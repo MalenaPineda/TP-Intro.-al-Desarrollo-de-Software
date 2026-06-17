@@ -16,6 +16,7 @@ CREATE TABLE usuarios (
 );
 
 CREATE TABLE casa_user (
+    id_casa_user SERIAL PRIMARY KEY, /*Agrego campo faltante Att: Jesús David*/
     id_casa INT REFERENCES Casa(id_casa) ON DELETE CASCADE,
     id_user INT REFERENCES Usuarios(id_user) ON DELETE CASCADE,
     PRIMARY KEY (id_casa, id_user)
