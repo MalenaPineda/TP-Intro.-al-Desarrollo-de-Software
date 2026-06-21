@@ -272,94 +272,14 @@
       <!-- Transacciones recientes -->
       <div class="panel-card">
         <div class="panel-title">Transacciones recientes</div>
-
-        <!-- EJS: <% transactions.forEach(t => { %> -->
-        <div class="tx-row">
-          <span class="tx-dot" style="background:var(--c-groceries)"></span>
-          <div class="tx-info">
-            <div class="tx-name">Grocery shopping</div>
-            <div class="tx-meta">Alex · May 23</div>
-          </div>
-          <div class="tx-amounts">
-            <div class="tx-total">$156.80</div>
-            <div class="tx-each">$39.20/ea</div>
-          </div>
-        </div>
-
-        <div class="tx-row">
-          <span class="tx-dot" style="background:var(--c-utilities)"></span>
-          <div class="tx-info">
-            <div class="tx-name">Electricity bill</div>
-            <div class="tx-meta">Jordan · May 20</div>
-          </div>
-          <div class="tx-amounts">
-            <div class="tx-total">$240.00</div>
-            <div class="tx-each">$60.00/ea</div>
-          </div>
-        </div>
-
-        <div class="tx-row">
-          <span class="tx-dot" style="background:var(--c-internet)"></span>
-          <div class="tx-info">
-            <div class="tx-name">Internet service</div>
-            <div class="tx-meta">You · May 18</div>
-          </div>
-          <div class="tx-amounts">
-            <div class="tx-total">$80.00</div>
-            <div class="tx-each">$20.00/ea</div>
-          </div>
-        </div>
-
-        <div class="tx-row">
-          <span class="tx-dot" style="background:var(--c-cleaning)"></span>
-          <div class="tx-info">
-            <div class="tx-name">Cleaning supplies</div>
-            <div class="tx-meta">Alex · May 15</div>
-          </div>
-          <div class="tx-amounts">
-            <div class="tx-total">$45.50</div>
-            <div class="tx-each">$11.38/ea</div>
-          </div>
-        </div>
-        <!-- EJS: <% }) %> -->
-
+          <div id="lista-gastos">HOLA</div>
       </div>
-    </div><!-- /bottom-grid -->
+    </div>
   </main>
 </div>
 
 <!-- Chart.js para el donut -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<script>
-  // EJS: los datos pueden venir del servidor como JSON embebido:
-  // const categories = <%- JSON.stringify(categories) %>;
-  const categories = [
-    { label: 'Groceries', value: 312, color: '#00bfa5' },
-    { label: 'Utilities',  value: 320, color: '#7c4dff' },
-    { label: 'Cleaning',   value: 90.3, color: '#f5a623' },
-    { label: 'Internet',   value: 80,   color: '#00d4d4' },
-    { label: 'Other',      value: 60,   color: '#ff6b35' },
-  ];
-
-  new Chart(document.getElementById('donut'), {
-    type: 'doughnut',
-    data: {
-      labels: categories.map(c => c.label),
-      datasets: [{
-        data:            categories.map(c => c.value),
-        backgroundColor: categories.map(c => c.color),
-        borderWidth: 3,
-        borderColor: '#fff',
-        hoverOffset: 6,
-      }]
-    },
-    options: {
-      cutout: '68%',
-      plugins: { legend: { display: false }, tooltip: { enabled: true } },
-      animation: { animateRotate: true, duration: 700 }
-    }
-  });
-</script>
-
+<script src="js/ver_gastos.js"></script>
 </body>
 </html>
