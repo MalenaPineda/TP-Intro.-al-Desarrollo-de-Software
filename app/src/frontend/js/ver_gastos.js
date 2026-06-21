@@ -39,8 +39,8 @@ function mostrarTransacciones(gastos) {
     fila.innerHTML = `
       <span class="tx-dot" style="background:${color}"></span>
       <div class="tx-info">
-        <div class="tx-name">${gasto.descripcion}</div>
-        <div class="tx-meta">Usuario ${gasto.id_user} · ${formatearFecha(gasto.fecha_gasto)}</div>
+        <div class="tx-descripcion">${gasto.descripcion}</div>
+        <div class="tx-nombre"> ${gasto.nombre} · ${formatearFecha(gasto.fecha_gasto)}</div>
       </div>
       <div class="tx-amounts">
         <div class="tx-total">$${monto}</div>
