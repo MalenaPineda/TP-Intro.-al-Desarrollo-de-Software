@@ -24,7 +24,7 @@ endpointsGastos.get("/", async (req, res) => {
   }
 });
 
-endpointsGastos.get("/:id", async (req, res) => {
+endpointsGastos.get("/total-mes/usuario/:id", async (req, res) => {
   try {
     const idUser = req.params.id;
     const total = await getTotalGastosPorUsuario(idUser);
