@@ -51,4 +51,23 @@ function mostrarTransacciones(gastos) {
   });
 }
 
+async function obtenerGastoMes() {
+  try {
+    const respuesta = await fetch(`${URL_API}/total-mes`);
+    if (!respuesta.ok) {
+      throw new Error(`Error HTTP: ${respuesta.status}`);
+    }
+    const gasto = await respuesta.json();
+    mostrarGastoDelMes(gasto[0].total);
+  } catch (error) {
+    console.error("No se pudieron cargar los gastos:", error);
+  }
+}
+
+function mostrarGastoDelMes(gasto) {
+  const contenedor = document.getElementById("gasto-mes");
+  contenedor.textContent = `$${gasto}`;
+}
+
 obtenerGastos();
+obtenerGastoMes()
