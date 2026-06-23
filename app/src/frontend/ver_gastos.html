@@ -7,153 +7,7 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.2/css/bulma.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-  <style>
-    :root {
-      --sidebar-width: 220px;
-      --accent: #5b9cf6;
-      --accent-soft: #e8f0fe;
-      --teal: #00bfa5;
-      --teal-soft: #e0f7f4;
-      --border: #f0f0f0;
-      --bg: #f8f9fb;
-      --text-muted: #888;
-      --radius: 14px;
-
-      /* categorías */
-      --c-groceries: #00bfa5;
-      --c-utilities: #7c4dff;
-      --c-cleaning:  #f5a623;
-      --c-internet:  #00d4d4;
-      --c-other:     #ff6b35;
-    }
-
-    html, body { height: 100%; margin: 0; background: var(--bg); font-family: 'Inter', system-ui, sans-serif; }
-
-    /* ── Layout ── */
-    .app-layout { display: flex; min-height: 100vh; }
-
-    /* ── Sidebar ── */
-    .sidebar {
-      width: var(--sidebar-width);
-      background: #fff;
-      border-right: 1px solid var(--border);
-      display: flex; flex-direction: column;
-      padding: 1.5rem 1rem;
-      position: fixed; top: 0; left: 0; bottom: 0;
-      z-index: 10;
-    }
-    .sidebar-brand { margin-bottom: 2rem; padding: 0 0.5rem; }
-    .sidebar-brand .house-name { font-weight: 700; font-size: 1.1rem; color: #1a1a2e; }
-    .sidebar-brand .members    { font-size: 0.78rem; color: var(--text-muted); }
-
-    .sidebar-menu { flex: 1; }
-    .sidebar-item {
-      display: flex; align-items: center; gap: 0.75rem;
-      padding: 0.6rem 0.75rem; border-radius: 10px;
-      color: #444; font-size: 0.92rem; cursor: pointer;
-      margin-bottom: 2px; text-decoration: none;
-      transition: background 0.15s;
-    }
-    .sidebar-item:hover  { background: var(--accent-soft); color: var(--accent); }
-    .sidebar-item.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
-    .sidebar-item .badge {
-      margin-left: auto; background: var(--accent); color: #fff;
-      border-radius: 999px; font-size: 0.72rem; padding: 1px 7px; font-weight: 600;
-    }
-    .sidebar-user {
-      display: flex; align-items: center; gap: 0.65rem;
-      padding: 0.5rem; border-top: 1px solid var(--border); margin-top: 1rem;
-    }
-    .avatar {
-      width: 36px; height: 36px; border-radius: 50%;
-      background: var(--accent); color: #fff; font-weight: 700; font-size: 0.85rem;
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-    }
-    .user-info .name { font-size: 0.88rem; font-weight: 600; color: #1a1a2e; }
-    .user-info .role { font-size: 0.75rem; color: var(--text-muted); }
-
-    /* ── Main ── */
-    .main-content {
-      margin-left: var(--sidebar-width);
-      flex: 1; padding: 2rem 2.5rem; max-width: 1060px;
-    }
-
-    /* ── Page header ── */
-    .page-header {
-      display: flex; align-items: flex-start; justify-content: space-between;
-      margin-bottom: 1.75rem;
-    }
-    .page-title    { font-size: 1.65rem; font-weight: 700; color: #1a1a2e; margin-bottom: 0.1rem; }
-    .page-subtitle { font-size: 0.88rem; color: var(--text-muted); }
-
-    .btn-add {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: var(--teal); color: #fff;
-      border: none; border-radius: 10px;
-      padding: 0.55rem 1.2rem; font-size: 0.9rem; font-weight: 600;
-      cursor: pointer; text-decoration: none; transition: opacity 0.15s;
-      white-space: nowrap;
-    }
-    .btn-add:hover { opacity: 0.88; color: #fff; }
-
-    /* ── Summary cards ── */
-    .summary-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
-      margin-bottom: 1.25rem;
-    }
-    .summary-card {
-      background: #fff; border-radius: var(--radius);
-      border: 1px solid var(--border); padding: 1.4rem 1.6rem;
-    }
-    .summary-label { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.35rem; }
-    .summary-value { font-size: 2rem; font-weight: 700; }
-    .summary-value.teal   { color: var(--teal); }
-    .summary-value.purple { color: #7c4dff; }
-
-    /* ── Bottom grid ── */
-    .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-
-    .panel-card {
-      background: #fff; border-radius: var(--radius);
-      border: 1px solid var(--border); padding: 1.4rem 1.5rem;
-    }
-    .panel-title { font-weight: 700; font-size: 1rem; color: #1a1a2e; margin-bottom: 1.1rem; }
-
-    /* ── Donut chart ── */
-    .chart-wrap { display: flex; align-items: center; gap: 2rem; }
-    canvas#donut { width: 160px !important; height: 160px !important; flex-shrink: 0; }
-
-    .legend { display: flex; flex-direction: column; gap: 0.55rem; }
-    .legend-item { display: flex; align-items: center; gap: 0.55rem; font-size: 0.85rem; color: #333; }
-    .legend-dot  { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
-    .legend-name { flex: 1; }
-    .legend-amount { font-weight: 600; margin-right: 0.35rem; }
-    .legend-pct    { color: var(--text-muted); font-size: 0.78rem; }
-
-    /* ── Transaction list ── */
-    .tx-row {
-      display: flex; align-items: center; gap: 0.75rem;
-      padding: 0.7rem 0; border-bottom: 1px solid var(--border);
-    }
-    .tx-row:last-child { border-bottom: none; }
-    .tx-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-    .tx-info { flex: 1; }
-    .tx-name { font-size: 0.88rem; font-weight: 500; color: #1a1a2e; }
-    .tx-meta { font-size: 0.76rem; color: var(--text-muted); }
-    .tx-amounts { text-align: right; }
-    .tx-total { font-size: 0.9rem; font-weight: 700; color: #1a1a2e; }
-    .tx-each  { font-size: 0.75rem; color: var(--text-muted); }
-
-    /* ── Responsive ── */
-    @media (max-width: 768px) {
-      .sidebar       { display: none; }
-      .main-content  { margin-left: 0; padding: 1.25rem; }
-      .summary-grid  { grid-template-columns: 1fr; }
-      .bottom-grid   { grid-template-columns: 1fr; }
-      .chart-wrap    { flex-direction: column; align-items: flex-start; }
-    }
-  </style>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
@@ -214,13 +68,10 @@
     <div class="summary-grid">
       <div class="summary-card">
         <div class="summary-label">Este mes</div>
-        <!-- EJS: <div class="summary-value teal">$<%= monthlyTotal %></div> -->
-        <div class="summary-value teal">$522.30</div>
       </div>
+
       <div class="summary-card">
-        <div class="summary-label">Tu parte</div>
-        <!-- EJS: <div class="summary-value purple">$<%= myShare %></div> -->
-        <div class="summary-value purple">$130.58</div>
+        <div class="summary-label">Este mes</div>
       </div>
     </div>
 
