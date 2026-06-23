@@ -9,3 +9,8 @@ export async function getTotalGastosPorUsuario(idUser) {
   const result = await db.query("SELECT SUM(monto) AS total FROM gastos WHERE id_user = $1 AND EXTRACT(MONTH FROM fecha_gasto) = EXTRACT(MONTH FROM CURRENT_DATE) AND EXTRACT(YEAR FROM fecha_gasto) = EXTRACT(YEAR FROM CURRENT_DATE);",[idUser])
   return result.rows;
 }
+
+export async function getTotalGastoPorMes() {
+  const result = await db.query("SELECT SUM(monto) AS total FROM gastos WHERE EXTRACT(MONTH FROM fecha_gasto) = EXTRACT(MONTH FROM CURRENT_DATE) AND EXTRACT(YEAR FROM fecha_gasto) = EXTRACT(YEAR FROM CURRENT_DATE);")
+  return result.rows;
+}
