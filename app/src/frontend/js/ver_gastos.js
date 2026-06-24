@@ -58,7 +58,7 @@ async function obtenerGastoMes() {
       throw new Error(`Error HTTP: ${respuesta.status}`);
     }
     const gasto = await respuesta.json();
-    mostrarGastoDelMes(gasto[0].total);
+    mostrarGastoDelMes(gasto.total);
   } catch (error) {
     console.error("No se pudieron cargar los gastos:", error);
   }
@@ -69,5 +69,26 @@ function mostrarGastoDelMes(gasto) {
   contenedor.textContent = `$${gasto}`;
 }
 
+async function obtenerGastoMesUsuario() {
+  try {
+    const respuesta = await fetch(`${URL_API}/total-mes/usuario/1`);
+    if (!respuesta.ok) {
+      throw new Error(`Error HTTP: ${respuesta.status}`);
+    }
+    const gasto = await respuesta.json();
+    console.log("GASTO USUARIO")
+    console.log(gasto.total)
+    mostrarGastoDelMesUsuario(gasto.total);
+  } catch (error) {
+    console.error("No se pudieron cargar los gastos:", error);
+  }
+}
+
+function mostrarGastoDelMesUsuario(gasto) {
+  const contenedor = document.getElementById("gasto-user");
+  contenedor.textContent = `$${gasto}`;
+}
+
 obtenerGastos();
 obtenerGastoMes()
+obtenerGastoMesUsuario()
