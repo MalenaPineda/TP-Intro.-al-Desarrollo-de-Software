@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getGastos, getTotalGastosPorUsuario, getTotalGastoPorMes } from "../../../db/gastos.js";
+import { getGastos, getTotalGastosPorUsuario, getTotalGastoPorMes, getGastosPorCategoria } from "../../../db/gastos.js";
 
 
 export const endpointsGastos = Router();
@@ -38,6 +38,16 @@ endpointsGastos.get("/total-mes/usuario/:id", async (req, res) => {
 endpointsGastos.get("/total-mes", async (req, res) => {
   try {
     const total = await getTotalGastoPorMes();
+    res.json(total);
+  } catch (error) {
+    console.error("Error al obtener el total del mes:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
+endpointsGastos.get("/categoria", async (req, res) => {
+  try {
+    const total = await getGastosPorCategoria();
     res.json(total);
   } catch (error) {
     console.error("Error al obtener el total del mes:", error);
