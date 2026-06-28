@@ -19,3 +19,8 @@ export async function getGastosPorCategoria() {
   const result = await db.query("SELECT c.nombre, SUM(g.monto) AS total_monto FROM gastos g, categoria_gastos c WHERE g.categoria = c.id_categoria AND EXTRACT(MONTH FROM g.fecha_gasto) = EXTRACT(MONTH FROM CURRENT_DATE) AND EXTRACT(YEAR FROM g.fecha_gasto) = EXTRACT(YEAR FROM CURRENT_DATE) GROUP BY c.nombre;")
   return result.rows;
 }
+
+export async function createGasto(descripcion,monto,metodo_pago,id_categoria,id_user) {
+  const result = await db.query("INSERT INTO gastos (descripcion, monto, CURRENT_DATE, metodo_pago, categoria, id_user) VALUES ($1, $2, $3, $4);")
+  return result.rows;
+}
