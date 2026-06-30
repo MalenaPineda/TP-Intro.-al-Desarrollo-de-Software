@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getGastos } from "../../db/gastos.js";
+import { getGastos } from "../../../db/gastos.js";
 
 export const endpointsGastos = Router();
 
