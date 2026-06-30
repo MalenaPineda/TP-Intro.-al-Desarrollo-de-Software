@@ -20,7 +20,10 @@ export async function getGastosPorCategoria() {
   return result.rows;
 }
 
-export async function createGasto(descripcion,monto,metodo_pago,id_categoria,id_user) {
-  const result = await db.query("INSERT INTO gastos (descripcion, monto, CURRENT_DATE, metodo_pago, categoria, id_user) VALUES ($1, $2, $3, $4);")
-  return result.rows;
+export async function createGasto(descripcion, monto, metodo_pago, id_categoria, id_user) {
+  const result = await db.query(
+    "INSERT INTO gastos (descripcion, monto, metodo_pago, categoria, id_user) VALUES ($1, $2, $3, $4, $5)",
+    [descripcion, monto, metodo_pago, id_categoria, id_user]
+  );
+  return result.rowCount > 0;
 }
