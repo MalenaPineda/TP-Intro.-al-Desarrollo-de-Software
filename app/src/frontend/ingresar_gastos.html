@@ -6,10 +6,9 @@
     <title>Ingersar Gasto</title>
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> -->
     <link rel="stylesheet" href="css/style.css" />
-
-    <!-- Font Awesome para el icono -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
 </head>
 <body class="is-flex is-justify-content-center is-align-items-center" style="min-height: 100vh;">
 
@@ -53,7 +52,7 @@
 <div class="container is-max-desktop p-5">
     
     <!-- Enlace Volver -->
-    <a href="#" class="has-text-grey is-size-6 is-flex is-align-items-center mb-5">
+    <a href="http://127.0.0.1:8080/ver_gastos.html" class="has-text-grey is-size-6 is-flex is-align-items-center mb-5">
         <span class="icon mr-2"><i class="fa-solid fa-arrow-left"></i></span> Volver a gastos
     </a>
 
@@ -61,13 +60,14 @@
     <h2 class="title is-3 mb-2 has-text-black">Registrar gasto</h2>
     <p class="subtitle is-6 has-text-grey mb-6">Añade un gasto compartido de la casa</p>
 
-    <!-- Tarjeta del Formulario (Usando un panel o recuadro con borde sutil de Bulma, sin sombras) -->
+    <!-- Tarjeta del Formulario  -->
+    <form id="datos-gastos">
     <div class="box p-6 has-background-white is-shadowless" style="border: 1px solid #e2e8f0; border-radius: 20px;">
         <!-- Campo: Nombre del gasto -->
         <div class="field mb-5">
             <label class="label has-text-grey-dark has-text-weight-normal">Nombre del gasto</label>
             <div class="control">
-                <input class="input is-medium" type="text" placeholder="ej. Compra del supermercado" style="border-radius: 10px;">
+                <input class="input is-medium" name="descripcion" type="text" placeholder="ej. Compra del supermercado" style="border-radius: 10px;">
             </div>
         </div>
 
@@ -79,10 +79,10 @@
                     <label class="label has-text-grey-dark has-text-weight-normal">Categoría</label>
                     <div class="control is-expanded">
                         <div class="select is-fullwidth is-medium">
-                            <select style="border-radius: 10px;">
-                                <option>Groceries</option>
-                                <option>Servicios</option>
-                                <option>Hogar</option>
+                            <select name="categoria" style="border-radius: 10px;">
+                                <option value="1">Groceries</option>
+                                <option value="2">Servicios</option>
+                                <option value="3">Hogar</option>
                             </select>
                         </div>
                     </div>
@@ -94,16 +94,32 @@
                 <div class="field">
                     <label class="label has-text-grey-dark has-text-weight-normal">Monto ($)</label>
                     <div class="control">
-                        <input class="input is-medium" type="number" step="0.01" value="0.00" style="border-radius: 10px;">
+                        <input class="input is-medium" name="monto" type="number" min="1" value="0" style="border-radius: 10px;">
                     </div>
                 </div>
             </div>
+
+            <div class="column">
+                <div class="field">
+                    <label class="label has-text-grey-dark has-text-weight-normal">Metodo de pago</label>
+                    <div class="control is-expanded">
+                        <div class="select is-fullwidth is-medium">
+                            <select name="metodo-pago" style="border-radius: 10px;">
+                                <option value="1">Efectivo</option>
+                                <option value="2">Tarjeta de credito</option>
+                                <option value="3">Tarjeta de debito</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
 
         <!-- Ingersar gasto -->
         <div class="field">
             <div class="control">
-                <button class="button is-cyan is-fullwidth is-medium py-5" style="border-radius: 10px;">
+                <button class="button is-cyan is-fullwidth is-medium py-5" name="btn-registar"type="submit" style="border-radius: 10px;">
                     <span class="icon mr-2">
                         <i class="fa-solid fa-circle-plus"></i>
                     </span>
@@ -111,8 +127,9 @@
                 </button>
             </div>
         </div>
-
+    </form>
     </div>
 </div>
+<script src="js/ingresar_gastos.js"></script>
 </body>
 </html>
