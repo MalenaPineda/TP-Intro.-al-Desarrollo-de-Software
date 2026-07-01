@@ -28,5 +28,5 @@ export async function cambiarEstadoTarea(id,estado) {
 }
 
 export async function getTareasCompletadas(id,estado) {
-    const resultado = await db.query("SELECT * FROM tarea WHERE estado = ")
+    const resultado = await db.query("")
 }
