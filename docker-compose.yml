@@ -1,18 +1,21 @@
 services:
   convivencia-api:
+    depends_on:
+      - db
     image: "backend"
     build: . # Buildear el Dockerfile de esta carpeta (.)
     ports:
       - "8000:8000"
     env_file:
-      - .env
+      - app/.env
 
   db:
     image: postgres:18
     env_file:
-      - .env
+      - app/.env
     ports:
       - "5433:5432"
     volumes:
       - ./data:/var/lib/postgresql
-
+      - ./app/db/schemas.sql:/docker-entrypoint-initdb.d/01_schemas.sql:ro
+      - ./app/db/seed.sql:/docker-entrypoint-initdb.d/02_seed.sql:ro
