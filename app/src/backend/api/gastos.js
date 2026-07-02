@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getGastos, getTotalGastosPorUsuario, getTotalGastoPorMes, getGastosPorCategoria, createGasto, getNombreCategoria } from "../../../db/gastos.js";
+import { getGastos, getTotalGastosPorUsuario, getTotalGastoPorMes, getGastosPorCategoria, createGasto, getNombreCategoria, getMetodoPago } from "../../../db/gastos.js";
 
 export const endpointsGastos = Router();
 
@@ -96,3 +96,12 @@ endpointsGastos.get("/nombre-categoria", async (req, res) => {
   }
 });
 
+endpointsGastos.get("/metodo-pago", async (req, res) => {
+  try {
+    const metodos = await getMetodoPago();
+    res.json(metodos);
+  } catch (error) {
+    console.error("Error al obtener las categorias:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
