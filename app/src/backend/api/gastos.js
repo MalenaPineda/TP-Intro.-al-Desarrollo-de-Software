@@ -86,7 +86,7 @@ endpointsGastos.post("/", async (req, res) => {
   });
 });
 
-endpointsGastos.get("/categorias", async (req, res) => {
+endpointsGastos.get("/nombre-categoria", async (req, res) => {
   try {
     const categorias = await getNombreCategoria();
     res.json(categorias);
