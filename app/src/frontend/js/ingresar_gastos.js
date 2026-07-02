@@ -60,4 +60,30 @@ function mostrarCategorias(categorias) {
   });
 }
 
+async function obtenerMetodoPago() {
+  try {
+    const respuesta = await fetch(`${URL_API}/metodo-pago`);
+    if (!respuesta.ok) {
+      throw new Error(`Error HTTP: ${respuesta.status}`);
+    }
+    const metodo = await respuesta.json()
+    mostrarMetodoPago(metodo);
+  } catch (error) {
+    console.error("No se pudieron cargar los gastos:", error);
+  }
+}
+
+function mostrarMetodoPago(metodo) {
+  const contenedor = document.getElementById("metodo-pago");
+  contenedor.innerHTML = "";
+
+  metodo.forEach((m) => {
+    const opcion = document.createElement("option");
+    opcion.value = m.id_metodo;
+    opcion.textContent = m.nombre;
+    contenedor.appendChild(opcion);
+  });
+}
+
 obtenerCategorias()
+obtenerMetodoPago()
