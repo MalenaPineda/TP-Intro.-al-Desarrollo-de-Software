@@ -32,3 +32,9 @@ export async function getNombreCategoria() {
   const result = await db.query("SELECT * FROM categoria_gastos ORDER BY nombre ASC;")
   return result.rows;
 }
+
+export async function getMetodoPago() {
+  const result = await db.query("SELECT * FROM metodo_pago ORDER BY nombre ASC;")
+  return result.rows;
+}
+
