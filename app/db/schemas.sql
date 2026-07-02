@@ -16,17 +16,22 @@ CREATE TABLE categoria_gastos (
     id_categoria SERIAL PRIMARY KEY, 
     nombre VARCHAR(100) NOT NULL
 );
+CREATE TABLE metodo_pago (
+    id SERIAL PRIMARY KEY, 
+    nombre VARCHAR(100) NOT NULL
+);
 
 CREATE TABLE gastos (
     id_gasto SERIAL PRIMARY KEY,
     descripcion VARCHAR(255) NOT NULL,
     monto DECIMAL(10,2) NOT NULL,
     fecha_gasto DATE DEFAULT CURRENT_DATE,
-    metodo_pago VARCHAR(50),
+    id_metodo INT NOT NULL,
     categoria INT NOT NULL,
     id_user INT NOT NULL,
     FOREIGN KEY (categoria) REFERENCES categoria_gastos(id_categoria),
     FOREIGN KEY (id_user) REFERENCES usuarios(id_user)
+    FOREIGN KEY (id_metodo) REFERENCES metodo_pago(id)
 );
 
 CREATE TABLE tareas (
