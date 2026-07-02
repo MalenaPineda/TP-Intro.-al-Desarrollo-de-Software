@@ -27,3 +27,8 @@ export async function createGasto(descripcion, monto, metodo_pago, id_categoria,
   );
   return result.rowCount > 0;
 }
+
+export async function getNombreCategoria() {
+  const result = await db.query("SELECT * FROM categoria_gastos ORDER BY nombre ASC;")
+  return result.rows;
+}
