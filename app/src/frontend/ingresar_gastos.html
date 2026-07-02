@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingersar Gasto</title>
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> -->
+    <link rel="stylesheet" href="css/style.css" />
+    
+</head>
+<body class="is-flex is-justify-content-center is-align-items-center" style="min-height: 100vh;">
+
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+          <div class="house-name">Casa Feliz</div>
+          <div class="members">4 miembros</div>
+        </div>
+    
+        <nav class="sidebar-menu">
+          <a href="/dashboard" class="sidebar-item">
+            <i class="fa-solid fa-house"></i> Dashboard
+          </a>
+          <a href="/tasks" class="sidebar-item">
+            <i class="fa-solid fa-check-square"></i> Tasks
+            <span class="badge">1</span>
+          </a>
+          <a href="/expenses" class="sidebar-item active">
+            <i class="fa-solid fa-dollar-sign"></i> Expensas
+            <span class="badge">2</span>
+          </a>
+          <a href="/ranking" class="sidebar-item">
+            <i class="fa-solid fa-trophy"></i> Ranking
+          </a>
+          <a href="/admin" class="sidebar-item">
+            <i class="fa-solid fa-shield-halved"></i> Admin
+          </a>
+        </nav>
+    
+        <div class="sidebar-user">
+          <div class="avatar">JD</div>
+          <div class="user-info">
+            <div class="name">Juan Díaz</div>
+            <div class="role">Admin</div>
+          </div>
+        </div>
+      </aside>
+    
+     <!-- CONTENEDOR PRINCIPAL DEL FORMULARIO -->
+<!-- is-max-desktop limita el ancho de forma limpia y p-5 da espacio en los bordes -->
+<div class="container is-max-desktop p-5">
+    
+    <!-- Enlace Volver -->
+    <a href="ver_gastos.html" class="has-text-grey is-size-6 is-flex is-align-items-center mb-5">
+        <span class="icon mr-2"><i class="fa-solid fa-arrow-left"></i></span> Volver a gastos
+    </a>
+
+    <!-- Encabezados de la sección -->
+    <h2 class="title is-3 mb-2 has-text-black">Registrar gasto</h2>
+    <p class="subtitle is-6 has-text-grey mb-6">Añade un gasto compartido de la casa</p>
+
+    <!-- Tarjeta del Formulario  -->
+    <form id="datos-gastos">
+    <div class="box p-6 has-background-white is-shadowless" style="border: 1px solid #e2e8f0; border-radius: 20px;">
+        <!-- Campo: Nombre del gasto -->
+        <div class="field mb-5">
+            <label class="label has-text-grey-dark has-text-weight-normal">Nombre del gasto</label>
+            <div class="control">
+                <input class="input is-medium" name="descripcion" type="text" placeholder="ej. Compra del supermercado" style="border-radius: 10px;">
+            </div>
+        </div>
+
+        <!-- Columnas: Categoría y Monto -->
+        <div class="columns mb-5">
+            <!-- Categoría -->
+            <div class="column">
+                <div class="field">
+                    <label class="label has-text-grey-dark has-text-weight-normal">Categoría</label>
+                    <div class="control is-expanded">
+                        <div class="select is-fullwidth is-medium">
+                            <select name="categoria" id="categoria" style="border-radius: 10px;">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monto -->
+            <div class="column">
+                <div class="field">
+                    <label class="label has-text-grey-dark has-text-weight-normal">Monto ($)</label>
+                    <div class="control">
+                        <input class="input is-medium" name="monto" type="number" min="1" value="0" style="border-radius: 10px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="field">
+                    <label class="label has-text-grey-dark has-text-weight-normal">Metodo de pago</label>
+                    <div class="control is-expanded">
+                        <div class="select is-fullwidth is-medium">
+                            <select name="metodo-pago" i="metodo-pago" style="border-radius: 10px;">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Ingersar gasto -->
+        <div class="field">
+            <div class="control">
+                <button class="button is-cyan is-fullwidth is-medium py-5" name="btn-registar"type="submit" style="border-radius: 10px;">
+                    <span class="icon mr-2">
+                        <i class="fa-solid fa-circle-plus"></i>
+                    </span>
+                    <span class="has-text-weight-medium">Registrar gasto</span>
+                </button>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+<script src="js/ingresar_gastos.js"></script>
+</body>
+</html>
