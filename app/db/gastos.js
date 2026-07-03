@@ -1,7 +1,21 @@
 import { db } from "./pool.js";
 
 export async function getGastos() {
-    const result = await db.query("SELECT g.id_gasto,g.descripcion,g.monto,g.fecha_gasto,g.metodo_pago,g.categoria,u.id_user,u.nombre FROM gastos g, usuarios u WHERE g.id_user = u.id_user ORDER BY g.fecha_gasto DESC; ")
+  const result = await db.query(`
+  SELECT 
+    g.id_gasto,
+    g.descripcion,
+    g.monto,
+    g.fecha_gasto,
+    g.categoria,
+    u.id_user,
+    u.nombre,
+    m.nombre AS metodo_pago
+  FROM gastos g, usuarios u, metodo_pago m
+  WHERE g.id_user = u.id_user
+  AND g.metodo_pago = m.id_metodo
+  ORDER BY g.fecha_gasto DESC
+`)
     return result.rows;
 }
 
@@ -22,7 +36,7 @@ export async function getGastosPorCategoria() {
 
 export async function createGasto(descripcion, monto, metodo_pago, id_categoria, id_user) {
   const result = await db.query(
-    "INSERT INTO gastos (descripcion, monto, metodo_pago, categoria, id_user) VALUES ($1, $2, $3, $4, $5)",
+    "INSERT INTO gastos (descripcion, monto, id_metodo, categoria, id_user) VALUES ($1, $2, $3, $4, $5)",
     [descripcion, monto, metodo_pago, id_categoria, id_user]
   );
   return result.rowCount > 0;
