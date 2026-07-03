@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       data.monto = parseFloat(data.monto);
       data.categoria = parseInt(data.categoria, 10);
+      data.metodo_pago = parseInt(data["metodo-pago"]);
       data.id_user = 1
       try {
         const response = await fetch(URL_API, {
