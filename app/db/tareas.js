@@ -26,7 +26,23 @@ export async function cambiarEstadoTarea(id,estado) {
     const resultado = await db.query("UPDATE tareas SET estado = $1 WHERE id_tarea = $2 RETURNING *",[estado, id]);
     return resultado.rows[0];
 }
+//Función para solicitar a la base de datos las tareas con toda la información necesaria. 
 
-export async function getTareasCompletadas(id,estado) {
-    const resultado = await db.query("")
+export async function getTareasCompletas() {
+    //En proceso de terminar
+    const resultado = await db.query(`SELECT 
+        tareas.id_tarea,
+        tareas.descripcion,
+        tareas.fecha_vencimiento,
+        tareas.fecha_creacion,
+        tareas.diaria,
+        tareas.estado,
+        tareas.notas,
+        categoria_tareas.nombre AS categoria,
+        array_agg(usuarios.nombre) AS usuario 
+        FROM tareas 
+        JOIN categoria_tareas ON tareas.id_categoria = categoria_tareas.id_categoria
+         JOIN tarea_user ON tareas.id_tarea = tarea_user.id_tarea JOIN usuarios ON tarea_user.id_user = usuarios.id_user
+         GROUP BY tareas.id_tarea, categoria_tareas.nombre`) //array_agg es una función que hace que muestre en este un array en los usuarios en el caso de que haya más de uno asignado para la misma tarea 
+    return resultado.rows;
 }

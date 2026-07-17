@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getTareas, getTareasPorId,crearTarea, borrarTarea, cambiarEstadoTarea } from '../../../db/tareas.js';
+import { getTareas, getTareasPorId,crearTarea, borrarTarea, cambiarEstadoTarea, getTareasCompletas } from '../../../db/tareas.js';
 
 export const rutaTareas = Router();
 
@@ -13,6 +13,18 @@ rutaTareas.get('/', async (req,res) => {
         res.status(500).json({error: "Error interno del servidor"});
     }
 });
+//Mostrar tareas con información completa
+rutaTareas.get('/completas', async (req,res) => {
+    try {
+        const tareas = await getTareasCompletas();
+        res.json(tareas);
+
+    } catch (error) {
+        console.log("Error al obtener tareas", error)
+        res.status(500).json({error: "Error interno del servidor"});
+    }
+})
+
 //Mostrar tareas por id
 rutaTareas.get('/:id', async (req,res) => {
     try {
@@ -25,11 +37,10 @@ rutaTareas.get('/:id', async (req,res) => {
         res.json(tarea)
     } catch(error) {
         console.error("Error al obtener tarea", error);
-        res.status(500).json({error: "EWrror interno del servidor"});
+        res.status(500).json({error: "Error interno del servidor"});
     }
 });
 
-//Mostrar tareas completadas
 
 
 //Crear una tarea
