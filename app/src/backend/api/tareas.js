@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getTareas, getTareasPorId,crearTarea, borrarTarea, cambiarEstadoTarea, getTareasCompletas } from '../../../db/tareas.js';
+import { getTareas, getTareasPorId,crearTarea, borrarTarea, cambiarEstadoTarea, getTareasCompletas, asignarUsuario } from '../../../db/tareas.js';
 
 export const rutaTareas = Router();
 
@@ -102,4 +102,27 @@ rutaTareas.delete('/:id', async (req,res) => {
     }
  });
 
- 
+ //Asignar tarea a usuario 
+ rutaTareas.post('/:id/usuarios', async (req,res)=> {
+    try {  
+        const { id }= req.params;
+        const {id_user} = req.body;
+
+        const tarea = await getTareasPorId(id);
+        if(!tarea) {
+            return res.status(404).json({error: "Tarea no encontrada"});
+        }
+
+        if (!(id_user)) {
+            console.error("Error: usuario no encontrado.");
+            return res.status(400).json({error: "El id_user es obligatorio"});
+        }
+
+        const resultado = await asignarUsuario(id,id_user);
+        res.status(201).json(resultado);
+
+    } catch (error) {
+        console.error("Error interno al asignar tarea");
+        res.status(500).json({error: "Error interno del servidor"});
+    }   
+ })

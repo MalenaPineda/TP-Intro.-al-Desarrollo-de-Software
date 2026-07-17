@@ -46,3 +46,9 @@ export async function getTareasCompletas() {
          GROUP BY tareas.id_tarea, categoria_tareas.nombre`) //array_agg es una función que hace que muestre en este un array en los usuarios en el caso de que haya más de uno asignado para la misma tarea 
     return resultado.rows;
 }
+
+export async function asignarUsuario(id_tarea, id_user) {
+    const resultado = await db.query(`INSERT INTO tarea_user(id_tarea,id_user) VALUES ($1,$2) RETURNING *`, [id_tarea,id_user]);
+
+    return resultado.rows[0];
+}
