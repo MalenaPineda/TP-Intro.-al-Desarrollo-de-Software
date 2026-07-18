@@ -1,10 +1,7 @@
 import { Router } from "express";
-<<<<<<< HEAD
-import { getGastos, getTotalGastosPorUsuario, getTotalGastoPorMes, getGastosPorCategoria } from "../../../db/gastos.js";
 
-=======
 import { getGastosPorMes, getGastos, getTotalGastosPorUsuario, getTotalGastoPorMes, getGastosPorCategoria, createGasto, getNombreCategoria, getMetodoPago } from "../../../db/gastos.js";
->>>>>>> c91605a... feat: Agrego el endpoint que devuelve los gastos por mes
+
 
 export const endpointsGastos = Router();
 
