@@ -15,7 +15,7 @@ INSERT INTO categoria_tareas (nombre) VALUES
 INSERT INTO categoria_gastos (nombre) VALUES 
 ('Alquiler y Expensas'),
 ('Supermercado'),
-('Servicios (Luz/Gas/Internet)'),
+('Servicios'),
 ('Delivery y Salidas'),
 ('Artículos de Limpieza');
 

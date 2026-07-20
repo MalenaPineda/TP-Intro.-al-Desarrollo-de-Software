@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Convivencia – Expenses</title>
 
+  <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.2/css/bulma.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
@@ -175,7 +176,7 @@
         <span class="badge">1</span>
       </a>
       <a href="/expenses" class="sidebar-item active">
-        <i class="fa-solid fa-dollar-sign"></i> Expenses
+        <i class="fa-solid fa-dollar-sign"></i> Expensas
         <span class="badge">2</span>
       </a>
       <a href="/ranking" class="sidebar-item">
@@ -204,23 +205,20 @@
         <h1 class="page-title">Expenses</h1>
         <p class="page-subtitle">Gastos compartidos de la casa</p>
       </div>
-      <!-- EJS: href="/expenses/new" -->
-      <a href="/expenses/new" class="btn-add">
+
+      <a href="ingresar_gastos.html" class="btn-add">
         <i class="fa-solid fa-circle-plus"></i> Agregar gasto
       </a>
     </div>
 
-    <!-- Summary cards -->
     <div class="summary-grid">
       <div class="summary-card">
-        <div class="summary-label">Este mes</div>
-        <!-- EJS: <div class="summary-value teal">$<%= monthlyTotal %></div> -->
-        <div class="summary-value teal">$522.30</div>
+        <div class="summary-label">Gasto del mes</div>
+        <div class="summary-value teal" id="gasto-mes"></div>
       </div>
       <div class="summary-card">
-        <div class="summary-label">Tu parte</div>
-        <!-- EJS: <div class="summary-value purple">$<%= myShare %></div> -->
-        <div class="summary-value purple">$130.58</div>
+        <div class="summary-label">Mi gasto</div>
+        <div class="summary-value purple" id="gasto-user"></div>
       </div>
     </div>
 
@@ -232,47 +230,14 @@
         <div class="panel-title">Por categoría</div>
         <div class="chart-wrap">
           <canvas id="donut"></canvas>
-          <!-- EJS: <% categories.forEach(c => { %> -->
-          <div class="legend">
-            <div class="legend-item">
-              <span class="legend-dot" style="background:var(--c-groceries)"></span>
-              <span class="legend-name">Groceries</span>
-              <span class="legend-amount">$312</span>
-              <span class="legend-pct">(36%)</span>
-            </div>
-            <div class="legend-item">
-              <span class="legend-dot" style="background:var(--c-utilities)"></span>
-              <span class="legend-name">Utilities</span>
-              <span class="legend-amount">$320</span>
-              <span class="legend-pct">(37%)</span>
-            </div>
-            <div class="legend-item">
-              <span class="legend-dot" style="background:var(--c-cleaning)"></span>
-              <span class="legend-name">Cleaning</span>
-              <span class="legend-amount">$90.3</span>
-              <span class="legend-pct">(10%)</span>
-            </div>
-            <div class="legend-item">
-              <span class="legend-dot" style="background:var(--c-internet)"></span>
-              <span class="legend-name">Internet</span>
-              <span class="legend-amount">$80</span>
-              <span class="legend-pct">(9%)</span>
-            </div>
-            <div class="legend-item">
-              <span class="legend-dot" style="background:var(--c-other)"></span>
-              <span class="legend-name">Other</span>
-              <span class="legend-amount">$60</span>
-              <span class="legend-pct">(7%)</span>
-            </div>
-          </div>
-          <!-- EJS: <% }) %> -->
+          <div class="legend"></div>
         </div>
       </div>
 
       <!-- Transacciones recientes -->
       <div class="panel-card">
         <div class="panel-title">Transacciones recientes</div>
-          <div id="lista-gastos">HOLA</div>
+      <div id="lista-gastos"></div>
       </div>
     </div>
   </main>
