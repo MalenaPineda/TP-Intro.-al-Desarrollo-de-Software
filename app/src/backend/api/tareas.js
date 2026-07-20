@@ -1,17 +1,18 @@
 import { Router } from 'express';
-import { getTareas, getTareasPorId,crearTarea, borrarTarea, cambiarEstadoTarea, getTareasCompletas, asignarUsuario } from '../../../db/tareas.js';
+import { getTareas, getTareasPorId,crearTarea, borrarTarea, cambiarEstadoTarea, getTareasCompletas, asignarUsuario, getMisTareas, getTareasDeOtros, getTareasDisponibles } from '../../../db/tareas.js';
 
 export const rutaTareas = Router();
 
-//Mostrar todas las tareas
-rutaTareas.get('/', async (req,res) => {
+// Tareas disponibles o sin asignar
+rutaTareas.get('/disponibles', async (req, res) => {
     try {
-        const tareas = await getTareas();
+        const tareas = await getTareasDisponibles();
         res.json(tareas);
-    } catch(error) {
-        console.log("Error al obtener tareas", error)
-        res.status(500).json({error: "Error interno del servidor"});
+    } catch (error) {
+        console.error("Error al obtener tareas disponibles", error);
+        res.status(500).json({ error: "Error interno del servidor" });
     }
+
 });
 //Mostrar tareas con información completa
 rutaTareas.get('/completas', async (req,res) => {
@@ -24,6 +25,43 @@ rutaTareas.get('/completas', async (req,res) => {
         res.status(500).json({error: "Error interno del servidor"});
     }
 })
+
+
+// Mis tareas
+rutaTareas.get('/mias/:id_user', async (req, res) => {
+    try {
+        const { id_user } = req.params;
+        const tareas = await getMisTareas(id_user);
+        res.json(tareas);
+    } catch (error) {
+        console.error("Error al obtener mis tareas", error);
+        res.status(500).json({ error: "Error interno del servidor" });
+    }
+});
+
+// Tareas de otros
+rutaTareas.get('/otros/:id_user', async (req, res) => {
+    try {
+        const { id_user } = req.params;
+        const tareas = await getTareasDeOtros(id_user);
+        res.json(tareas);
+    } catch (error) {
+        console.error("Error al obtener tareas de otros", error);
+        res.status(500).json({ error: "Error interno del servidor" });
+    }
+});
+
+//Mostrar todas las tareas
+rutaTareas.get('/', async (req,res) => {
+    try {
+        const tareas = await getTareas();
+        res.json(tareas);
+    } catch(error) {
+        console.log("Error al obtener tareas", error)
+        res.status(500).json({error: "Error interno del servidor"});
+    }
+});
+
 
 //Mostrar tareas por id
 rutaTareas.get('/:id', async (req,res) => {
@@ -78,7 +116,7 @@ rutaTareas.delete('/:id', async (req,res) => {
     try{
         const {id} = req.params
         const {estado} = req.body;
-        const estadosValidos = ['pendiente', 'por aprobar','aprobada']
+        const estadosValidos = ['pendiente', 'en progreso','hecha']
 
         const tarea = await getTareasPorId(id);
         if(!tarea) {
