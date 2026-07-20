@@ -53,7 +53,7 @@ endpointsGastos.get("/categoria", async (req, res) => {
     console.error("Error al obtener el total del mes:", error);
     res.status(500).json({ error: "Error interno del servidor" });
   }
-;
+});
 
 endpointsGastos.post("/", async (req, res) => {
   if (

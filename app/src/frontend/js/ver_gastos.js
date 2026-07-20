@@ -7,7 +7,7 @@ const coloresPorCategoria = {
   4: "#f5a623", // cleaning
   5: "#ff6b35", // other
 };
- 
+
 async function obtenerGastos() {
   try {
     const respuesta = await fetch(URL_API);
@@ -19,7 +19,6 @@ async function obtenerGastos() {
   } catch (error) {
     console.error("No se pudieron cargar los gastos:", error);
   }
-
 }
 
 function formatearFecha(fechaISO) {
@@ -59,7 +58,6 @@ async function obtenerGastoMes() {
       throw new Error(`Error HTTP: ${respuesta.status}`);
     }
     const gasto = await respuesta.json();
-    console.log(gasto.total)
     mostrarGastoDelMes(gasto.total);
   } catch (error) {
     console.error("No se pudieron cargar los gastos:", error);
@@ -68,7 +66,6 @@ async function obtenerGastoMes() {
 
 function mostrarGastoDelMes(gasto) {
   const contenedor = document.getElementById("gasto-mes");
-  const gastoSeguro = gasto ?? 0;
   contenedor.textContent = `$${gasto}`;
 }
 
@@ -79,6 +76,8 @@ async function obtenerGastoMesUsuario() {
       throw new Error(`Error HTTP: ${respuesta.status}`);
     }
     const gasto = await respuesta.json();
+    console.log("GASTO USUARIO")
+    console.log(gasto.total)
     mostrarGastoDelMesUsuario(gasto.total);
   } catch (error) {
     console.error("No se pudieron cargar los gastos:", error);

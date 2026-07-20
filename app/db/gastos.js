@@ -52,7 +52,6 @@ export async function getMetodoPago() {
   return result.rows;
 }
 
-<<<<<<< HEAD
 export async function getGastosPorMes() {
   const result = await db.query(`
     SELECT 
@@ -66,5 +65,3 @@ export async function getGastosPorMes() {
   return result.rows;
   
 }
-=======
->>>>>>> 46ec5dc32efbcbadbf14a6fd5b0b20196f72ef66
