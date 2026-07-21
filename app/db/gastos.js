@@ -52,3 +52,16 @@ export async function getMetodoPago() {
   return result.rows;
 }
 
+export async function getGastosPorMes() {
+  const result = await db.query(`
+    SELECT 
+      EXTRACT(MONTH FROM fecha_gasto) AS mes,
+      EXTRACT(YEAR FROM fecha_gasto) AS anio,
+      SUM(monto) AS total
+    FROM gastos
+    GROUP BY anio, mes
+    ORDER BY anio ASC, mes ASC
+  `);
+  return result.rows;
+  
+}
