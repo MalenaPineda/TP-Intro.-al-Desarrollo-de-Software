@@ -36,18 +36,98 @@ function mostrarTransacciones(gastos) {
 
     const fila = document.createElement("div");
     fila.className = "tx-row";
+    fila.dataset.id = gasto.id_gasto;
     fila.innerHTML = `
       <span class="tx-dot" style="background:${color}"></span>
       <div class="tx-info">
         <div class="tx-descripcion">${gasto.descripcion}</div>
-        <div class="tx-nombre"> ${gasto.nombre} · ${formatearFecha(gasto.fecha_gasto)}</div>
+        <div class="tx-nombre">${gasto.nombre} · ${formatearFecha(gasto.fecha_gasto)}</div>
       </div>
       <div class="tx-amounts">
         <div class="tx-total">$${monto}</div>
-        <div class="tx-each">${gasto.metodo_pago}</div>
+        <div class="tx-each">${gasto.metodo_pago || ""}</div>
       </div>
+      <button class="btn-editar has-text-grey is-size-7" style="background:none;border:none;cursor:pointer;">Editar</button>
     `;
+
+    fila.querySelector(".btn-editar").addEventListener("click", () => {
+      activarEdicion(fila, gasto);
+    });
+
     contenedor.appendChild(fila);
+  });
+}
+
+function activarEdicion(fila, gasto) {
+  fila.innerHTML = `
+    <span class="tx-dot" style="background:#999"></span>
+    <div class="tx-info" style="display:flex; flex-direction:column; gap:0.4rem;">
+      <input class="input is-small" id="edit-descripcion" value="${gasto.descripcion}" style="border-radius:8px;">
+      <input class="input is-small" id="edit-monto" type="number" value="${gasto.monto}" style="border-radius:8px;">
+    </div>
+    <div class="tx-amounts" style="display:flex; flex-direction:column; gap:0.4rem;">
+      <select class="select is-small" id="edit-categoria" style="border-radius:8px;">
+      </select>
+      <select class="select is-small" id="edit-metodo" style="border-radius:8px;">
+      </select>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:0.3rem;">
+      <button class="button is-small is-success" id="btn-guardar" style="border-radius:8px;">Guardar</button>
+      <button class="button is-small is-light" id="btn-cancelar" style="border-radius:8px;">Cancelar</button>
+    </div>
+  `;
+
+  // Cargar categorías en el select
+  fetch(`${URL_API}/nombre-categoria`)
+  .then(r => r.json())
+  .then(cats => {
+    const sel = fila.querySelector("#edit-categoria");
+    sel.innerHTML = cats.map(c => 
+      `<option value="${c.id_categoria}" ${c.id_categoria === gasto.categoria ? "selected" : ""}>${c.nombre}</option>`
+    ).join("");
+  });
+
+  // Cargar métodos de pago en el select
+  fetch(`${URL_API}/metodo-pago`)
+    .then(r => r.json())
+    .then(metodos => {
+      const sel = fila.querySelector("#edit-metodo");
+      metodos.forEach(m => {
+        const op = document.createElement("option");
+        op.value = m.id_metodo;
+        op.textContent = m.nombre;
+        if (m.id_metodo === gasto.metodo_pago) op.selected = true;
+        sel.appendChild(op);
+      });
+    });
+
+  // Guardar cambios
+  fila.querySelector("#btn-guardar").addEventListener("click", async () => {
+    const data = {
+      descripcion: fila.querySelector("#edit-descripcion").value,
+      monto: parseFloat(fila.querySelector("#edit-monto").value),
+      categoria: parseInt(fila.querySelector("#edit-categoria").value),
+      metodo_pago: parseInt(fila.querySelector("#edit-metodo").value),
+    };
+    console.log(data)
+    try {
+      const respuesta = await fetch(`${URL_API}/${gasto.id_gasto}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!respuesta.ok) throw new Error("Error al guardar");
+      alert("¡Gasto actualizado!");
+      obtenerGastos();
+    } catch (error) {
+      console.error(error);
+      alert("Hubo un error al guardar");
+    }
+  });
+
+  // Cancelar — recarga la lista sin guardar
+  fila.querySelector("#btn-cancelar").addEventListener("click", () => {
+    obtenerGastos();
   });
 }
 
@@ -148,6 +228,7 @@ function mostrarGrafico(categorias) {
     contenedorLeyenda.appendChild(item);
   });
 }
+
 obtenerGastosPorCategoria()
 obtenerGastos()
 obtenerGastoMes()
