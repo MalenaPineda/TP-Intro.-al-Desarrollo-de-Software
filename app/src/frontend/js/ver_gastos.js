@@ -54,6 +54,13 @@ function mostrarTransacciones(gastos) {
       activarEdicion(fila, gasto);
     });
 
+        <div class="tx-nombre"> ${gasto.nombre} · ${formatearFecha(gasto.fecha_gasto)}</div>
+      </div>
+      <div class="tx-amounts">
+        <div class="tx-total">$${monto}</div>
+        <div class="tx-each">${gasto.metodo_pago}</div>
+      </div>
+    `;
     contenedor.appendChild(fila);
   });
 }
@@ -228,7 +235,6 @@ function mostrarGrafico(categorias) {
     contenedorLeyenda.appendChild(item);
   });
 }
-
 obtenerGastosPorCategoria()
 obtenerGastos()
 obtenerGastoMes()

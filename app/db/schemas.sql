@@ -8,8 +8,7 @@ CREATE TABLE usuarios (
 );
 
 CREATE TABLE categoria_tareas (
-    id_categoria SERIAL PRIMARY KEY, 
-    id_categoria INT PRIMARY KEY AUTO_INCREMENT,
+    id_categoria SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL
 );
 
