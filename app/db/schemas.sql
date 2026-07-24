@@ -30,7 +30,7 @@ CREATE TABLE gastos (
     categoria INT NOT NULL,
     id_user INT NOT NULL,
     FOREIGN KEY (categoria) REFERENCES categoria_gastos(id_categoria),
-    FOREIGN KEY (id_user) REFERENCES usuarios(id_user)
+    FOREIGN KEY (id_user) REFERENCES usuarios(id_user),
     FOREIGN KEY (id_metodo) REFERENCES metodo_pago(id)
 );
 

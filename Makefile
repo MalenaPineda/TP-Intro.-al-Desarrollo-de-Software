@@ -1,4 +1,5 @@
 run-front:
+	mkdir -p ./data
 	cd app/src/frontend && npx http-server -p 8080
 
 run-back:
