@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="stylesheet" href="css/style.css" />
-    
 </head>
 <body class="is-flex is-justify-content-center is-align-items-center" style="min-height: 100vh;">
 
@@ -53,35 +52,37 @@
             <label class="label has-text-grey-dark has-text-weight-normal">Nombre del gasto</label>
             <div class="control">
                 <input class="input is-medium" name="descripcion" type="text" placeholder="ej. Compra del supermercado" style="border-radius: 10px;">
+              </div>
             </div>
-        </div>
 
-        <!-- Columnas: Categoría y Monto -->
-        <div class="columns mb-5">
-            <!-- Categoría -->
-            <div class="column">
+            <!-- Columnas: Categoría, Monto y Método de pago -->
+            <div class="columns mb-5">
+
+              <!-- Categoría -->
+              <div class="column">
                 <div class="field">
-                    <label class="label has-text-grey-dark has-text-weight-normal">Categoría</label>
-                    <div class="control is-expanded">
-                        <div class="select is-fullwidth is-medium">
-                            <select name="categoria" id="categoria" style="border-radius: 10px;">
-                            </select>
-                        </div>
+                  <label class="label has-text-grey-dark has-text-weight-normal">Categoría</label>
+                  <div class="control is-expanded">
+                    <div class="select is-fullwidth is-medium">
+                      <select name="categoria" id="categoria" style="border-radius: 10px;">
+                      </select>
                     </div>
+                  </div>
                 </div>
-            </div>
+              </div>
 
-            <!-- Monto -->
-            <div class="column">
+              <!-- Monto -->
+              <div class="column">
                 <div class="field">
-                    <label class="label has-text-grey-dark has-text-weight-normal">Monto ($)</label>
-                    <div class="control">
-                        <input class="input is-medium" name="monto" type="number" min="1" value="0" style="border-radius: 10px;">
-                    </div>
+                  <label class="label has-text-grey-dark has-text-weight-normal">Monto ($)</label>
+                  <div class="control">
+                    <input class="input is-medium" name="monto" type="number" min="1" value="0" style="border-radius: 10px;">
+                  </div>
                 </div>
-            </div>
+              </div>
 
-            <div class="column">
+              <!-- Método de pago -->
+              <div class="column">
                 <div class="field">
                     <label class="label has-text-grey-dark has-text-weight-normal">Metodo de pago</label>
                     <div class="control is-expanded">
@@ -91,25 +92,34 @@
                             </select>
                         </div>
                     </div>
+                  </div>
                 </div>
-            </div>
-            
-        </div>
+              </div>
 
-        <!-- Ingersar gasto -->
-        <div class="field">
-            <div class="control">
-                <button class="button is-cyan is-fullwidth is-medium py-5" name="btn-registar"type="submit" style="border-radius: 10px;">
-                    <span class="icon mr-2">
-                        <i class="fa-solid fa-circle-plus"></i>
-                    </span>
-                    <span class="has-text-weight-medium">Registrar gasto</span>
-                </button>
             </div>
-        </div>
-    </form>
+
+            <!-- Botón registrar -->
+            <div class="field">
+              <div class="control">
+                <button class="button is-cyan is-fullwidth is-medium py-5" name="btn-registrar" type="submit" style="border-radius: 10px;">
+                  <span class="icon mr-2">
+                    <i class="fa-solid fa-circle-plus"></i>
+                  </span>
+                  <span class="has-text-weight-medium">Registrar gasto</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </form>
+
+      </div>
     </div>
+
+  </main>
+
 </div>
+
 <script src="js/ingresar_gastos.js"></script>
 </body>
 </html>
