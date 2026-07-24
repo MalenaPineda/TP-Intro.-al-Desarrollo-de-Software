@@ -54,13 +54,6 @@ function mostrarTransacciones(gastos) {
       activarEdicion(fila, gasto);
     });
 
-        <div class="tx-nombre"> ${gasto.nombre} · ${formatearFecha(gasto.fecha_gasto)}</div>
-      </div>
-      <div class="tx-amounts">
-        <div class="tx-total">$${monto}</div>
-        <div class="tx-each">${gasto.metodo_pago}</div>
-      </div>
-    `;
     contenedor.appendChild(fila);
   });
 }
@@ -81,8 +74,7 @@ function activarEdicion(fila, gasto) {
     <div style="display:flex; flex-direction:column; gap:0.3rem;">
       <button class="button is-small is-success" id="btn-guardar" style="border-radius:8px;">Guardar</button>
       <button class="button is-small is-light" id="btn-cancelar" style="border-radius:8px;">Cancelar</button>
-    </div>
-  `;
+    </div>`;
 
   // Cargar categorías en el select
   fetch(`${URL_API}/nombre-categoria`)
