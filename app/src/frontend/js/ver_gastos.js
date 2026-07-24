@@ -15,6 +15,7 @@ async function obtenerGastos() {
       throw new Error(`Error HTTP: ${respuesta.status}`);
     }
     const gastos = await respuesta.json();
+    console.log(gastos)
     mostrarTransacciones(gastos);
   } catch (error) {
     console.error("No se pudieron cargar los gastos:", error);
@@ -47,11 +48,17 @@ function mostrarTransacciones(gastos) {
         <div class="tx-total">$${monto}</div>
         <div class="tx-each">${gasto.metodo_pago || ""}</div>
       </div>
+      <div>
       <button class="btn-editar has-text-grey is-size-7" style="background:none;border:none;cursor:pointer;">Editar</button>
-    `;
+      <button class="btn-borrar has-text-grey is-size-7" style="background:none;border:none;cursor:pointer;">Borrar</button>
+      </div>
+      `;
 
     fila.querySelector(".btn-editar").addEventListener("click", () => {
       activarEdicion(fila, gasto);
+    });
+    fila.querySelector(".btn-borrar").addEventListener("click", () => {
+      borrarGasto(gasto.id_gasto)
     });
 
     contenedor.appendChild(fila);
@@ -129,6 +136,20 @@ function activarEdicion(fila, gasto) {
   fila.querySelector("#btn-cancelar").addEventListener("click", () => {
     obtenerGastos();
   });
+}
+
+async function borrarGasto(id) {
+  try {
+    const respuesta = await fetch(`${URL_API}/${id}`, {
+      method: "DELETE",
+    });
+    if (!respuesta.ok) throw new Error("Error al borrar")
+    alert("¡Borrado con exito!");
+    location.reload();
+  } catch (error) {
+    console.error("No se pudo borrar el gasto:", error);
+    alert("Hubo un error al borrar el gasto");
+  }
 }
 
 async function obtenerGastoMes() {
