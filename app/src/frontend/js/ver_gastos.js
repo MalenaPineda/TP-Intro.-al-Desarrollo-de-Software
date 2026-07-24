@@ -93,7 +93,7 @@ function activarEdicion(fila, gasto) {
       const sel = fila.querySelector("#edit-metodo");
       metodos.forEach(m => {
         const op = document.createElement("option");
-        op.value = m.id_metodo;
+        op.value = m.id;
         op.textContent = m.nombre;
         if (m.id_metodo === gasto.metodo_pago) op.selected = true;
         sel.appendChild(op);

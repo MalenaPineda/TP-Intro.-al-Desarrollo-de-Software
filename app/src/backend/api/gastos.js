@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getGastosPorMes, getGastos, getTotalGastosPorUsuario, getTotalGastoPorMes, getGastosPorCategoria, createGasto, getNombreCategoria, getMetodoPago } from "../../../db/gastos.js";
+import { getGastosPorMes, getGastos, getTotalGastosPorUsuario, getTotalGastoPorMes, getGastosPorCategoria, createGasto, getNombreCategoria, getMetodoPago, updateGasto } from "../../../db/gastos.js";
 
 
 export const endpointsGastos = Router();

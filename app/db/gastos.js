@@ -68,7 +68,7 @@ export async function getGastosPorMes() {
 
 export async function updateGasto(id, descripcion, monto, metodo_pago, id_categoria) {
   const result = await db.query(
-    "UPDATE gastos SET descripcion = $1, monto = $2, metodo_pago = $3, categoria = $4 WHERE id_gasto = $5",
+    "UPDATE gastos SET descripcion = $1, monto = $2, id_metodo = $3, categoria = $4 WHERE id_gasto = $5",
     [descripcion, monto, metodo_pago, id_categoria, id]
   );
   return result.rowCount > 0;
