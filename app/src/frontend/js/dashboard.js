@@ -1,21 +1,24 @@
-
 const URL_API = "http://localhost:8000/api/v1/gastos";
+
 const coloresPorCategoria = {
-    1: "#00bfa5",
-    2: "#00d4d4",
-    3: "#7c4dff",
-    4: "#f5a623",
-    5: "#ff6b35",
+  1: "#00bfa5",
+  2: "#00d4d4",
+  3: "#7c4dff",
+  4: "#f5a623",
+  5: "#ff6b35", 
 };
+
+
 document.addEventListener("DOMContentLoaded", () => {
     mostrarFecha();
-    actualizarTarjetas();
+    actualizarTarjetasTareas();
     inicializarInteraccionTareas();
-
-    cargarGastos();
+    cargarGastosRecientes();
     obtenerGastoMes();
     obtenerGastoMesUsuario();
+
 });
+
 function mostrarFecha() {
     const elementoFecha = document.getElementById('current-date');
     const elementoCasa = document.getElementById('house-name');
@@ -26,21 +29,26 @@ function mostrarFecha() {
         month: 'long', 
         year: 'numeric' 
     };
-    
-    const fechaFormateadaEspaniol = hoy.toLocaleDateString('es-ES', opcionesFecha);
-    
+    const fechaFormateadaEspaniol = hoy.toLocaleDateString('es-AR', opcionesFecha);
     if (elementoFecha && elementoCasa) {
+
         const nombreCasa = elementoCasa.textContent;
         if (!nombreCasa.includes('·')) {
             elementoCasa.textContent = `${fechaFormateadaEspaniol} · ${nombreCasa}`;
         }
-        
         elementoFecha.style.display = 'none'; 
     }
 } 
-   
-function actualizarTarjetas() {
-    
+function formatearFecha(fecha) {
+    const fechaConvertida = new Date(fecha);
+
+    return fechaConvertida.toLocaleDateString('es-AR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    });
+}
+function actualizarTarjetasTareas() {
     const tareas = [
         { nombre: "Limpiar la cocina", asignado: "Alex", estado: "en progreso" },
         { nombre: "Sacar la basura", asignado: "Jordan", estado: "en progreso" },
@@ -48,16 +56,12 @@ function actualizarTarjetas() {
         { nombre: "Regar las plantas", asignado: "Sam", estado: "hecha" },
         { nombre: "Aspirar el salón", asignado: "You", estado: "en progreso" }
     ];
-
     const formateadorDinero = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD'
     });
-
     const tareasPendientes = tareas.filter(tarea => tarea.estado !== "hecha").length;
-
     const misTareasTotales = tareas.filter(tarea => tarea.asignado === "You").length;
-    
     const misTareasHechas = tareas.filter(tarea => tarea.asignado === "You" && tarea.estado === "hecha").length;
 
     document.getElementById('pending-tasks').textContent = tareasPendientes;
@@ -65,10 +69,8 @@ function actualizarTarjetas() {
 }
 function inicializarInteraccionTareas() {
     const botonesEstado = document.querySelectorAll('.badge-estado');
-
     botonesEstado.forEach(boton => {
         boton.addEventListener('click', function() {
-            
             if (this.classList.contains('estado-pendiente')) {
                 this.classList.remove('estado-pendiente');
                 this.classList.add('estado-progreso');
@@ -84,43 +86,72 @@ function inicializarInteraccionTareas() {
                 this.classList.add('estado-pendiente');
                 this.textContent = 'Pendiente';
             }
-            
             //  "fetch()" 
         });
     });
+
 }
 
-const ENDPOINT_GASTOS = 'http://localhost:8000/api/v1/gastos'; 
-
-async function cargarGastos() {
+async function cargarGastosRecientes(){
     try {
-        const respuesta = await fetch('http://localhost:8000/api/v1/gastos');
-        
+        const respuesta = await fetch(URL_API);
         if (!respuesta.ok) {
             throw new Error('No se pudieron cargar los datos de los gastos');
         }
         const datosGastos = await respuesta.json();
-        mostrarTransacciones(datosGastos);
+
+        console.log(datosGastos); 
+        
+        mostrarInformacionGastos(datosGastos);
     }
     catch (error) {
         console.error("Hubo un error de conexión: ", error);
-        document.getElementById('lista-gastos').innerHTML = '<p style="color: red; font-size: 0.8rem;">Error al cargar los gastos.</p>';
+}}
+
+async function obtenerGastoMes() {
+    try {
+        const respuesta = await fetch(URL_API);
+        if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
+
+        const gastos = await respuesta.json();
+
+        const total = gastos.reduce((suma, gasto) => {
+            return suma + Number(gasto.monto);
+        }, 0);
+        const elemento = document.getElementById("gasto-mes");
+
+        if (elemento) elemento.textContent = `$${total.toFixed(2)}`;
+        }
+    catch (error) {
+        console.error("No se pudo cargar el gasto del mes:", error);
     }
 }
-function mostrarTransacciones(gastos) {
+
+async function obtenerGastoMesUsuario() {
+    try {
+        const respuesta = await fetch(URL_API);
+        if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
+        const gasto = await respuesta.json();
+        const el = document.getElementById("gasto-user");
+        if (el) el.textContent = `$${gasto.total}`;
+    } catch (error) {
+        console.error("No se pudo cargar el gasto del usuario:", error);
+    }
+}
+
+function mostrarInformacionGastos(datosGastos) {
     const contenedor = document.getElementById('lista-gastos');
     contenedor.innerHTML = '';
-    gastos.forEach((gasto) => {
+    datosGastos.forEach((gasto) => {
         const color = coloresPorCategoria[gasto.categoria] || "#999";
         const monto = parseFloat(gasto.monto).toFixed(2);
-
         const fila = document.createElement("div");
         fila.className = "tx-row";
         fila.innerHTML = `
             <span class="tx-dot" style="background:${color}"></span>
             <div class="tx-info">
-                <div class="tx-descripcion">${gasto.descripcion}</div>
-                <div class="tx-nombre">${gasto.nombre} · ${formatearFecha(gasto.fecha_gasto)}</div>
+                <div class="tx-name">${gasto.descripcion}</div>
+                <div class="tx-meta">${gasto.nombre} · ${formatearFecha(gasto.fecha_gasto)}</div>
             </div>
             <div class="tx-amounts">
                 <div class="tx-total">$${monto}</div>
@@ -129,29 +160,4 @@ function mostrarTransacciones(gastos) {
         `;
         contenedor.appendChild(fila);
     });
-}
-
-async function obtenerGastoMes() {
-    try {
-        const respuesta = await fetch("http://localhost:8000/api/v1/gastos/total-mes");
-        if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
-
-        const total = await respuesta.json();
-        const el = document.getElementById("gasto-mes");
-        if (el) el.textContent = `$${total}`;
-    } catch (error) {
-        console.error("No se pudo cargar el gasto del mes:", error);
-    }
-}
-
-async function obtenerGastoMesUsuario() {
-    try {
-        const respuesta = await fetch("http://localhost:8000/api/v1/gastos");
-        if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
-        const gasto = await respuesta.json();
-        const el = document.getElementById("gasto-user");
-        if (el) el.textContent = `$${gasto.total}`;
-    } catch (error) {
-        console.error("No se pudo cargar el gasto del usuario:", error);
-    }
 }
