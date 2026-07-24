@@ -80,7 +80,7 @@ function mostrarMetodoPago(metodo) {
 
   metodo.forEach((m) => {
     const opcion = document.createElement("option");
-    opcion.value = m.id_metodo;
+    opcion.value = m.id;
     opcion.textContent = m.nombre;
     contenedor.appendChild(opcion);
   });
