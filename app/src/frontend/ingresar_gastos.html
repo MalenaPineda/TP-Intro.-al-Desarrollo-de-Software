@@ -3,77 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ingresar Gasto</title>
+    <title>Ingersar Gasto</title>
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
-    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
+<body class="is-flex is-justify-content-center is-align-items-center" style="min-height: 100vh;">
 
-<div class="app-layout">
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <div class="house-name">Casa Feliz</div>
+            <div class="members">4 miembros</div>
+        </div>
+        
+        <nav class="sidebar-menu">
+            <a href="dashboard" class="sidebar-item"><i class="fa-solid fa-house"></i>Página principal</a>
+            <a href="ver_gastos" class="sidebar-item"><i class="fa-solid fa-dollar-sign"></i>Gastos</a>
+            <a href="#" class="sidebar-item"><i class="fa-solid fa-list-check"></i>Tareas</a>
+        </nav>
+        
+        <div class="sidebar-user">
+            <div class="avatar">M</div>
+            <div class="user-info">
+                <div class="name">Malena</div>
+                <div class="role">Integrantes</div>
+            </div>
+        </div>
+    </aside>
+    
+     <!-- CONTENEDOR PRINCIPAL DEL FORMULARIO -->
+<div class="container is-max-desktop p-5">
+    
+    <!-- Enlace Volver -->
+    <a href="ver_gastos.html" class="has-text-grey is-size-6 is-flex is-align-items-center mb-5">
+        <span class="icon mr-2"><i class="fa-solid fa-arrow-left"></i></span> Volver a gastos
+    </a>
 
-  <!-- ═══ SIDEBAR ═══ -->
-  <aside class="sidebar">
-    <div class="sidebar-brand">
-      <div class="house-name">Casa Feliz</div>
-      <div class="members">4 miembros</div>
-    </div>
+    <!-- Encabezados de la sección -->
+    <h2 class="title is-3 mb-2 has-text-black">Registrar gasto</h2>
+    <p class="subtitle is-6 has-text-grey mb-6">Añade un gasto compartido de la casa</p>
 
-    <nav class="sidebar-menu">
-      <a href="/dashboard" class="sidebar-item">
-        <i class="fa-solid fa-house"></i> Dashboard
-      </a>
-      <a href="/tasks" class="sidebar-item">
-        <i class="fa-solid fa-check-square"></i> Tasks
-        <span class="badge">1</span>
-      </a>
-      <a href="/expenses" class="sidebar-item active">
-        <i class="fa-solid fa-dollar-sign"></i> Expensas
-        <span class="badge">2</span>
-      </a>
-      <a href="/ranking" class="sidebar-item">
-        <i class="fa-solid fa-trophy"></i> Ranking
-      </a>
-      <a href="/admin" class="sidebar-item">
-        <i class="fa-solid fa-shield-halved"></i> Admin
-      </a>
-    </nav>
-
-    <div class="sidebar-user">
-      <div class="avatar">JD</div>
-      <div class="user-info">
-        <div class="name">Juan Díaz</div>
-        <div class="role">Admin</div>
-      </div>
-    </div>
-  </aside>
-
-  <!-- ═══ MAIN ═══ -->
-  <main class="main-content">
-
-    <!-- Page header — igual que ver_gastos.html -->
-    <div class="page-header">
-      <div>
-        <a href="ver_gastos.html" class="has-text-grey is-size-6 is-flex is-align-items-center mb-3">
-          <span class="icon mr-2"><i class="fa-solid fa-arrow-left"></i></span> Volver a gastos
-        </a>
-        <h1 class="page-title">Registrar gasto</h1>
-        <p class="page-subtitle">Añade un gasto compartido de la casa</p>
-      </div>
-    </div>
-
-    <!-- Formulario centrado -->
-    <div style="display:flex; justify-content:center;">
-      <div style="width: 100%; max-width: 750px;">
-
-        <form id="datos-gastos">
-          <div class="box p-6 has-background-white is-shadowless" style="border: 1px solid #e2e8f0; border-radius: 20px;">
-
-            <!-- Campo: Nombre del gasto -->
-            <div class="field mb-5">
-              <label class="label has-text-grey-dark has-text-weight-normal">Nombre del gasto</label>
-              <div class="control">
+    <!-- Tarjeta del Formulario  -->
+    <form id="datos-gastos">
+    <div class="box p-6 has-background-white is-shadowless" style="border: 1px solid #e2e8f0; border-radius: 20px;">
+        <!-- Campo: Nombre del gasto -->
+        <div class="field mb-5">
+            <label class="label has-text-grey-dark has-text-weight-normal">Nombre del gasto</label>
+            <div class="control">
                 <input class="input is-medium" name="descripcion" type="text" placeholder="ej. Compra del supermercado" style="border-radius: 10px;">
               </div>
             </div>

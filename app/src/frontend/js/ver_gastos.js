@@ -15,7 +15,6 @@ async function obtenerGastos() {
       throw new Error(`Error HTTP: ${respuesta.status}`);
     }
     const gastos = await respuesta.json();
-    console.log(gastos)
     mostrarTransacciones(gastos);
   } catch (error) {
     console.error("No se pudieron cargar los gastos:", error);
@@ -81,8 +80,7 @@ function activarEdicion(fila, gasto) {
     <div style="display:flex; flex-direction:column; gap:0.3rem;">
       <button class="button is-small is-success" id="btn-guardar" style="border-radius:8px;">Guardar</button>
       <button class="button is-small is-light" id="btn-cancelar" style="border-radius:8px;">Cancelar</button>
-    </div>
-  `;
+    </div>`;
 
   // Cargar categorías en el select
   fetch(`${URL_API}/nombre-categoria`)
@@ -167,7 +165,12 @@ async function obtenerGastoMes() {
 
 function mostrarGastoDelMes(gasto) {
   const contenedor = document.getElementById("gasto-mes");
-  contenedor.textContent = `$${gasto}`;
+  if (gasto != null){
+    contenedor.textContent = `$${gasto}`;
+  }else{
+    contenedor.textContent = `$0`;
+  }
+ 
 }
 
 async function obtenerGastoMesUsuario() {
@@ -187,7 +190,11 @@ async function obtenerGastoMesUsuario() {
 
 function mostrarGastoDelMesUsuario(gasto) {
   const contenedor = document.getElementById("gasto-user");
-  contenedor.textContent = `$${gasto}`;
+  if (gasto != null){
+    contenedor.textContent = `$${gasto}`;
+  }else{
+    contenedor.textContent = `$0`;
+  }
 }
 
 // Colores para asignar a cada categoría, en el orden en que lleguen

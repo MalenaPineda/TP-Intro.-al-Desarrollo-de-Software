@@ -137,3 +137,13 @@ endpointsGastos.delete("/:id", async (req, res) => {
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });
+endpointsGastos.get("/por-mes", async (req, res) => {
+  try {
+    const gastos = await getGastosPorMes();
+    res.json(gastos);
+  } catch (error) {
+    console.error("Error al obtener gastos por mes:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
