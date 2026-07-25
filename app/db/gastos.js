@@ -2,20 +2,20 @@ import { db } from "./pool.js";
 
 export async function getGastos() {
   const result = await db.query(`
-    SELECT 
-      g.id_gasto,
-      g.descripcion,
-      g.monto,
-      g.fecha_gasto,
-      g.categoria,
-      u.id_user,
-      u.nombre,
-      m.nombre AS metodo_pago
-    FROM gastos g, usuarios u, metodo_pago m
-    WHERE g.id_user = u.id_user
-    AND g.id_metodo = m.id
-    ORDER BY g.fecha_gasto DESC
-  `)
+  SELECT 
+  g.id_gasto,
+  g.descripcion,
+  g.monto,
+  g.fecha_gasto,
+  g.categoria,
+  u.id_user,
+  u.nombre,
+  m.nombre AS metodo_pago
+FROM gastos g, usuarios u, metodo_pago m
+WHERE g.id_user = u.id_user
+AND g.id_metodo = m.id
+ORDER BY g.fecha_gasto DESC
+`)
   return result.rows;
 }
 
@@ -71,5 +71,10 @@ export async function updateGasto(id, descripcion, monto, metodo_pago, id_catego
     "UPDATE gastos SET descripcion = $1, monto = $2, id_metodo = $3, categoria = $4 WHERE id_gasto = $5",
     [descripcion, monto, metodo_pago, id_categoria, id]
   );
+  return result.rowCount > 0;
+}
+
+export async function deleteGasto(id) {
+  const result = await db.query("DELETE FROM gastos WHERE id_gasto = $1",[id]);
   return result.rowCount > 0;
 }
