@@ -29,6 +29,10 @@ function formatearFecha(fechaISO) {
 function mostrarTransacciones(gastos) {
   const contenedor = document.getElementById("lista-gastos");
   contenedor.innerHTML = "";
+  if (gastos.length === 0) {
+    contenedor.innerHTML = "<p>No hay registros de gastos</p>";
+    return;
+  }
 
   gastos.forEach((gasto) => {
     const color = coloresPorCategoria[gasto.categoria] || "#999";
@@ -99,7 +103,7 @@ function activarEdicion(fila, gasto) {
       const sel = fila.querySelector("#edit-metodo");
       metodos.forEach(m => {
         const op = document.createElement("option");
-        op.value = m.id_metodo;
+        op.value = m.id;
         op.textContent = m.nombre;
         if (m.id_metodo === gasto.metodo_pago) op.selected = true;
         sel.appendChild(op);
@@ -218,6 +222,10 @@ function mostrarGrafico(categorias) {
   const valores = categorias.map(c => parseFloat(c.total_monto));
   const colores = categorias.map((c, i) => coloresCategorias[i % coloresCategorias.length]);
   const totalGeneral = valores.reduce((suma, v) => suma + v, 0);
+  if (categorias.length === 0) {
+    contenedor.innerHTML = "<p>No hay registros de gastos</p>";
+    return;
+  }
 
   new Chart(document.getElementById('donut'), {
     type: 'doughnut',

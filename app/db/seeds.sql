@@ -20,7 +20,7 @@ INSERT INTO categoria_gastos (nombre) VALUES
 ('Artículos de Limpieza');
 
 -- Métodos de pago
-INSERT INTO metodo_pago VALUES 
+INSERT INTO metodo_pago (nombre) VALUES 
 ('Efectivo'),
 ('Tarjeta de crédito'),
 ('Transferencia');
