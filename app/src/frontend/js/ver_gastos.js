@@ -264,7 +264,55 @@ function mostrarGrafico(categorias) {
     contenedorLeyenda.appendChild(item);
   });
 }
+const nombresMeses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
+async function obtenerGastosPorMes() {
+  try {
+    const respuesta = await fetch(`${URL_API}/por-mes`);
+    if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
+    const datos = await respuesta.json();
+    mostrarGraficoBarras(datos);
+  } catch (error) {
+    console.error("No se pudieron cargar los gastos por mes:", error);
+  }
+}
+
+function mostrarGraficoBarras(datos) {
+  const etiquetas = datos.map(d => `${nombresMeses[parseInt(d.mes) - 1]} ${d.anio}`);
+  const valores = datos.map(d => parseFloat(d.total));
+
+  new Chart(document.getElementById('barras'), {
+    type: 'bar',
+    data: {
+      labels: etiquetas,
+      datasets: [{
+        label: 'Gastos por mes',
+        data: valores,
+        backgroundColor: '#5b9cf6',
+        borderRadius: 8,
+        borderSkipped: false,
+        barThickness: 40,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { enabled: true }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: value => `$${value}`
+          }
+        }
+      }
+    }
+  });
+}
+
+obtenerGastosPorMes();
 obtenerGastosPorCategoria()
 obtenerGastos()
 obtenerGastoMes()
