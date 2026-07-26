@@ -105,7 +105,7 @@ rutaTareas.delete('/:id', async (req,res) => {
         if (!tarea) {
             return res.status(404).json({"error":"Tarea no encontrada"});
         }
-        res.json({mensaje: "Tarea elimindada correctamente", tarea});
+        res.json({mensaje: "Tarea eliminada correctamente", tarea});
     } catch (error) {
         console.error("Error al eliminar tarea")
         res.status(500).json({error: "Error en el servidor"});

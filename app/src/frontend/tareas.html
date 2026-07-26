@@ -9,67 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.2/css/bulma.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-  <style>
-    .tasks-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .task-card {
-      background: #fff;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      padding: 1rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .task-title { font-size: 0.92rem; font-weight: 600; color: #1a1a2e; }
-    .task-meta  { font-size: 0.76rem; color: var(--text-muted); margin-bottom: 0.5rem; }
-
-    .badge-estado {
-      display: inline-block;
-      border-radius: 999px;
-      padding: 2px 10px;
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
-    .badge-pendiente   { background: #fff3cd; color: #856404; }
-    .badge-en-progreso { background: #cff4fc; color: #055160; }
-    .badge-hecha       { background: #d1e7dd; color: #0a3622; }
-
-    .btn-elegir {
-      width: 100%;
-      margin-top: 0.6rem;
-      background: var(--teal);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 0.45rem;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .btn-elegir:hover { opacity: 0.88; }
-
-    .btn-hecha {
-      width: 100%;
-      margin-top: 0.4rem;
-      background: #fff;
-      color: var(--teal);
-      border: 1px solid var(--teal);
-      border-radius: 8px;
-      padding: 0.4rem;
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .btn-hecha:hover { background: var(--teal-soft); }
-
-    @media (max-width: 768px) {
-      .tasks-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+  
 </head>
 <body>
 
@@ -121,19 +61,19 @@
 
       <!-- Columna 1: Disponibles -->
       <div class="panel-card">
-        <div class="panel-title">● Disponibles</div>
+        <div class="panel-title"> Disponibles</div>
         <div id="lista-disponibles"></div>
       </div>
 
       <!-- Columna 2: Mis tareas -->
       <div class="panel-card">
-        <div class="panel-title">● Mis tareas</div>
+        <div class="panel-title"> Mis tareas</div>
         <div id="lista-mias"></div>
       </div>
 
       <!-- Columna 3: Tareas de otros -->
       <div class="panel-card">
-        <div class="panel-title">● Tareas de otros</div>
+        <div class="panel-title"> Tareas de otros</div>
         <div id="lista-otros"></div>
       </div>
 

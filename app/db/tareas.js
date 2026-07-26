@@ -54,7 +54,7 @@ export async function asignarUsuario(id_tarea, id_user) {
 }
 
 
-export async function getTareasDisponibles(disponible) {
+export async function getTareasDisponibles() {
     const resultado = await db.query(`SELECT tareas.*, categoria_tareas.nombre AS categoria
         FROM tareas
         JOIN categoria_tareas ON tareas.id_categoria = categoria_tareas.id_categoria
