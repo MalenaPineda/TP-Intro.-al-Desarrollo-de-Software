@@ -1,5 +1,7 @@
+
+
 import { Router } from 'express';
-import { getTareas, getTareasPorId,crearTarea, borrarTarea, cambiarEstadoTarea, getTareasCompletas, asignarUsuario, getMisTareas, getTareasDeOtros, getTareasDisponibles } from '../../../db/tareas.js';
+import { getTareas,getRankingTareas, getTareasPorId,crearTarea, borrarTarea, cambiarEstadoTarea, getTareasCompletas, asignarUsuario, getMisTareas, getTareasDeOtros, getTareasDisponibles } from '../../../db/tareas.js';
 
 export const rutaTareas = Router();
 
@@ -164,3 +166,13 @@ rutaTareas.delete('/:id', async (req,res) => {
         res.status(500).json({error: "Error interno del servidor"});
     }   
  })
+
+rutaTareas.get("/ranking", async (req, res) => {
+  try {
+    const ranking = await getRankingTareas();
+    res.json(ranking);
+  } catch (error) {
+    console.error("Error al obtener el ranking:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
