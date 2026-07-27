@@ -78,3 +78,23 @@ export async function deleteGasto(id) {
   const result = await db.query("DELETE FROM gastos WHERE id_gasto = $1", [id]);
   return result.rowCount > 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+export async function getCantidadMiembros() {
+  const result = await db.query(
+    "SELECT COUNT(*) AS cantidad FROM usuarios;"
+  );
+
+  return result.rows[0];
+}

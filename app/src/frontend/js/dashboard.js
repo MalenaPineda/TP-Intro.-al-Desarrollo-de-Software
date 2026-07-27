@@ -119,7 +119,10 @@ async function obtenerGastoMes() {
         const elemento = document.getElementById("gasto-mes");
         if (elemento) {
             if (gasto.total !== null) {
-                elemento.textContent = `$${Number(gasto.total).toFixed(2)}`;
+                elemento.textContent = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD'
+                }).format(Number(gasto.total));
             } else {
                 elemento.textContent = "$0.00";
             }
@@ -133,11 +136,23 @@ async function obtenerGastoMes() {
 
 async function obtenerGastoMesUsuario() {
     try {
-        const respuesta = await fetch(`${URL_API}/total-mes/usuario/1`);
-        if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
-        const gasto = await respuesta.json();
-        const el = document.getElementById("gasto-user");
-        if (el) el.textContent = `$${gasto.total}`;
+        const gastosMes = await fetch(`${URL_API}/total-mes`);
+        const miembros = await fetch(`${URL_API}/miembros`);
+
+        const gasto = await gastosMes.json();
+        const cantidad = await miembros.json();
+
+        const parte = Number(gasto.total) / Number(cantidad.cantidad);
+
+        const elemento = document.getElementById("gasto-user");
+
+        if (elemento) {
+            elemento.textContent = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD'
+            }).format(Number(parte));
+        }
+
     } catch (error) {
         console.error("No se pudo cargar el gasto del usuario:", error);
     }
