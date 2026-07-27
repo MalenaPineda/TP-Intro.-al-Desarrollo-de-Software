@@ -20,7 +20,11 @@ INSERT INTO categoria_gastos (nombre) VALUES
 ('Artículos de Limpieza');
 
 -- Métodos de pago
+<<<<<<< HEAD
 INSERT INTO metodo_pago (nombre) VALUES 
+=======
+INSERT INTO metodo_pago VALUES 
+>>>>>>> origin/fix/base-datos
 ('Efectivo'),
 ('Tarjeta de crédito'),
 ('Transferencia');
