@@ -65,9 +65,9 @@
   /* ── Main ── */
   .main-content {
     margin-left: var(--sidebar-width);
-    flex: 1;
-    padding: 2rem 2.5rem;
-}
+    flex: 1; padding: 2rem 2.5rem; max-width: 1060px;
+  }
+
   /* ── Page header ── */
   .page-header {
     display: flex; align-items: flex-start; justify-content: space-between;
@@ -100,17 +100,15 @@
 
   /* ── Summary cards ── */
   .summary-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
     margin-bottom: 1.25rem;
-}
+  }
   .summary-card {
     background: #fff; border-radius: var(--radius);
     border: 1px solid var(--border); padding: 1.4rem 1.6rem;
   }
   .summary-label { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.35rem; }
-  .summary-value { font-size: 2rem; font-weight: 700; color:#333333; }
+  .summary-value { font-size: 2rem; font-weight: 700; }
   .summary-value.teal   { color: var(--teal); }
   .summary-value.purple { color: #7c4dff; }
 

@@ -82,6 +82,7 @@ export async function getGastosPorMes() {
   return result.rows;
   
 }
+<<<<<<< HEAD
 
 export async function updateGasto(id, descripcion, monto, metodo_pago, id_categoria) {
   const result = await db.query(
@@ -95,3 +96,5 @@ export async function deleteGasto(id) {
   const result = await db.query("DELETE FROM gastos WHERE id_gasto = $1",[id]);
   return result.rowCount > 0;
 }
+=======
+>>>>>>> origin/feature/ver-gastos
