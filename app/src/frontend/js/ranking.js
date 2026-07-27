@@ -23,11 +23,20 @@ function mostrarRanking(ranking) {
   }
 
   ranking.forEach((usuario, index) => {
+    const insigniasHtml = usuario.insignias.length > 0
+      ? usuario.insignias.map((i) =>
+          `<span title="${i.nombre}" style="margin-right: 0.3rem;">
+            ${i.icono ? `<img src="${i.icono}" alt="${i.nombre}" style="width:20px; height:20px; vertical-align:middle;">` : "🏅"}
+          </span>`
+        ).join("")
+      : "";
+
     const fila = document.createElement("div");
     fila.className = "tx-row";
     fila.innerHTML = `
       <div class="tx-info">
         <div class="tx-name">#${index + 1} — ${usuario.nombre}</div>
+        <div class="tx-meta">${insigniasHtml}</div>
       </div>
       <div class="tx-amounts">
         <div class="tx-total">${usuario.tareas_completadas} tareas</div>
