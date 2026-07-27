@@ -1,7 +1,7 @@
 //import { application } from "express";
 
 const URL_API = 'http://localhost:8000/api/v1/tareas';
-const ID_USER = 1;
+const ID_USER = 3;
 
 const coloresPorCategoria = {
     1: '#00bfa5', // Limpieza
@@ -54,20 +54,19 @@ function mostrarDisponibles(tareas) {
 
         const infoTarea = document.createElement('div'); //badge
         infoTarea.className = 'task-meta';
-        infoTarea.textContent = `${tarea.categoria} Vence ${formatearFecha(tarea.fecha_vencimiento)}`;
+        infoTarea.textContent = `${tarea.categoria} · Vence ${formatearFecha(tarea.fecha_vencimiento)}`;
 
         //badge - muestra el estao de la tarea con color según infoTarea_clase()
         const estadoTarea = document.createElement('span');
         estadoTarea.className = `badge-estado ${infoTarea_clase(tarea.estado)}`;
         estadoTarea.textContent = tarea.estado;
 
-
         //boton - al clickear marca la tarea como hecha
-        const boton = document.createElement('button');
+       /* const boton = document.createElement('button');
         boton.className = 'btn-hecha';
         boton.textContent = 'Marcar como hecha';
-        boton.addEventListener('click', () => {marcarHecha(tarea.id_tarea)});
-        
+        boton.addEventListener('click', () => {marcarHecha(tarea.id_tarea)});   */
+
         //boton- al clickear elige la tarea
         const botonElegir = document.createElement('button');
         botonElegir.className = 'btn-elegir';
@@ -79,13 +78,125 @@ function mostrarDisponibles(tareas) {
         card.appendChild(tituloTarea);
         card.appendChild(infoTarea);
         card.appendChild(estadoTarea);
-        card.appendChild(boton);
+        //card.appendChild(boton);
         card.appendChild(botonElegir);
         contenedor.append(card)
     }
 )
 }
 
+//MIS TAREAS
+
+async function cargarMisTareas() {
+    try {
+        const res = await fetch(`${URL_API}/mias/${ID_USER}`);
+        if (!res.ok) throw new Error(`Error HTTp: ${res.status}`);
+        const tareas = await res.json();
+        mostrarMisTareas(tareas);
+    }
+    catch (error) {
+        console.error("Error al cargar mis tareas",error);
+    }
+}
+
+function mostrarMisTareas(tareas) {
+    const contenedor = document.getElementById('lista-mias');
+    contenedor.innerHTML='';
+
+    tareas.forEach(tarea => {
+        const color = coloresPorCategoria[tarea.id_categoria] || '#999';
+        const card = document.createElement('div');
+        card.className = 'task-card';
+
+
+        const puntoCategoria = document.createElement('span');
+        puntoCategoria.className = 'tx-dot';
+        puntoCategoria.style.backgroundColor = color;
+
+
+        const tituloTarea = document.createElement('div');
+        tituloTarea.className = 'task-title';
+        tituloTarea.textContent = tarea.descripcion;
+
+        const infoTarea = document.createElement('div');
+        infoTarea.className = 'task-meta';
+        infoTarea.textContent = `${tarea.categoria} · Vence ${formatearFecha(tarea.fecha_vencimiento)}`;
+
+        const estadoTarea = document.createElement('span');
+        estadoTarea.className = `badge-estado ${infoTarea_clase(tarea.estado)}`;
+        estadoTarea.textContent = tarea.estado;
+
+      
+
+        card.appendChild(puntoCategoria);
+        card.appendChild(tituloTarea);
+        card.appendChild(infoTarea);
+        card.appendChild(estadoTarea);
+        if (tarea.estado !== 'hecha') {
+
+            const boton = document.createElement('button');
+            boton.className = 'btn-hecha';
+            boton.textContent = 'Marcar como hecha';
+            boton.addEventListener('click', () => marcarHecha(tarea.id_tarea));
+            card.appendChild(boton);
+        }        
+        contenedor.appendChild(card);
+
+        
+    });
+}
+
+async function cargarTareasDeOtros() {
+    try {
+        const res = await fetch(`${URL_API}/otros/${ID_USER}`);
+        if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
+        const tareas = await res.json();
+        mostrarTareasDeOtros(tareas);
+    } catch (error) {
+        console.error("Error al cargar tareas de otros",error);
+    }
+}
+
+function mostrarTareasDeOtros(tareas)
+ {
+    const contenedor = document.getElementById('lista-otros'); 
+    contenedor.innerHTML='';
+    
+    tareas.forEach(tarea => {
+
+        const color = coloresPorCategoria[tarea.id_categoria] || '#999';
+        const card = document.createElement('div');
+        card.className = 'task-card';
+
+        const puntoCategoria = document.createElement('span');
+        puntoCategoria.className = 'tx-dot';
+        puntoCategoria.style.backgroundColor = color;
+
+        const tituloTarea = document.createElement('span');
+        tituloTarea.className = 'task-title';
+        tituloTarea.textContent = tarea.descripcion;
+
+        const infoTarea = document.createElement('div');
+        infoTarea.className = 'task-meta';
+        infoTarea.textContent  = `${tarea.categoria} · Vence ${formatearFecha(tarea.fecha_vencimiento)}`;
+
+        const estadoTarea = document.createElement('span');
+        estadoTarea.className = `badge-estado ${infoTarea_clase(tarea.estado)}`;
+        estadoTarea.textContent = tarea.estado;
+
+        const nombreUsuario = document.createElement('div');
+        nombreUsuario.className = 'task-meta';
+        nombreUsuario.textContent = tarea.usuario;
+
+
+        card.appendChild(puntoCategoria);
+        card.appendChild(tituloTarea);
+        card.appendChild(infoTarea);
+        card.appendChild(estadoTarea);
+        card.appendChild(nombreUsuario);
+        contenedor.appendChild(card);
+    });
+ }
 
 // ACCIONES
 
