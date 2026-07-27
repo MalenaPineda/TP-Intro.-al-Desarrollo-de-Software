@@ -83,14 +83,22 @@ export async function getGastosPorMes() {
   
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 export async function updateGasto(id, descripcion, monto, metodo_pago, id_categoria) {
   const result = await db.query(
     "UPDATE gastos SET descripcion = $1, monto = $2, id_metodo = $3, categoria = $4 WHERE id_gasto = $5",
+=======
+
+export async function updateGasto(id, descripcion, monto, metodo_pago, id_categoria) {
+  const result = await db.query(
+    "UPDATE gastos SET descripcion = $1, monto = $2, metodo_pago = $3, categoria = $4 WHERE id_gasto = $5",
+>>>>>>> origin/feature/editar-gasto
     [descripcion, monto, metodo_pago, id_categoria, id]
   );
   return result.rowCount > 0;
 }
+<<<<<<< HEAD
 
 export async function deleteGasto(id) {
   const result = await db.query("DELETE FROM gastos WHERE id_gasto = $1",[id]);
@@ -98,3 +106,5 @@ export async function deleteGasto(id) {
 }
 =======
 >>>>>>> origin/feature/ver-gastos
+=======
+>>>>>>> origin/feature/editar-gasto
