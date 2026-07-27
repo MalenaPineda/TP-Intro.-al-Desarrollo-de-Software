@@ -1,15 +1,14 @@
-//import { application } from "express";
-
 const URL_API = 'http://localhost:8000/api/v1/tareas';
 const ID_USER = 3;
 
 const coloresPorCategoria = {
     1: '#00bfa5', // Limpieza
     2: '#f5a623', // Cocina
-    3: '#7c4dff', // Compras
-    4: '#00d4d4', // Mantenimiento
+    3: '#7c4dff', // Mantenimiento
+    4: '#00d4d4', // Jardinería
+    5: '#ff6b6b', // Mascotas
+    6: '#4ecdc4', // Compras
 };
-
 /*   Cargar página principal al iniciar */
 
 async function init() {
@@ -59,7 +58,7 @@ function mostrarDisponibles(tareas) {
         //badge - muestra el estao de la tarea con color según infoTarea_clase()
         const estadoTarea = document.createElement('span');
         estadoTarea.className = `badge-estado ${infoTarea_clase(tarea.estado)}`;
-        estadoTarea.textContent = tarea.estado;
+        estadoTarea.textContent = ponerPrimeraLetraMayuscula(tarea.estado);
 
         //boton - al clickear marca la tarea como hecha
        /* const boton = document.createElement('button');
@@ -124,7 +123,7 @@ function mostrarMisTareas(tareas) {
 
         const estadoTarea = document.createElement('span');
         estadoTarea.className = `badge-estado ${infoTarea_clase(tarea.estado)}`;
-        estadoTarea.textContent = tarea.estado;
+        estadoTarea.textContent = ponerPrimeraLetraMayuscula(tarea.estado);
 
       
 
@@ -172,7 +171,7 @@ function mostrarTareasDeOtros(tareas)
         puntoCategoria.className = 'tx-dot';
         puntoCategoria.style.backgroundColor = color;
 
-        const tituloTarea = document.createElement('span');
+        const tituloTarea = document.createElement('div');
         tituloTarea.className = 'task-title';
         tituloTarea.textContent = tarea.descripcion;
 
@@ -182,18 +181,22 @@ function mostrarTareasDeOtros(tareas)
 
         const estadoTarea = document.createElement('span');
         estadoTarea.className = `badge-estado ${infoTarea_clase(tarea.estado)}`;
-        estadoTarea.textContent = tarea.estado;
+        estadoTarea.textContent = ponerPrimeraLetraMayuscula(tarea.estado);
 
         const nombreUsuario = document.createElement('div');
         nombreUsuario.className = 'task-meta';
         nombreUsuario.textContent = tarea.usuario;
-
+        
+        //Configurado específicamente para esta columna. Se modifica el diseño para que el usuario y el estado de la tarea estén en la misma línea
+        const footerCard = document.createElement('div');
+        footerCard.className = 'card-footer';
+        footerCard.appendChild(nombreUsuario);
+        footerCard.appendChild(estadoTarea);
 
         card.appendChild(puntoCategoria);
         card.appendChild(tituloTarea);
         card.appendChild(infoTarea);
-        card.appendChild(estadoTarea);
-        card.appendChild(nombreUsuario);
+        card.appendChild(footerCard);
         contenedor.appendChild(card);
     });
  }
@@ -256,4 +259,9 @@ function infoTarea_clase(estado) {
     return ''; //En el caso de que el estado no coincida con ninguno devuelve vacío
 }
 
+//Para poner la primera letra mayúscula en los outout de los queries 
+function ponerPrimeraLetraMayuscula(str) {
+    if(!str) return '';
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
 init();

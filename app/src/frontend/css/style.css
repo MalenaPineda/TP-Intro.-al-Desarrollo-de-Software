@@ -157,6 +157,23 @@
   padding: 1rem;
   margin-bottom: 0.75rem;
 }
+/*  Diseñado específicamente para la columna de tareas de otros en CoLiving/tareas  */
+.card-footer {
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.panel-title .dot-verde {
+  color: var(--teal);
+}
+.panel-title .dot-azul {
+  color: var(--accent);
+}
+.panel-title .dot-violeta {
+  color: var(--c-utilities);
+}
 
 .task-title { font-size: 0.92rem; font-weight: 600; color: #1a1a2e; }
 .task-meta  { font-size: 0.76rem; color: var(--text-muted); margin-bottom: 0.5rem; }
