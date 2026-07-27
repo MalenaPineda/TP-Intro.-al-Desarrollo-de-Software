@@ -100,7 +100,7 @@
 
   /* ── Summary cards ── */
   .summary-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;
     margin-bottom: 1.25rem;
   }
   .summary-card {
@@ -111,6 +111,8 @@
   .summary-value { font-size: 2rem; font-weight: 700; }
   .summary-value.teal   { color: var(--teal); }
   .summary-value.purple { color: #7c4dff; }
+  .summary-value.blue {color: #083974;
+}
 
   /* ── Bottom grid ── */
   .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }

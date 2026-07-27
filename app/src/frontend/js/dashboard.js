@@ -1,11 +1,11 @@
 const URL_API = "http://localhost:8000/api/v1/gastos";
 
 const coloresPorCategoria = {
-  1: "#00bfa5",
-  2: "#00d4d4",
-  3: "#7c4dff",
-  4: "#f5a623",
-  5: "#ff6b35", 
+    1: "#00bfa5",
+    2: "#00d4d4",
+    3: "#7c4dff",
+    4: "#f5a623",
+    5: "#ff6b35",
 };
 
 
@@ -23,11 +23,11 @@ function mostrarFecha() {
     const elementoFecha = document.getElementById('current-date');
     const elementoCasa = document.getElementById('house-name');
     const hoy = new Date();
-    const opcionesFecha = { 
-        weekday: 'long', 
-        day: 'numeric', 
-        month: 'long', 
-        year: 'numeric' 
+    const opcionesFecha = {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
     };
     const fechaFormateadaEspaniol = hoy.toLocaleDateString('es-AR', opcionesFecha);
     if (elementoFecha && elementoCasa) {
@@ -36,9 +36,9 @@ function mostrarFecha() {
         if (!nombreCasa.includes('·')) {
             elementoCasa.textContent = `${fechaFormateadaEspaniol} · ${nombreCasa}`;
         }
-        elementoFecha.style.display = 'none'; 
+        elementoFecha.style.display = 'none';
     }
-} 
+}
 function formatearFecha(fecha) {
     const fechaConvertida = new Date(fecha);
 
@@ -70,17 +70,17 @@ function actualizarTarjetasTareas() {
 function inicializarInteraccionTareas() {
     const botonesEstado = document.querySelectorAll('.badge-estado');
     botonesEstado.forEach(boton => {
-        boton.addEventListener('click', function() {
+        boton.addEventListener('click', function () {
             if (this.classList.contains('estado-pendiente')) {
                 this.classList.remove('estado-pendiente');
                 this.classList.add('estado-progreso');
                 this.textContent = 'En progreso';
-            } 
+            }
             else if (this.classList.contains('estado-progreso')) {
                 this.classList.remove('estado-progreso');
                 this.classList.add('estado-hecha');
                 this.textContent = 'Hecha';
-            } 
+            }
             else if (this.classList.contains('estado-hecha')) {
                 this.classList.remove('estado-hecha');
                 this.classList.add('estado-pendiente');
@@ -92,7 +92,7 @@ function inicializarInteraccionTareas() {
 
 }
 
-async function cargarGastosRecientes(){
+async function cargarGastosRecientes() {
     try {
         const respuesta = await fetch(URL_API);
         if (!respuesta.ok) {
@@ -100,28 +100,32 @@ async function cargarGastosRecientes(){
         }
         const datosGastos = await respuesta.json();
 
-        console.log(datosGastos); 
-        
+        console.log(datosGastos);
+
         mostrarInformacionGastos(datosGastos);
     }
     catch (error) {
         console.error("Hubo un error de conexión: ", error);
-}}
+    }
+}
 
 async function obtenerGastoMes() {
     try {
-        const respuesta = await fetch(URL_API);
+        const respuesta = await fetch(`${URL_API}/total-mes`);
         if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
 
-        const gastos = await respuesta.json();
+        const gasto = await respuesta.json();
 
-        const total = gastos.reduce((suma, gasto) => {
-            return suma + Number(gasto.monto);
-        }, 0);
         const elemento = document.getElementById("gasto-mes");
-
-        if (elemento) elemento.textContent = `$${total.toFixed(2)}`;
+        if (elemento) {
+            if (gasto.total !== null) {
+                elemento.textContent = `$${Number(gasto.total).toFixed(2)}`;
+            } else {
+                elemento.textContent = "$0.00";
+            }
         }
+
+    }
     catch (error) {
         console.error("No se pudo cargar el gasto del mes:", error);
     }
@@ -129,7 +133,7 @@ async function obtenerGastoMes() {
 
 async function obtenerGastoMesUsuario() {
     try {
-        const respuesta = await fetch(URL_API);
+        const respuesta = await fetch(`${URL_API}/total-mes/usuario/1`);
         if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
         const gasto = await respuesta.json();
         const el = document.getElementById("gasto-user");
