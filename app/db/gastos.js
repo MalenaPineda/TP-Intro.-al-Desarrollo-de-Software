@@ -2,26 +2,6 @@ import { db } from "./pool.js";
 
 export async function getGastos() {
   const result = await db.query(`
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/feature/borrar-gasto
-  SELECT 
-  g.id_gasto,
-  g.descripcion,
-  g.monto,
-  g.fecha_gasto,
-  g.categoria,
-  u.id_user,
-  u.nombre,
-  m.nombre AS metodo_pago
-FROM gastos g, usuarios u, metodo_pago m
-WHERE g.id_user = u.id_user
-AND g.id_metodo = m.id
-ORDER BY g.fecha_gasto DESC
-`)
-<<<<<<< HEAD
-=======
     SELECT 
       g.id_gasto,
       g.descripcion,
@@ -31,14 +11,11 @@ ORDER BY g.fecha_gasto DESC
       u.id_user,
       u.nombre,
       m.nombre AS metodo_pago
-    FROM gastos g, usuarios u, metodo_pago m
-    WHERE g.id_user = u.id_user
-    AND g.id_metodo = m.id
+    FROM gastos g
+    JOIN usuarios u ON g.id_user = u.id_user
+    JOIN metodo_pago m ON g.id_metodo = m.id
     ORDER BY g.fecha_gasto DESC
-  `)
->>>>>>> origin/fix/base-datos
-=======
->>>>>>> origin/feature/borrar-gasto
+  `);
   return result.rows;
 }
 
@@ -88,35 +65,16 @@ export async function getGastosPorMes() {
   return result.rows;
   
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 export async function updateGasto(id, descripcion, monto, metodo_pago, id_categoria) {
   const result = await db.query(
     "UPDATE gastos SET descripcion = $1, monto = $2, id_metodo = $3, categoria = $4 WHERE id_gasto = $5",
-=======
-
-export async function updateGasto(id, descripcion, monto, metodo_pago, id_categoria) {
-  const result = await db.query(
-    "UPDATE gastos SET descripcion = $1, monto = $2, metodo_pago = $3, categoria = $4 WHERE id_gasto = $5",
->>>>>>> origin/feature/editar-gasto
     [descripcion, monto, metodo_pago, id_categoria, id]
   );
   return result.rowCount > 0;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/feature/borrar-gasto
 
 export async function deleteGasto(id) {
   const result = await db.query("DELETE FROM gastos WHERE id_gasto = $1",[id]);
   return result.rowCount > 0;
 }
-<<<<<<< HEAD
-=======
->>>>>>> origin/feature/ver-gastos
-=======
->>>>>>> origin/feature/editar-gasto
-=======
->>>>>>> origin/feature/borrar-gasto
