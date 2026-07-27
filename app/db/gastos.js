@@ -3,6 +3,9 @@ import { db } from "./pool.js";
 export async function getGastos() {
   const result = await db.query(`
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/feature/borrar-gasto
   SELECT 
   g.id_gasto,
   g.descripcion,
@@ -17,6 +20,7 @@ WHERE g.id_user = u.id_user
 AND g.id_metodo = m.id
 ORDER BY g.fecha_gasto DESC
 `)
+<<<<<<< HEAD
 =======
     SELECT 
       g.id_gasto,
@@ -33,6 +37,8 @@ ORDER BY g.fecha_gasto DESC
     ORDER BY g.fecha_gasto DESC
   `)
 >>>>>>> origin/fix/base-datos
+=======
+>>>>>>> origin/feature/borrar-gasto
   return result.rows;
 }
 
@@ -99,12 +105,18 @@ export async function updateGasto(id, descripcion, monto, metodo_pago, id_catego
   return result.rowCount > 0;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/feature/borrar-gasto
 
 export async function deleteGasto(id) {
   const result = await db.query("DELETE FROM gastos WHERE id_gasto = $1",[id]);
   return result.rowCount > 0;
 }
+<<<<<<< HEAD
 =======
 >>>>>>> origin/feature/ver-gastos
 =======
 >>>>>>> origin/feature/editar-gasto
+=======
+>>>>>>> origin/feature/borrar-gasto

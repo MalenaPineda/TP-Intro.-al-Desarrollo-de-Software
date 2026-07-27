@@ -32,9 +32,9 @@ function mostrarTransacciones(gastos) {
   if (gastos.length === 0) {
     contenedor.innerHTML = "<p>No hay registros de gastos</p>";
     return;
-  }}
+  }
 
-  gastos.forEach((gasto)) => {
+  gastos.forEach((gasto) => {
     const color = coloresPorCategoria[gasto.categoria] || "#999";
     const monto = parseFloat(gasto.monto).toFixed(2);
 
@@ -61,11 +61,12 @@ function mostrarTransacciones(gastos) {
       activarEdicion(fila, gasto);
     });
     fila.querySelector(".btn-borrar").addEventListener("click", () => {
-      borrarGasto(gasto.id_gasto)
+      borrarGasto(gasto.id_gasto);
     });
 
     contenedor.appendChild(fila);
-  };
+  });
+}
 
 function activarEdicion(fila, gasto) {
   fila.innerHTML = `

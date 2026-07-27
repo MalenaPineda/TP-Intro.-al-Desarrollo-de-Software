@@ -16,12 +16,18 @@ services:
     volumes:
       - ./data:/var/lib/postgresql
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/feature/borrar-gasto
       - ./app/db/schemas.sql:/docker-entrypoint-initdb.d/01_schemas.sql:ro
 <<<<<<< HEAD
       - ./app/db/seeds.sql:/docker-entrypoint-initdb.d/02_seeds.sql:ro
+<<<<<<< HEAD
 =======
       - ./app/db/seeds.sql:/docker-entrypoint-initdb.d/02_seeds.sql:ro
 >>>>>>> origin/fix/base-datos
 =======
       - ./app/db/schemas.sql:/docker-entrypoint-initdb.d/schemas.sql:ro
 >>>>>>> origin/feature/editar-gasto
+=======
+>>>>>>> origin/feature/borrar-gasto
