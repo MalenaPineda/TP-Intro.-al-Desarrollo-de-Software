@@ -1,7 +1,7 @@
 
 
 import { Router } from 'express';
-import { getTareas,getRankingTareas, getTareasPorId,crearTarea, borrarTarea, cambiarEstadoTarea, getTareasCompletas, asignarUsuario, getMisTareas, getTareasDeOtros, getTareasDisponibles } from '../../../db/tareas.js';
+import { getTareas,getNombreCategoriaTarea,getRankingTareas, getTareasPorId,crearTarea, borrarTarea, cambiarEstadoTarea, getTareasCompletas, asignarUsuario, getMisTareas, getTareasDeOtros, getTareasDisponibles,editarTarea } from '../../../db/tareas.js';
 
 export const rutaTareas = Router();
 
@@ -64,6 +64,17 @@ rutaTareas.get('/', async (req,res) => {
     }
 });
 
+//Mostrar nombre de la categoría de tarea
+rutaTareas.get('/nombre-categoria-tarea', async (req, res) => {
+    try {
+        const categorias = await getNombreCategoriaTarea();
+        res.json(categorias);
+    } catch (error) {
+        console.log("Error al obtener tareas", error);
+        res.status(500).json({error: "Error interno del servidor"});
+    }
+} )
+
 
 //Mostrar tareas por id
 rutaTareas.get('/:id', async (req,res) => {
@@ -113,6 +124,30 @@ rutaTareas.delete('/:id', async (req,res) => {
         res.status(500).json({error: "Error en el servidor"});
     }
  });
+
+//Editar detalles de una tarea
+rutaTareas.put('/:id', async (req,res)=> {
+    try {
+        const {id} = req.params;
+        const {descripcion,fecha_vencimiento,id_categoria,notas} = req.body;
+
+        const tarea = await getTareasPorId(id);
+        if(!tarea) {
+            return res.status(404).json({error: "Tarea no encontrada"}); 
+        }
+        if(!descripcion || !id_categoria) {
+            return res.status(400).json({error: "Datos obligatorios no ingresados"});
+        }
+        
+        const resultado = await editarTarea(id,descripcion,fecha_vencimiento,id_categoria,notas);
+        res.json(resultado);
+
+    } catch(error) {
+        console.error("Error al editar tarea",error);
+        res.status(500).json({error: "Error interno del servidor"});
+    }
+});
+
 //Actualizar estado de una tarea
  rutaTareas.patch('/:id', async (req,res) => {
     try{

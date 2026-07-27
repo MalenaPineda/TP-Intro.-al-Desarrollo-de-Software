@@ -5,6 +5,12 @@ export async function getTareas() {
     return resultado.rows
 }
 
+export async function getNombreCategoriaTarea() {
+    const resultado = await db.query('SELECT * FROM categoria_tareas ORDER BY nombre ASC');
+    return resultado.rows;
+};
+
+
 export async function getTareasPorId(id) {
     const resultado = await db.query("SELECT * FROM tareas WHERE id_tarea = $1", [id]);
     return resultado.rows[0];
@@ -22,6 +28,11 @@ export async function borrarTarea(id) {
     return resultado.rows[0];
 }
 
+export async function editarTarea(id,descripcion,fecha_vencimiento,id_categoria,notas) {
+    const resultado = await db.query(`UPDATE tareas SET descripcion = $1, fecha_vencimiento = $2, id_categoria =$3, notas = $4 WHERE id_tarea = $5 RETURNING *`, [descripcion,fecha_vencimiento,id_categoria,notas,id]);
+    return resultado.rows[0];
+}
+
 export async function cambiarEstadoTarea(id,estado) {
     const resultado = await db.query("UPDATE tareas SET estado = $1 WHERE id_tarea = $2 RETURNING *",[estado, id]);
     return resultado.rows[0];
@@ -31,6 +42,8 @@ export async function cambiarEstadoTarea(id,estado) {
 export async function getTareasCompletas() {
     //En proceso de terminar
     const resultado = await db.query(`SELECT 
+        tareas.id_categoria,
+        tareas.descripcion,
         tareas.id_tarea,
         tareas.descripcion,
         tareas.fecha_vencimiento,
@@ -43,7 +56,7 @@ export async function getTareasCompletas() {
         FROM tareas 
         JOIN categoria_tareas ON tareas.id_categoria = categoria_tareas.id_categoria
          JOIN tarea_user ON tareas.id_tarea = tarea_user.id_tarea JOIN usuarios ON tarea_user.id_user = usuarios.id_user
-         GROUP BY tareas.id_tarea, categoria_tareas.nombre`) //array_agg es una función que hace que muestre en este un array en los usuarios en el caso de que haya más de uno asignado para la misma tarea 
+         GROUP BY tareas.id_tarea, categoria_tareas.nombre, tareas.id_categoria`) //array_agg es una función que hace que muestre en este un array en los usuarios en el caso de que haya más de uno asignado para la misma tarea 
     return resultado.rows;
 }
 
