@@ -15,7 +15,7 @@ async function init() {
     await obtenerCategorias();
     await cargarTareas();
     registrarHandlerFormulario();
-
+    document.querySelector('[name="fecha_vencimiento"]').min = new Date().toISOString().substring(0,10) //
 }
 //CATEGORIAS
 
@@ -224,6 +224,7 @@ async function construirFormularioEdicion(fila,tarea) {
     inputFecha.className = 'input is-small';
     inputFecha.type = 'date';
     inputFecha.value = formatoInputFecha(tarea.fecha_vencimiento);
+    inputFecha.min = new Date().toISOString().substring(0,10); //Establece mínimo para que no se pueda poner fecha pasada a día actual
     
     //Agregamos al elemento
     editDatos.appendChild(selectCategoria);
