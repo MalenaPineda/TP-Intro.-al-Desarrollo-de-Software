@@ -8,7 +8,8 @@
     --bg: #f8f9fb;
     --text-muted: #888;
     --radius: 14px;
-
+  /*Sobreescribo fondo oscuro de bulma*/
+  /*--bulma-body-background-color: var(--bg);*/
     /* categorías */
     --c-groceries: #00bfa5;
     --c-utilities: #7c4dff;
@@ -259,3 +260,23 @@
 @media (max-width: 768px) {
   .tasks-grid { grid-template-columns: 1fr; }
 }
+
+/*Notificación submit exitoso */
+
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  padding: 12px 24px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.toast.exito   { background: #28a745; }
+.toast.error   { background: #dc3545; } 
