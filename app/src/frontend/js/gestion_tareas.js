@@ -285,7 +285,9 @@ async function guardarEdicion(idTarea, tareaEditada) {
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
 
         await cargarTareas(); // refresca la tabla completa con los datos actualizados
+        mostrarToast('Tarea editada exitosamente');
     } catch (error) {
+        mostrarToast('Error al editar tarea', 'error'); //Notifcación caso fallido
         console.error("Error al guardar edición", error);
     }
 }
@@ -302,8 +304,10 @@ async function eliminarTarea(idTarea) {
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
 
         await cargarTareas(); // refresca la tabla sin la tarea eliminada
+        mostrarToast('Tarea eliminada exitosamente');
     } catch (error) {
         console.error("Error al eliminar tarea", error);
+        mostrarToast('Error al eliminar tarea', 'error');
     }
 }
 
@@ -334,8 +338,10 @@ function registrarHandlerFormulario() {
             });
             if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
 
-            form.reset();          // limpia el formulario tras crear con éxito
+            form.reset();   // limpia el formulario tras crear con éxito
             await cargarTareas();  // muestra la nueva tarea en la tabla
+            mostrarToast('Tarea creada exitosamente');       //función para mostrar exito de la acción
+
         } catch (error) {
             console.error("Error al crear tarea", error);
         }
@@ -367,6 +373,14 @@ if (estado === 'pendiente') return 'badge-pendiente';
 function ponerPrimeraLetraMayuscula(str) {
     if (!str) return '';
     return str.charAt(0).toUpperCase() + str.slice(1);
+}
+//Función para mostrar acción exitosa o fallida
+function mostrarToast(mensaje, tipo='exito') {
+    const toast = document.getElementById('toast');
+    toast.textContent = mensaje;
+    toast.className = `toast ${tipo}`; 
+    setTimeout(()=>toast.classList.add('show'),10);
+    setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
 init();
