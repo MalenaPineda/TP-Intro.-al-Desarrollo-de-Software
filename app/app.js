@@ -1,5 +1,5 @@
-import express from "express";
 import cors from "cors";
+import express from "express";
 
 import { endpointsGastos } from "./src/backend/api/gastos.js";
 import { endpointsTareas } from "./src/backend/api/tareas.js";
@@ -20,11 +20,6 @@ app.use("/api/v1/tareas", endpointsTareas);
 app.get("/health", (req, res) => {
   res.send("OK");
 });
-
-app.listen(port, () => {
-  console.log(`Convivencia listening on port ${port}`);
-});
-
 
 app.listen(port, () => {
   console.log(`Convivencia listening on port ${port}`);
