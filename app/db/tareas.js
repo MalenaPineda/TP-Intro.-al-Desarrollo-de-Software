@@ -131,7 +131,7 @@ export async function getInsigniasPorUsuario() {
     FROM usuarios u, tarea_user tu, tareas t, insignias i
     WHERE tu.id_user = u.id_user
     AND tu.id_tarea = t.id_tarea
-    AND t.estado = 'completada'
+    AND t.estado = 'hecha'
     AND i.id_categoria_tarea = t.id_categoria
     GROUP BY u.id_user, i.id_insignia, i.nombre, i.icono
     HAVING COUNT(t.id_tarea) >= i.cant_tarea
