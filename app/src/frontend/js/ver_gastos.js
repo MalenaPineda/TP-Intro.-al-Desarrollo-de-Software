@@ -29,6 +29,10 @@ function formatearFecha(fechaISO) {
 function mostrarTransacciones(gastos) {
   const contenedor = document.getElementById("lista-gastos");
   contenedor.innerHTML = "";
+  if (gastos.length === 0) {
+    contenedor.innerHTML = "<p>No hay registros de gastos</p>";
+    return;
+  }
 
   gastos.forEach((gasto) => {
     const color = coloresPorCategoria[gasto.categoria] || "#999";
@@ -47,11 +51,17 @@ function mostrarTransacciones(gastos) {
         <div class="tx-total">$${monto}</div>
         <div class="tx-each">${gasto.metodo_pago || ""}</div>
       </div>
-      <button class="btn-editar has-text-grey is-size-7" style="background:none;border:none;cursor:pointer;">Editar</button>
+      <div>
+        <button class="btn-editar has-text-grey is-size-7" style="background:none;border:none;cursor:pointer;">Editar</button>
+        <button class="btn-borrar has-text-grey is-size-7" style="background:none;border:none;cursor:pointer;">Borrar</button>
+      </div>
     `;
 
     fila.querySelector(".btn-editar").addEventListener("click", () => {
       activarEdicion(fila, gasto);
+    });
+    fila.querySelector(".btn-borrar").addEventListener("click", () => {
+      borrarGasto(gasto.id_gasto);
     });
 
     contenedor.appendChild(fila);
@@ -74,7 +84,8 @@ function activarEdicion(fila, gasto) {
     <div style="display:flex; flex-direction:column; gap:0.3rem;">
       <button class="button is-small is-success" id="btn-guardar" style="border-radius:8px;">Guardar</button>
       <button class="button is-small is-light" id="btn-cancelar" style="border-radius:8px;">Cancelar</button>
-    </div>`;
+    </div>
+  `;
 
   // Cargar categorías en el select
   fetch(`${URL_API}/nombre-categoria`)
@@ -128,6 +139,20 @@ function activarEdicion(fila, gasto) {
   fila.querySelector("#btn-cancelar").addEventListener("click", () => {
     obtenerGastos();
   });
+}
+
+async function borrarGasto(id) {
+  try {
+    const respuesta = await fetch(`${URL_API}/${id}`, {
+      method: "DELETE",
+    });
+    if (!respuesta.ok) throw new Error("Error al borrar")
+    alert("¡Borrado con exito!");
+    location.reload();
+  } catch (error) {
+    console.error("No se pudo borrar el gasto:", error);
+    alert("Hubo un error al borrar el gasto");
+  }
 }
 
 async function obtenerGastoMes() {
@@ -198,6 +223,10 @@ function mostrarGrafico(categorias) {
   const valores = categorias.map(c => parseFloat(c.total_monto));
   const colores = categorias.map((c, i) => coloresCategorias[i % coloresCategorias.length]);
   const totalGeneral = valores.reduce((suma, v) => suma + v, 0);
+  if (categorias.length === 0) {
+    contenedor.innerHTML = "<p>No hay registros de gastos</p>";
+    return;
+  }
 
   new Chart(document.getElementById('donut'), {
     type: 'doughnut',
@@ -236,6 +265,7 @@ function mostrarGrafico(categorias) {
     contenedorLeyenda.appendChild(item);
   });
 }
+
 obtenerGastosPorCategoria()
 obtenerGastos()
 obtenerGastoMes()

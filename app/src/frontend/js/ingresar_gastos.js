@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
       data.categoria = parseInt(data.categoria, 10);
       data.metodo_pago = parseInt(data["metodo-pago"]);
       data.id_user = 1
-      try {
+      try { 
         const response = await fetch(URL_API, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

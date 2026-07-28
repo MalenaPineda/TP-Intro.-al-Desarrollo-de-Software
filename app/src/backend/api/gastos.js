@@ -1,18 +1,8 @@
 import { Router } from "express";
-import { getGastosPorMes, getGastos, getTotalGastosPorUsuario, getTotalGastoPorMes, getGastosPorCategoria, createGasto, getNombreCategoria, getMetodoPago, updateGasto } from "../../../db/gastos.js";
 
+import { createGasto, deleteGasto, getCantidadMiembros, getGastos, getGastosPorCategoria, getGastosPorMes, getMetodoPago, getNombreCategoria, getTotalGastoPorMes, getTotalGastosPorUsuario, updateGasto } from "../../../db/gastos.js";
 
 export const endpointsGastos = Router();
-
-endpointsGastos.get("/", async (req, res) => {
-  try {
-    const gastos = await getGastos();
-    res.json(gastos);
-  } catch (error) {
-    console.error("Error al obtener los gastos:", error);
-    res.status(500).json({ error: "Error interno del servidor" });
-  }
-});
 
 endpointsGastos.get("/", async (req, res) => {
   try {
@@ -107,6 +97,7 @@ endpointsGastos.get("/metodo-pago", async (req, res) => {
   }
 });
 
+
 endpointsGastos.put("/:id", async (req, res) => {
   console.log(req)
   try {
@@ -123,6 +114,21 @@ endpointsGastos.put("/:id", async (req, res) => {
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });
+
+endpointsGastos.delete("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deleted = await deleteGasto(id);
+    if (!deleted) {
+      res.sendStatus(404);
+      return;
+    }
+    res.sendStatus(200);
+  } catch (error) {
+    console.error("Error al eliminar el gasto:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
 endpointsGastos.get("/por-mes", async (req, res) => {
   try {
     const gastos = await getGastosPorMes();
@@ -133,3 +139,21 @@ endpointsGastos.get("/por-mes", async (req, res) => {
   }
 });
 
+
+
+
+
+
+
+
+
+
+endpointsGastos.get("/miembros", async (req, res) => {
+  try {
+    const cantidad = await getCantidadMiembros();
+    res.json(cantidad);
+  } catch (error) {
+    console.error("Error al obtener miembros:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
