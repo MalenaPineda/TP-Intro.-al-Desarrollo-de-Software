@@ -55,7 +55,7 @@ function mostrarDisponibles(tareas) {
         infoTarea.className = 'task-meta';
         infoTarea.textContent = `${tarea.categoria} · Vence ${formatearFecha(tarea.fecha_vencimiento)}`;
 
-        //badge - muestra el estao de la tarea con color según infoTarea_clase()
+        //badge - muestra el estado de la tarea con color según infoTarea_clase()
         const estadoTarea = document.createElement('span');
         estadoTarea.className = `badge-estado ${infoTarea_clase(tarea.estado)}`;
         estadoTarea.textContent = ponerPrimeraLetraMayuscula(tarea.estado);
