@@ -1,12 +1,4 @@
 services:
-  frontend:
-    image: nginx:alpine
-    ports:
-      - "8080:80"
-    volumes:
-      - ./app/src/frontend:/usr/share/nginx/html:ro
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-
   convivencia-api:
     image: "backend"
     build: . # Buildear el Dockerfile de esta carpeta (.)
