@@ -1,7 +1,7 @@
 
 
 import { Router } from 'express';
-import { getTareas,getNombreCategoriaTarea,getRankingTareas, getTareasPorId,crearTarea, borrarTarea, cambiarEstadoTarea, getTareasCompletas, asignarUsuario, getMisTareas, getTareasDeOtros, getTareasDisponibles,editarTarea, getRankingTareas, getInsigniasPorUsuario } from '../../../db/tareas.js';
+import { getTareas,getNombreCategoriaTarea,getRankingTareas, getTareasPorId,crearTarea, borrarTarea, cambiarEstadoTarea, getTareasCompletas, asignarUsuario, getMisTareas, getTareasDeOtros, getTareasDisponibles,editarTarea, getInsigniasPorUsuario } from '../../../db/tareas.js';
 
 export const rutaTareas = Router();
 
@@ -214,6 +214,7 @@ rutaTareas.put('/:id', async (req,res)=> {
         }
 
         const resultado = await asignarUsuario(id,id_user);
+        await cambiarEstadoTarea(id, 'en progreso')
         res.status(201).json(resultado);
 
     } catch (error) {
