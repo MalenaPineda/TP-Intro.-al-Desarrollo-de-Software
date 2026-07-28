@@ -2,20 +2,20 @@ import { db } from "./pool.js";
 
 export async function getGastos() {
   const result = await db.query(`
-    SELECT 
-      g.id_gasto,
-      g.descripcion,
-      g.monto,
-      g.fecha_gasto,
-      g.categoria,
-      u.id_user,
-      u.nombre,
-      m.nombre AS metodo_pago
-    FROM gastos g, usuarios u, metodo_pago m
-    WHERE g.id_user = u.id_user
-    AND g.id_metodo = m.id
-    ORDER BY g.fecha_gasto DESC
-  `)
+  SELECT 
+  g.id_gasto,
+  g.descripcion,
+  g.monto,
+  g.fecha_gasto,
+  g.categoria,
+  u.id_user,
+  u.nombre,
+  m.nombre AS metodo_pago
+FROM gastos g, usuarios u, metodo_pago m
+WHERE g.id_user = u.id_user
+AND g.id_metodo = m.id
+ORDER BY g.fecha_gasto DESC
+`)
   return result.rows;
 }
 
