@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- bulma -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <!-- 1. FONT AWESOME (íconos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- estilos generales-->
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <title>Página principal - Hogar Compartido</title>
 </head>
 <body>
+<div class="app-layout">
     <aside class="sidebar">
         <div class="sidebar-brand">
             <div class="house-name">Casa Feliz</div>
@@ -20,6 +24,7 @@
             <a href="dashboard" class="sidebar-item"><i class="fa-solid fa-house"></i>Página principal</a>
             <a href="ver_gastos" class="sidebar-item"><i class="fa-solid fa-dollar-sign"></i>Gastos</a>
             <a href="tareas" class="sidebar-item"><i class="fa-solid fa-list-check"></i>Tareas</a>
+            <a href="ranking" class="sidebar-item"><i class="fa-solid fa-trophy"></i>Ranking</a>
         </nav>
         
         <div class="sidebar-user">
@@ -33,31 +38,27 @@
     <main class="main-content">
         <header class="page-header">
             <div>
-                <h1 class="page-title">Página principal</h1>
-                <p class="page-subtitle">¡Bienvenido de nuevo!</p>
+                <h1 class="page-title">¡Bienvenido de nuevo!</h1>
                 <p class="house-title" id="house-name">Casa Feliz</p>
             </div>
             
             <div id="current-date"></div>
         </header>
     <section class="summary-grid">
-
     <div class="summary-card">
         <p class="summary-label">Tareas pendientes</p>
-        <h2 class="summary-value" id="pending-tasks">5</h2>
+        <h2 class="summary-value blue" id="pending-tasks">5</h2>
     </div>
-
     <div class="summary-card">
         <p class="summary-label">Gastos del mes</p>
-        <h2 class="summary-value teal" id="monthly-expenses">
-            $125.000
-        </h2>
+        <h2 class="summary-value teal" id="gasto-mes">...</h2>
+        <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;"
+        >Tu parte: <span id="gasto-user">...</span></p>
     </div>
-
     <div class="summary-card">
         <p class="summary-label">Tus tareas</p>
         <h2 class="summary-value purple" id="my-tasks">
-            2 de 5
+            0 de 5
         </h2>
     </div>
     </section> 
@@ -69,83 +70,45 @@
                 <a href="#" style="font-size: 0.8rem; color: var(--c-utilities); text-decoration: none;">Ver todas</a>
             </div>
             
-            <div class="task-list">
-                <div class="tx-row" style="background: var(--bg); padding: 0.8rem; border-radius: 8px; border: none; margin-bottom: 0.5rem;">
-                    <div class="tx-info">
-                        <div class="tx-name">Limpiar la cocina</div>
-                        <div class="tx-meta">Alex</div>
-                    </div>
-                    <div>
-                        <span style="background: var(--teal-soft); color: var(--teal); padding: 0.3rem 0.6rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600;">En progreso</span>
-                    </div>
-                </div>
-
-                <div class="tx-row" style="background: var(--bg); padding: 0.8rem; border-radius: 8px; border: none; margin-bottom: 0.5rem;">
-                    <div class="tx-info">
-                        <div class="tx-name">Sacar la basura</div>
-                        <div class="tx-meta">Jordan</div>
-                    </div>
-                    <div>
-                        <span style="background: var(--teal-soft); color: var(--teal); padding: 0.3rem 0.6rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600;">En progreso</span>
-                    </div>
-                </div>
-
+        <div class="task-list">
+        <!-- Tarea 1 -->
+        <div class="tx-row" style="background: var(--bg); padding: 0.8rem; border-radius: 8px; border: none; margin-bottom: 0.5rem;">
+            <div class="tx-info">
+                <div class="tx-name">Limpiar la cocina</div>
+                <div class="tx-meta">Alex</div>
+            </div>
+            <div>
+                <span class="badge-estado estado-progreso">En progreso</span>
+            </div>
+    </div>
+    <!-- Tarea 2 -->
                 <div class="tx-row" style="background: var(--bg); padding: 0.8rem; border-radius: 8px; border: none; margin-bottom: 0.5rem;">
                     <div class="tx-info">
                         <div class="tx-name">Hacer la compra</div>
                         <div class="tx-meta">Tu</div>
                     </div>
                     <div>
-                        <span style="background: #fff4e5; color: #f5a623; padding: 0.3rem 0.6rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600;">Pendiente</span>
+                        <span class="badge-estado estado-pendiente">Pendiente</span>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> 
 
         <div class="panel-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.1rem;">
                 <h3 class="panel-title" style="margin-bottom: 0;">Gastos recientes</h3>
-                <a href="#" style="font-size: 0.8rem; color: var(--c-utilities); text-decoration: none;">Ver todos</a>
+                <a href="ver_gastos.html" style="font-size: 0.8rem; color: var(--c-utilities); text-decoration: none;">Ver todos</a>
+                
             </div>
 
-            <div class="expense-list">
-
-                <div class="tx-row">
-                    <div class="tx-info">
-                        <div class="tx-name">Compra supermercado</div>
-                        <div class="tx-meta">Pagó Alex · May 23</div>
-                    </div>
-                    <div class="tx-amounts">
-                        <div class="tx-total">$156.80</div>
-                        <div class="tx-each">$39.20/ea</div>
-                    </div>
-                </div>
-
-                <div class="tx-row">
-                    <div class="tx-info">
-                        <div class="tx-name">Factura electricidad</div>
-                        <div class="tx-meta">Pagó Jordan · May 20</div>
-                    </div>
-                    <div class="tx-amounts">
-                        <div class="tx-total">$240.00</div>
-                        <div class="tx-each">$60.00/ea</div>
-                    </div>
-                </div>
-
-                <div class="tx-row">
-                    <div class="tx-info">
-                        <div class="tx-name">Internet</div>
-                        <div class="tx-meta">Pagó Tu · May 18</div>
-                    </div>
-                    <div class="tx-amounts">
-                        <div class="tx-total">$80.00</div>
-                        <div class="tx-each">$20.00/ea</div>
-                    </div>
-                </div>
+            <div class="expense-list" id="lista-gastos">
+        
             </div>
         </div>
+
     </section>
     </main>
+</div>
     <script src="js/dashboard.js"></script>
 </body>
 </html>
