@@ -79,6 +79,7 @@ export async function deleteGasto(id) {
   return result.rowCount > 0;
 }
 
+
 export async function getCantidadMiembros() {
   const result = await db.query(
     "SELECT COUNT(*) AS cantidad FROM usuarios;"
