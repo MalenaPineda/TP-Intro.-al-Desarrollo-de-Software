@@ -52,16 +52,16 @@ function mostrarTransacciones(gastos) {
         <div class="tx-each">${gasto.metodo_pago || ""}</div>
       </div>
       <div>
-      <button class="btn-editar has-text-grey is-size-7" style="background:none;border:none;cursor:pointer;">Editar</button>
-      <button class="btn-borrar has-text-grey is-size-7" style="background:none;border:none;cursor:pointer;">Borrar</button>
+        <button class="btn-editar has-text-grey is-size-7" style="background:none;border:none;cursor:pointer;">Editar</button>
+        <button class="btn-borrar has-text-grey is-size-7" style="background:none;border:none;cursor:pointer;">Borrar</button>
       </div>
-      `;
+    `;
 
     fila.querySelector(".btn-editar").addEventListener("click", () => {
       activarEdicion(fila, gasto);
     });
     fila.querySelector(".btn-borrar").addEventListener("click", () => {
-      borrarGasto(gasto.id_gasto)
+      borrarGasto(gasto.id_gasto);
     });
 
     contenedor.appendChild(fila);
@@ -84,7 +84,8 @@ function activarEdicion(fila, gasto) {
     <div style="display:flex; flex-direction:column; gap:0.3rem;">
       <button class="button is-small is-success" id="btn-guardar" style="border-radius:8px;">Guardar</button>
       <button class="button is-small is-light" id="btn-cancelar" style="border-radius:8px;">Cancelar</button>
-    </div>`;
+    </div>
+  `;
 
   // Cargar categorías en el select
   fetch(`${URL_API}/nombre-categoria`)
