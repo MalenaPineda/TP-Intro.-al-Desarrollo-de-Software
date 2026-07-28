@@ -75,6 +75,17 @@ rutaTareas.get('/nombre-categoria-tarea', async (req, res) => {
     }
 } )
 
+//Muevo get ranking antes de /:id
+rutaTareas.get("/ranking", async (req, res) => {
+  try {
+    const ranking = await getRankingTareas();
+    res.json(ranking);
+  } catch (error) {
+    console.error("Error al obtener el ranking:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
 
 //Mostrar tareas por id
 rutaTareas.get('/:id', async (req,res) => {
@@ -120,7 +131,7 @@ rutaTareas.delete('/:id', async (req,res) => {
         }
         res.json({mensaje: "Tarea eliminada correctamente", tarea});
     } catch (error) {
-        console.error("Error al eliminar tarea")
+        console.error("Error al eliminar tarea", error)
         res.status(500).json({error: "Error en el servidor"});
     }
  });
@@ -165,7 +176,7 @@ rutaTareas.put('/:id', async (req,res)=> {
             return res.status(400).json({error:"Estado mal ingresado"});
         } 
         if (!estadosValidos.includes(estado)) {
-            return res.status(400).json({ error: "Estado inválido. Debe ser pendiente, en progreso o completada" });
+            return res.status(400).json({ error: "Estado inválido. Debe ser pendiente, en progreso o hecha" });
         }
 
         const resultado = await cambiarEstadoTarea(id,estado);
@@ -197,17 +208,8 @@ rutaTareas.put('/:id', async (req,res)=> {
         res.status(201).json(resultado);
 
     } catch (error) {
-        console.error("Error interno al asignar tarea");
+        console.error("Error interno al asignar tarea", error);
         res.status(500).json({error: "Error interno del servidor"});
     }   
  })
 
-rutaTareas.get("/ranking", async (req, res) => {
-  try {
-    const ranking = await getRankingTareas();
-    res.json(ranking);
-  } catch (error) {
-    console.error("Error al obtener el ranking:", error);
-    res.status(500).json({ error: "Error interno del servidor" });
-  }
-});
