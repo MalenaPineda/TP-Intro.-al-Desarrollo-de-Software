@@ -18,7 +18,6 @@ app.use(express.json());
 app.use("/api/v1/gastos", endpointsGastos);
 app.use("/api/v1/tareas", rutaTareas);
 
-
 app.get("/health", (req, res) => {
   res.send("OK");
 });

@@ -1,5 +1,5 @@
 const URL_API = 'http://localhost:8000/api/v1/tareas';
-const ID_USER = 3;
+const ID_USER = 2;
 
 const coloresPorCategoria = {
     1: '#00bfa5', // Limpieza
@@ -208,6 +208,7 @@ function mostrarTareasDeOtros(tareas)
 
 async function elegirTarea(id_tarea) {
     try {
+        console.log("ID_USER:", ID_USER);  // agregar esto
         const res = await fetch(`${URL_API}/${id_tarea}/usuarios`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -243,10 +244,12 @@ async function marcarHecha(id_tarea) {
 //HELPERS 
 
 //Convertir una fcha en formato ISO (aaaa-mm-ddT00:00:00.000z) a formato legible (25 jun)
+//Se hace manual ya que con la función de parseo cambiaba la zona horaria
 function formatearFecha(fechaISO) {
-    if(!fechaISO) return 'Sin fecha límite'; //Si no tiene fecha devuelve ese mensaje
-    const fecha = new Date(fechaISO); //crea un objeto Date desde el string ISO
-    return fecha.toLocaleDateString('es-AR', {day: 'numeric',month:'short'});
+    if (!fechaISO) return 'Sin fecha límite';
+    const [anio, mes, dia] = fechaISO.substring(0, 10).split('-');
+    const fecha = new Date(anio, mes - 1, dia);
+    return fecha.toLocaleDateString('es-AR', { day: 'numeric', month: 'short' });
 }
 
 

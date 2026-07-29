@@ -22,8 +22,10 @@ async function obtenerGastos() {
 }
 
 function formatearFecha(fechaISO) {
-  const fecha = new Date(fechaISO);
-  return fecha.toLocaleDateString("es-AR", { day: "numeric", month: "short" });
+    if (!fechaISO) return 'Sin fecha límite';
+    const [anio, mes, dia] = fechaISO.substring(0, 10).split('-');
+    const fecha = new Date(anio, mes - 1, dia);
+    return fecha.toLocaleDateString('es-AR', { day: 'numeric', month: 'short' });
 }
 
 function mostrarTransacciones(gastos) {

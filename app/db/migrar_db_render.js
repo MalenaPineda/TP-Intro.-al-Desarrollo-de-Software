@@ -1,0 +1,23 @@
+import { readFileSync } from "fs";
+import { Pool } from "pg";
+
+const pool = new Pool({
+  connectionString: process.env.DB_URL,
+  ssl: { rejectUnauthorized: false }
+});
+
+async function run(file) {
+  const sql = readFileSync(file, "utf8");
+  await pool.query(sql);
+  console.log(` Ejecutado: ${file}`);
+}
+
+async function main() {
+    await run("./schemas.sql");
+    await run("./seed.sql");
+    await pool.end();
+  }
+main().catch((err) => {
+  console.error("Error:", err);
+  process.exit(1);
+});
