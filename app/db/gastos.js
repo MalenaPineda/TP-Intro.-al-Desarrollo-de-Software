@@ -2,25 +2,25 @@ import { db } from "./pool.js";
 
 export async function getGastos() {
   const result = await db.query(`
-  SELECT 
-    g.id_gasto,
-    g.descripcion,
-    g.monto,
-    g.fecha_gasto,
-    g.categoria,
-    u.id_user,
-    u.nombre,
-    m.nombre AS metodo_pago
-  FROM gastos g, usuarios u, metodo_pago m
-  WHERE g.id_user = u.id_user
-  AND g.metodo_pago = m.id_metodo
-  ORDER BY g.fecha_gasto DESC
-`)
-    return result.rows;
+    SELECT 
+      g.id_gasto,
+      g.descripcion,
+      g.monto,
+      g.fecha_gasto,
+      g.categoria,
+      u.id_user,
+      u.nombre,
+      m.nombre AS metodo_pago
+    FROM gastos g
+    JOIN usuarios u ON g.id_user = u.id_user
+    JOIN metodo_pago m ON g.id_metodo = m.id
+    ORDER BY g.fecha_gasto DESC
+  `);
+  return result.rows;
 }
 
 export async function getTotalGastosPorUsuario(idUser) {
-  const result = await db.query("SELECT SUM(monto) AS total FROM gastos WHERE id_user = $1 AND EXTRACT(MONTH FROM fecha_gasto) = EXTRACT(MONTH FROM CURRENT_DATE) AND EXTRACT(YEAR FROM fecha_gasto) = EXTRACT(YEAR FROM CURRENT_DATE);",[idUser])
+  const result = await db.query("SELECT SUM(monto) AS total FROM gastos WHERE id_user = $1 AND EXTRACT(MONTH FROM fecha_gasto) = EXTRACT(MONTH FROM CURRENT_DATE) AND EXTRACT(YEAR FROM fecha_gasto) = EXTRACT(YEAR FROM CURRENT_DATE);", [idUser])
   return result.rows[0];
 }
 
@@ -52,3 +52,38 @@ export async function getMetodoPago() {
   return result.rows;
 }
 
+export async function getGastosPorMes() {
+  const result = await db.query(`
+    SELECT 
+      EXTRACT(MONTH FROM fecha_gasto) AS mes,
+      EXTRACT(YEAR FROM fecha_gasto) AS anio,
+      SUM(monto) AS total
+    FROM gastos
+    GROUP BY anio, mes
+    ORDER BY anio ASC, mes ASC
+  `);
+  return result.rows;
+
+}
+
+export async function updateGasto(id, descripcion, monto, metodo_pago, id_categoria) {
+  const result = await db.query(
+    "UPDATE gastos SET descripcion = $1, monto = $2, id_metodo = $3, categoria = $4 WHERE id_gasto = $5",
+    [descripcion, monto, metodo_pago, id_categoria, id]
+  );
+  return result.rowCount > 0;
+}
+
+export async function deleteGasto(id) {
+  const result = await db.query("DELETE FROM gastos WHERE id_gasto = $1", [id]);
+  return result.rowCount > 0;
+}
+
+
+export async function getCantidadMiembros() {
+  const result = await db.query(
+    "SELECT COUNT(*) AS cantidad FROM usuarios;"
+  );
+
+  return result.rows[0];
+}

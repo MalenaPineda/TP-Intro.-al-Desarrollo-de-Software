@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<<<<<<< HEAD
-  <title>Convivencia – Expenses</title>
-
+  <title>CoLiving – Gastos</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.2/css/bulma.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
@@ -155,91 +153,43 @@
       .chart-wrap    { flex-direction: column; align-items: flex-start; }
     }
   </style>
-=======
-  <title>Convivencia – Expensas</title>
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.2/css/bulma.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="css/style.css" />
->>>>>>> d822528838800fe9fefae368d9468efe047300a0
 </head>
 <body>
-
 <div class="app-layout">
-
   <!-- ═══ SIDEBAR ═══ -->
   <aside class="sidebar">
     <div class="sidebar-brand">
-      <div class="house-name">Casa Feliz</div>
-      <div class="members">4 miembros</div>
+        <div class="house-name">Casa Feliz</div>
+        <div class="members">4 miembros</div>
     </div>
-
+    
     <nav class="sidebar-menu">
-      <a href="/dashboard" class="sidebar-item">
-        <i class="fa-solid fa-house"></i> Dashboard
-      </a>
-      <a href="/tasks" class="sidebar-item">
-        <i class="fa-solid fa-check-square"></i> Tasks
-        <span class="badge">1</span>
-      </a>
-      <a href="/expenses" class="sidebar-item active">
-<<<<<<< HEAD
-        <i class="fa-solid fa-dollar-sign"></i> Expenses
-=======
-        <i class="fa-solid fa-dollar-sign"></i> Expensas
->>>>>>> d822528838800fe9fefae368d9468efe047300a0
-        <span class="badge">2</span>
-      </a>
-      <a href="/ranking" class="sidebar-item">
-        <i class="fa-solid fa-trophy"></i> Ranking
-      </a>
-      <a href="/admin" class="sidebar-item">
-        <i class="fa-solid fa-shield-halved"></i> Admin
-      </a>
+        <a href="dashboard" class="sidebar-item "><i class="fa-solid fa-house"></i>Página principal</a>
+        <a href="ver_gastos" class="sidebar-item"><i class="fa-solid fa-dollar-sign"></i>Gastos</a>
+        <a href="tareas" class="sidebar-item"><i class="fa-solid fa-list-check"></i>Tareas</a>
+        <a href="ranking" class="sidebar-item"><i class="fa-solid fa-trophy"></i>Ranking</a>
     </nav>
-
+    
     <div class="sidebar-user">
-      <div class="avatar">JD</div>
-      <div class="user-info">
-        <div class="name">Juan Díaz</div>
-        <div class="role">Admin</div>
-      </div>
+        <div class="avatar">M</div>
+        <div class="user-info">
+            <div class="name">Malena</div>
+            <div class="role">Integrantes</div>
+        </div>
     </div>
-  </aside>
-
+</aside>
   <!-- ═══ MAIN ═══ -->
   <main class="main-content">
-
     <!-- Page header -->
     <div class="page-header">
       <div>
-        <h1 class="page-title">Expenses</h1>
+        <h1 class="page-title">Historial de pagos</h1>
         <p class="page-subtitle">Gastos compartidos de la casa</p>
       </div>
-<<<<<<< HEAD
-      <!-- EJS: href="/expenses/new" -->
-      <a href="/expenses/new" class="btn-add">
-=======
-
-      <a href="ingresar_gastos.html" class="btn-add">
->>>>>>> d822528838800fe9fefae368d9468efe047300a0
+      <a href="/ingresar_gastos" class="btn-add">
         <i class="fa-solid fa-circle-plus"></i> Agregar gasto
       </a>
     </div>
-
-<<<<<<< HEAD
-    <!-- Summary cards -->
-    <div class="summary-grid">
-      <div class="summary-card">
-        <div class="summary-label">Este mes</div>
-        <!-- EJS: <div class="summary-value teal">$<%= monthlyTotal %></div> -->
-        <div class="summary-value teal">$522.30</div>
-      </div>
-      <div class="summary-card">
-        <div class="summary-label">Tu parte</div>
-        <!-- EJS: <div class="summary-value purple">$<%= myShare %></div> -->
-        <div class="summary-value purple">$130.58</div>
-=======
     <div class="summary-grid">
       <div class="summary-card">
         <div class="summary-label">Gasto del mes</div>
@@ -248,72 +198,26 @@
       <div class="summary-card">
         <div class="summary-label">Mi gasto</div>
         <div class="summary-value purple" id="gasto-user"></div>
->>>>>>> d822528838800fe9fefae368d9468efe047300a0
       </div>
     </div>
-
     <!-- Bottom grid -->
     <div class="bottom-grid">
-
       <!-- Por categoría -->
       <div class="panel-card">
         <div class="panel-title">Por categoría</div>
         <div class="chart-wrap">
           <canvas id="donut"></canvas>
-<<<<<<< HEAD
-          <!-- EJS: <% categories.forEach(c => { %> -->
-          <div class="legend">
-            <div class="legend-item">
-              <span class="legend-dot" style="background:var(--c-groceries)"></span>
-              <span class="legend-name">Groceries</span>
-              <span class="legend-amount">$312</span>
-              <span class="legend-pct">(36%)</span>
-            </div>
-            <div class="legend-item">
-              <span class="legend-dot" style="background:var(--c-utilities)"></span>
-              <span class="legend-name">Utilities</span>
-              <span class="legend-amount">$320</span>
-              <span class="legend-pct">(37%)</span>
-            </div>
-            <div class="legend-item">
-              <span class="legend-dot" style="background:var(--c-cleaning)"></span>
-              <span class="legend-name">Cleaning</span>
-              <span class="legend-amount">$90.3</span>
-              <span class="legend-pct">(10%)</span>
-            </div>
-            <div class="legend-item">
-              <span class="legend-dot" style="background:var(--c-internet)"></span>
-              <span class="legend-name">Internet</span>
-              <span class="legend-amount">$80</span>
-              <span class="legend-pct">(9%)</span>
-            </div>
-            <div class="legend-item">
-              <span class="legend-dot" style="background:var(--c-other)"></span>
-              <span class="legend-name">Other</span>
-              <span class="legend-amount">$60</span>
-              <span class="legend-pct">(7%)</span>
-            </div>
-          </div>
-          <!-- EJS: <% }) %> -->
-=======
           <div class="legend"></div>
->>>>>>> d822528838800fe9fefae368d9468efe047300a0
         </div>
       </div>
-
       <!-- Transacciones recientes -->
       <div class="panel-card">
         <div class="panel-title">Transacciones recientes</div>
-<<<<<<< HEAD
-          <div id="lista-gastos">HOLA</div>
-=======
       <div id="lista-gastos"></div>
->>>>>>> d822528838800fe9fefae368d9468efe047300a0
       </div>
     </div>
   </main>
 </div>
-
 <!-- Chart.js para el donut -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="js/ver_gastos.js"></script>

@@ -1,6 +1,3 @@
-/*INSERT INTO usuarios VALUES('Jesus', 'jesus@gmail.com', '12345');
-*/
-
 -- Usuarios (roomies)
 INSERT INTO usuarios (nombre, email, contrasenia, fecha_nacimiento)
 VALUES 
@@ -8,7 +5,7 @@ VALUES
 ('María', 'maria@hogar.com', 'hashmaria', '1998-09-14'),
 ('Pedro', 'pedro@hogar.com', 'hashpedro', '1995-12-01');
 
--- Categorías de tareas (quehaceres del hogar)
+-- Categorías de tareas
 INSERT INTO categoria_tareas (nombre)
 VALUES 
 ('Limpieza'),
@@ -16,7 +13,7 @@ VALUES
 ('Compras'),
 ('Mantenimiento');
 
--- Categorías de gastos (hogar)
+-- Categorías de gastos
 INSERT INTO categoria_gastos (nombre)
 VALUES 
 ('Supermercado'),
@@ -24,13 +21,21 @@ VALUES
 ('Transporte'),
 ('Ocio');
 
--- Gastos compartidos
-INSERT INTO gastos (descripcion, monto, metodo_pago, categoria, id_user)
+-- Métodos de pago
+INSERT INTO metodo_pago (nombre)
 VALUES 
-('Compra semanal en supermercado', 15000.00, 'Tarjeta débito', 1, 1),
-('Factura de electricidad', 8000.00, 'Transferencia bancaria', 2, 2),
-('Taxi al centro', 2500.00, 'Efectivo', 3, 3),
-('Pizza del viernes', 6000.00, 'Tarjeta crédito', 1, 2);
+('Tarjeta débito'),
+('Transferencia bancaria'),
+('Efectivo'),
+('Tarjeta crédito');
+
+-- Gastos compartidos
+INSERT INTO gastos (descripcion, monto, id_metodo, categoria, id_user)
+VALUES 
+('Compra semanal en supermercado', 15000.00, 1, 1, 1),
+('Factura de electricidad', 8000.00, 2, 2, 2),
+('Taxi al centro', 2500.00, 3, 3, 3),
+('Pizza del viernes', 6000.00, 4, 1, 2);
 
 -- Tareas del hogar
 INSERT INTO tareas (descripcion, fecha_vencimiento, diaria, estado, notas, id_categoria)
@@ -40,7 +45,7 @@ VALUES
 ('Comprar papel higiénico', '2026-06-25', FALSE, 'pendiente', 'Hacer lista de compras', 3),
 ('Revisar la lámpara del living', '2026-06-27', FALSE, 'pendiente', 'Posible cambio de foco', 4);
 
--- Insignias (gamificación de convivencia)
+-- Insignias
 INSERT INTO insignias (nombre, descripcion, cant_tarea, id_categoria_tarea, icono)
 VALUES 
 ('Chef del mes', 'Completa 20 tareas de cocina', 20, 2, 'chef.png'),
@@ -50,14 +55,14 @@ VALUES
 -- Relación usuario-insignia
 INSERT INTO user_insignia (id_user, id_insignia, disponible)
 VALUES 
-(1, 2, TRUE),   -- Jesús ya ganó "Eco-friendly"
-(2, 1, FALSE),  -- María aún no tiene "Chef del mes"
-(3, 3, TRUE);   -- Pedro ya tiene "Comprador estrella"
+(1, 2, TRUE),
+(2, 1, FALSE),
+(3, 3, TRUE);
 
--- Relación tarea-usuario (quién hace qué)
+-- Relación tarea-usuario
 INSERT INTO tarea_user (id_tarea, id_user)
 VALUES 
-(1, 2),  -- María lava los platos
-(2, 1),  -- Jesús saca la basura
-(3, 3),  -- Pedro compra papel higiénico
-(4, 1);  -- Jesús revisa la lámpara
+(1, 2),
+(2, 1),
+(3, 3),
+(4, 1);

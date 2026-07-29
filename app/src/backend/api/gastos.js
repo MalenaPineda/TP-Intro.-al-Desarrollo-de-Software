@@ -1,17 +1,8 @@
 import { Router } from "express";
-import { getGastos, getTotalGastosPorUsuario, getTotalGastoPorMes, getGastosPorCategoria, createGasto, getNombreCategoria, getMetodoPago } from "../../../db/gastos.js";
+
+import { createGasto, deleteGasto, getCantidadMiembros, getGastos, getGastosPorCategoria, getGastosPorMes, getMetodoPago, getNombreCategoria, getTotalGastoPorMes, getTotalGastosPorUsuario, updateGasto } from "../../../db/gastos.js";
 
 export const endpointsGastos = Router();
-
-endpointsGastos.get("/", async (req, res) => {
-  try {
-    const gastos = await getGastos();
-    res.json(gastos);
-  } catch (error) {
-    console.error("Error al obtener los gastos:", error);
-    res.status(500).json({ error: "Error interno del servidor" });
-  }
-});
 
 endpointsGastos.get("/", async (req, res) => {
   try {
@@ -102,6 +93,67 @@ endpointsGastos.get("/metodo-pago", async (req, res) => {
     res.json(metodos);
   } catch (error) {
     console.error("Error al obtener las categorias:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
+
+endpointsGastos.put("/:id", async (req, res) => {
+  console.log(req)
+  try {
+    const id = req.params.id;
+    const { descripcion, monto, metodo_pago, categoria } = req.body;
+    const updated = await updateGasto(id, descripcion, monto, metodo_pago, categoria);
+    if (!updated) {
+      res.sendStatus(404);
+      return;
+    }
+    res.sendStatus(200);
+  } catch (error) {
+    console.error("Error al actualizar el gasto:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
+endpointsGastos.delete("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deleted = await deleteGasto(id);
+    if (!deleted) {
+      res.sendStatus(404);
+      return;
+    }
+    res.sendStatus(200);
+  } catch (error) {
+    console.error("Error al eliminar el gasto:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+endpointsGastos.get("/por-mes", async (req, res) => {
+  try {
+    const gastos = await getGastosPorMes();
+    res.json(gastos);
+  } catch (error) {
+    console.error("Error al obtener gastos por mes:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
+
+
+
+
+
+
+
+
+
+endpointsGastos.get("/miembros", async (req, res) => {
+  try {
+    const cantidad = await getCantidadMiembros();
+    res.json(cantidad);
+  } catch (error) {
+    console.error("Error al obtener miembros:", error);
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });
