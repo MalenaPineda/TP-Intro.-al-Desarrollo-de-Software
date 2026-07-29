@@ -4,5 +4,9 @@ run-front:
 
 run-back:
 	docker compose up -d
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> release
 run: run-back run-front

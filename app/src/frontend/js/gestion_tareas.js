@@ -15,7 +15,7 @@ async function init() {
     await obtenerCategorias();
     await cargarTareas();
     registrarHandlerFormulario();
-
+    document.querySelector('[name="fecha_vencimiento"]').min = new Date().toISOString().substring(0,10) //
 }
 //CATEGORIAS
 
@@ -224,6 +224,7 @@ async function construirFormularioEdicion(fila,tarea) {
     inputFecha.className = 'input is-small';
     inputFecha.type = 'date';
     inputFecha.value = formatoInputFecha(tarea.fecha_vencimiento);
+    inputFecha.min = new Date().toISOString().substring(0,10); //Establece mínimo para que no se pueda poner fecha pasada a día actual
     
     //Agregamos al elemento
     editDatos.appendChild(selectCategoria);
@@ -285,7 +286,9 @@ async function guardarEdicion(idTarea, tareaEditada) {
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
 
         await cargarTareas(); // refresca la tabla completa con los datos actualizados
+        mostrarToast('Tarea editada exitosamente');
     } catch (error) {
+        mostrarToast('Error al editar tarea', 'error'); //Notifcación caso fallido
         console.error("Error al guardar edición", error);
     }
 }
@@ -302,8 +305,10 @@ async function eliminarTarea(idTarea) {
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
 
         await cargarTareas(); // refresca la tabla sin la tarea eliminada
+        mostrarToast('Tarea eliminada exitosamente');
     } catch (error) {
         console.error("Error al eliminar tarea", error);
+        mostrarToast('Error al eliminar tarea', 'error');
     }
 }
 
@@ -334,8 +339,10 @@ function registrarHandlerFormulario() {
             });
             if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
 
-            form.reset();          // limpia el formulario tras crear con éxito
+            form.reset();   // limpia el formulario tras crear con éxito
             await cargarTareas();  // muestra la nueva tarea en la tabla
+            mostrarToast('Tarea creada exitosamente');       //función para mostrar exito de la acción
+
         } catch (error) {
             console.error("Error al crear tarea", error);
         }
@@ -346,9 +353,10 @@ function registrarHandlerFormulario() {
 
 //Convierte fecha ISO a formatoLegible
 function formatearFecha(fechaISO) {
-    if (!fechaISO) return 'Sin fecha';
-    const fecha = new Date(fechaISO);
-    return fecha.toLocaleDateString('es-AR',{day:'numeric',month: 'short'});
+    if (!fechaISO) return 'Sin fecha límite';
+    const [anio, mes, dia] = fechaISO.substring(0, 10).split('-');
+    const fecha = new Date(anio, mes - 1, dia);
+    return fecha.toLocaleDateString('es-AR', { day: 'numeric', month: 'short' });
 }
 //Ahora para el input (mejora visual)
 function formatoInputFecha(fechaISO) {
@@ -367,6 +375,14 @@ if (estado === 'pendiente') return 'badge-pendiente';
 function ponerPrimeraLetraMayuscula(str) {
     if (!str) return '';
     return str.charAt(0).toUpperCase() + str.slice(1);
+}
+//Función para mostrar acción exitosa o fallida
+function mostrarToast(mensaje, tipo='exito') {
+    const toast = document.getElementById('toast');
+    toast.textContent = mensaje;
+    toast.className = `toast ${tipo}`; 
+    setTimeout(()=>toast.classList.add('show'),10);
+    setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
 init();

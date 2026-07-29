@@ -139,15 +139,6 @@ endpointsGastos.get("/por-mes", async (req, res) => {
   }
 });
 
-
-
-
-
-
-
-
-
-
 endpointsGastos.get("/miembros", async (req, res) => {
   try {
     const cantidad = await getCantidadMiembros();

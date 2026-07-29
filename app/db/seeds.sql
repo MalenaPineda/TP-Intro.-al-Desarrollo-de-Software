@@ -39,11 +39,11 @@ INSERT INTO gastos (descripcion, monto, fecha_gasto, id_metodo, categoria, id_us
 ('Pizza del viernes', 6000.00, '2026-07-23', 1, 4, 4);
 -- Tareas del hogar
 INSERT INTO tareas (descripcion, fecha_vencimiento, diaria, estado, notas, id_categoria) VALUES 
-('Lavar los platos', '2026-06-24', TRUE, 'hecha', 'Después de la cena', 2),
-('Sacar la basura', '2026-06-24', TRUE, 'hecha', 'Turno de Jesús', 1),
-('Comprar papel higiénico', '2026-06-25', FALSE, 'hecha', 'Hacer lista de compras', 6),
-('Revisar la lámpara del living', '2026-06-27', FALSE, 'pendiente', 'Posible cambio de foco', 3),
-('Limpiar el baño', '2026-07-28', FALSE, 'hecha', 'Limpiar pisa y bacha', 1),
+('Lavar los platos', '2026-06-24', TRUE, 'en progreso', 'Después de la cena', 2),
+('Sacar la basura', '2026-06-24', TRUE, 'en progreso', 'Turno de Jesús', 1),
+('Comprar papel higiénico', '2026-06-25', FALSE, 'en progreso', 'Hacer lista de compras', 6),
+('Revisar la lámpara del living', '2026-06-27', FALSE, 'en progreso', 'Posible cambio de foco', 3),
+('Limpiar el baño', '2026-07-28', FALSE, 'pendiente', 'Limpiar pisa y bacha', 1),
 ('Comprar flores para el living', '2026-08-01', FALSE, 'pendiente', NULL, 6);
 -- Insignias
 INSERT INTO insignias (nombre, descripcion, cant_tarea, id_categoria_tarea, icono) VALUES 

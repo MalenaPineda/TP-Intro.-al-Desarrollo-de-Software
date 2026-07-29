@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 const URL_API = `${window.location.origin}/api/v1/gastos`;
+=======
+const URL_API = "http://localhost:8000/api/v1/gastos";
+>>>>>>> release
 
 const coloresPorCategoria = {
     1: "#00bfa5",
@@ -119,9 +123,15 @@ async function obtenerGastoMes() {
         const elemento = document.getElementById("gasto-mes");
         if (elemento) {
             if (gasto.total !== null) {
+<<<<<<< HEAD
                 elemento.textContent = new Intl.NumberFormat('en-US', {
                     style: 'currency',
                     currency: 'USD'
+=======
+                elemento.textContent = new Intl.NumberFormat('es-AR', {
+                    style: 'currency',
+                    currency: 'ARS'
+>>>>>>> release
                 }).format(Number(gasto.total));
             } else {
                 elemento.textContent = "$0.00";
@@ -147,9 +157,15 @@ async function obtenerGastoMesUsuario() {
         const elemento = document.getElementById("gasto-user");
 
         if (elemento) {
+<<<<<<< HEAD
             elemento.textContent = new Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency: 'USD'
+=======
+            elemento.textContent = new Intl.NumberFormat('es-AR', {
+                style: 'currency',
+                currency: 'ARS'
+>>>>>>> release
             }).format(Number(parte));
         }
 
