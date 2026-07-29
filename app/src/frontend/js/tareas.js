@@ -1,4 +1,4 @@
-const URL_API = 'http://localhost:8000/api/v1/tareas';
+const URL_API = `${window.location.origin}/api/v1/tareas`;
 const ID_USER = 3;
 
 const coloresPorCategoria = {

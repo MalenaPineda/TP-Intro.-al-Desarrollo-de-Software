@@ -1,4 +1,4 @@
-const URL_API = "http://localhost:8000/api/v1/gastos";
+const URL_API = `${window.location.origin}/api/v1/gastos`;
 
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('datos-gastos');

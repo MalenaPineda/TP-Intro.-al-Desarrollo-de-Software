@@ -1,4 +1,5 @@
-const URL_API_RANKING = "http://localhost:8000/api/v1/tareas/ranking";
+//const URL_API_RANKING = "http://localhost:8000/api/v1/tareas/ranking";
+const URL_API_RANKING = `${window.location.origin}/api/v1/tareas/ranking`;
 
 async function obtenerRanking() {
   try {
