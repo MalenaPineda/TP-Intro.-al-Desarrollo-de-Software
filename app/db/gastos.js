@@ -15,7 +15,7 @@ export async function getGastos() {
     JOIN usuarios u ON g.id_user = u.id_user
     JOIN metodo_pago m ON g.id_metodo = m.id
     ORDER BY g.fecha_gasto DESC
-  `);
+  `)
   return result.rows;
 }
 
