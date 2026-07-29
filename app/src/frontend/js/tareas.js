@@ -244,10 +244,12 @@ async function marcarHecha(id_tarea) {
 //HELPERS 
 
 //Convertir una fcha en formato ISO (aaaa-mm-ddT00:00:00.000z) a formato legible (25 jun)
+//Se hace manual ya que con la función de parseo cambiaba la zona horaria
 function formatearFecha(fechaISO) {
-    if(!fechaISO) return 'Sin fecha límite'; //Si no tiene fecha devuelve ese mensaje
-    const fecha = new Date(fechaISO); //crea un objeto Date desde el string ISO
-    return fecha.toLocaleDateString('es-AR', {day: 'numeric',month:'short'});
+    if (!fechaISO) return 'Sin fecha límite';
+    const [anio, mes, dia] = fechaISO.substring(0, 10).split('-');
+    const fecha = new Date(anio, mes - 1, dia);
+    return fecha.toLocaleDateString('es-AR', { day: 'numeric', month: 'short' });
 }
 
 

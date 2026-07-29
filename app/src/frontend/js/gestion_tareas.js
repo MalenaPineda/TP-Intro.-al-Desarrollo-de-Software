@@ -353,9 +353,10 @@ function registrarHandlerFormulario() {
 
 //Convierte fecha ISO a formatoLegible
 function formatearFecha(fechaISO) {
-    if (!fechaISO) return 'Sin fecha';
-    const fecha = new Date(fechaISO);
-    return fecha.toLocaleDateString('es-AR',{day:'numeric',month: 'short'});
+    if (!fechaISO) return 'Sin fecha límite';
+    const [anio, mes, dia] = fechaISO.substring(0, 10).split('-');
+    const fecha = new Date(anio, mes - 1, dia);
+    return fecha.toLocaleDateString('es-AR', { day: 'numeric', month: 'short' });
 }
 //Ahora para el input (mejora visual)
 function formatoInputFecha(fechaISO) {
