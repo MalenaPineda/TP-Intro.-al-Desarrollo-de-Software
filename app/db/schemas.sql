@@ -16,6 +16,7 @@ CREATE TABLE categoria_gastos (
     id_categoria SERIAL PRIMARY KEY, 
     nombre VARCHAR(100) NOT NULL
 );
+
 CREATE TABLE metodo_pago (
     id SERIAL PRIMARY KEY, 
     nombre VARCHAR(100) NOT NULL
