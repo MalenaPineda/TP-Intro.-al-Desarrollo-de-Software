@@ -24,8 +24,8 @@ app.use("/api/v1/tareas", rutaTareas);
 app.get("/health", (req, res) => {
   res.send("OK");
 });
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src/frontend'));
+app.get('/:path', (req, res) => {
+  res.sendFile(`app/src/frontend/${req.params.path}.html`);
 });
 app.listen(port, () => {
   console.log(`Convivencia listening on port ${port}`);
