@@ -320,3 +320,28 @@ body {
 .boton:hover {
   opacity: 0.8;
 }
+
+/* Portada */
+.portada {
+  background-image:
+      linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+      url("../img/disenio.png");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero .title{
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.hero .subtitle{
+  margin-top: 1rem;
+  font-size: 1.3rem;
+}
+
+.hero-body .container {
+  transform: translateY(60px);
+}
