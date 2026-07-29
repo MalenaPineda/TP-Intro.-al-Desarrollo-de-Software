@@ -1,11 +1,11 @@
 const URL_API = "http://localhost:8000/api/v1/gastos";
 
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('datos-gastos');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
+  const form = document.getElementById('datos-gastos');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
 
       data.monto = parseFloat(data.monto);
       data.categoria = parseInt(data.categoria, 10);
@@ -33,8 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error(error);
         alert('Hubo un error: ' + error.message);
       }
-    });
   });
+});
 
 async function obtenerCategorias() {
   try {

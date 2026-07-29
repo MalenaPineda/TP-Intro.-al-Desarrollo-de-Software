@@ -80,17 +80,6 @@ export async function deleteGasto(id) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 export async function getCantidadMiembros() {
   const result = await db.query(
     "SELECT COUNT(*) AS cantidad FROM usuarios;"

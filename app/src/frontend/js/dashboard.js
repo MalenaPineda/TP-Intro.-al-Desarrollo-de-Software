@@ -119,9 +119,9 @@ async function obtenerGastoMes() {
         const elemento = document.getElementById("gasto-mes");
         if (elemento) {
             if (gasto.total !== null) {
-                elemento.textContent = new Intl.NumberFormat('en-US', {
+                elemento.textContent = new Intl.NumberFormat('es-AR', {
                     style: 'currency',
-                    currency: 'USD'
+                    currency: 'ARS'
                 }).format(Number(gasto.total));
             } else {
                 elemento.textContent = "$0.00";
@@ -147,9 +147,9 @@ async function obtenerGastoMesUsuario() {
         const elemento = document.getElementById("gasto-user");
 
         if (elemento) {
-            elemento.textContent = new Intl.NumberFormat('en-US', {
+            elemento.textContent = new Intl.NumberFormat('es-AR', {
                 style: 'currency',
-                currency: 'USD'
+                currency: 'ARS'
             }).format(Number(parte));
         }
 
