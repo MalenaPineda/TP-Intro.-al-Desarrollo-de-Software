@@ -25,7 +25,7 @@ app.get("/health", (req, res) => {
   res.send("OK");
 });
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'app/src/frontend/dashboard.html'));
+  res.sendFile(path.join(__dirname, 'src/frontend'));
 });
 app.listen(port, () => {
   console.log(`Convivencia listening on port ${port}`);
