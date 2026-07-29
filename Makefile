@@ -4,5 +4,5 @@ run-front:
 
 run-back:
 	docker compose up -d
-
+	
 run: run-back run-front

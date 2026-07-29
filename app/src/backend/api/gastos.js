@@ -14,6 +14,16 @@ endpointsGastos.get("/", async (req, res) => {
   }
 });
 
+endpointsGastos.get("/", async (req, res) => {
+  try {
+    const gastos = await getGastos();
+    res.json(gastos);
+  } catch (error) {
+    console.error("Error al obtener los gastos:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
 endpointsGastos.get("/total-mes/usuario/:id", async (req, res) => {
   try {
     const idUser = req.params.id;
@@ -138,15 +148,6 @@ endpointsGastos.get("/por-mes", async (req, res) => {
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });
-
-
-
-
-
-
-
-
-
 
 endpointsGastos.get("/miembros", async (req, res) => {
   try {
