@@ -17,14 +17,15 @@ app.use(cors({
   allowedHeaders: ['Content-Type']
 }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'app/src/frontend')));
+app.use(express.static(path.join(__dirname, 'src/frontend')));
+
 app.use("/api/v1/gastos", endpointsGastos);
 app.use("/api/v1/tareas", rutaTareas);
 app.get("/health", (req, res) => {
   res.send("OK");
 });
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'app/src/frontend/index.html'));
+  res.sendFile(path.join(__dirname, 'app/src/frontend/dashboard.html'));
 });
 app.listen(port, () => {
   console.log(`Convivencia listening on port ${port}`);
