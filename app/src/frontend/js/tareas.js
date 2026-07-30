@@ -1,5 +1,5 @@
 const URL_API = 'http://localhost:8000/api/v1/tareas';
-const ID_USER = 3;
+const ID_USER = 2;
 
 const coloresPorCategoria = {
     1: '#00bfa5', // Limpieza
@@ -208,6 +208,7 @@ function mostrarTareasDeOtros(tareas)
 
 async function elegirTarea(id_tarea) {
     try {
+        console.log("ID_USER:", ID_USER);  // agregar esto
         const res = await fetch(`${URL_API}/${id_tarea}/usuarios`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
