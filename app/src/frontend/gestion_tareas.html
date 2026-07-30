@@ -55,20 +55,21 @@
         <div class="house-name">Casa Feliz</div>
         <div class="members">4 miembros</div>
     </div>
-        <nav class="sidebar-menu">
+    <nav class="sidebar-menu">
         <a href="dashboard" class="sidebar-item"><i class="fa-solid fa-house"></i> Página principal</a>
         <a href="ver_gastos" class="sidebar-item"><i class="fa-solid fa-dollar-sign"></i> Gastos</a>
         <a href="tareas" class="sidebar-item active"><i class="fa-solid fa-list-check"></i> Tareas</a>
-        <a href="ranking" class="sidebar-item active"><i class="fa-solid fa-trophy"></i>Ranking</a>
-
+        <a href="ranking" class="sidebar-item"><i class="fa-solid fa-trophy"></i>Ranking</a>
+        <a href="miembros" class="sidebar-item"><i class="fa-solid fa-users"></i> Miembros</a>
     </nav>
-    <div class="sidebar-user">
-        <div class="avatar">M</div>
+    <div class="sidebar-user" id="selector-usuario">
+        <div class="avatar" id="user-avatar">M</div>
         <div class="user-info">
-            <div class="name">Malena</div>
-            <div class="role">Integrantes</div>
+            <div class="name" id="user-name">Malena</div>
+            <div class="role">Cambiar usuario ▾</div>
         </div>
     </div>
+    <div id="user-dropdown" class="user-dropdown"></div>
 </aside>
 
   <!--
@@ -241,6 +242,7 @@
   - Se carga al final del body para que el DOM esté listo
 -->
  
+<script src="js/comun.js"></script>
 <script src="js/gestion_tareas.js"></script>
 </body>
 </html>
