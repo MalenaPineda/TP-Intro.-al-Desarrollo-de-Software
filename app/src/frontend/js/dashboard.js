@@ -129,7 +129,7 @@ function mostrarTareas(tareas) {
 function actualizarCantidadTareas(tareas) {
 
     const pendientes = tareas.filter(
-        tarea => tarea.estado !== "hecha"
+        tarea => tarea.estado !== "hecha" && tarea.estado !== "en progreso"
     );
 
     const elemento = document.getElementById("pending-tasks");
