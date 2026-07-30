@@ -17,7 +17,6 @@
   --c-internet:  #00d4d4;
   --c-other:     #ff6b35;
 }
-
 html, body { height: 100%; margin: 0; background: var(--bg); font-family: 'Inter', system-ui, sans-serif; }
 
 /* ── Layout ── */
@@ -321,6 +320,25 @@ body {
   opacity: 0.8;
 }
 
+/*Notificación submit exitoso */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  padding: 12px 24px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.toast.exito   { background: #28a745; }
+.toast.error   { background: #dc3545; } 
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -348,6 +366,20 @@ body {
     font-size: 1.3rem;
 }
 
+.boton {
+    background-color: #00bfa5;
+    color: rgb(0, 0, 0);
+    padding: 15px 30px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 18px;
+    transition: background-color 0.3s ease; 
+}
+
+
+.boton:hover {
+    opacity: 0.8;
+}
 .hero-body .container {
     transform: translateY(60px);
 }
