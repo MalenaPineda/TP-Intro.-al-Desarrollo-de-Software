@@ -26,9 +26,7 @@ function mostrarRanking(ranking) {
   ranking.forEach((usuario, index) => {
     const insigniasHtml = usuario.insignias.length > 0
       ? usuario.insignias.map((i) =>
-          `<span title="${i.nombre}" style="margin-right: 0.3rem;">
-            ${i.icono ? `<img src="${i.icono}" alt="${i.nombre}" style="width:20px; height:20px; vertical-align:middle;">` : "🏅"}
-          </span>`
+          `<span title="${i.nombre}" style="margin-right: 0.3rem;">🏅 ${i.nombre}</span>`
         ).join("")
       : "";
 
