@@ -61,9 +61,11 @@
       border-radius: 999px; font-size: 0.72rem; padding: 1px 7px; font-weight: 600;
     }
     .sidebar-user {
-      display: flex; align-items: center; gap: 0.65rem;
-      padding: 0.5rem; border-top: 1px solid var(--border); margin-top: 1rem;
-    }
+  display: flex; align-items: center; gap: 0.65rem;
+  cursor: pointer;
+  position: relative;
+  padding: 0.5rem; border-top: 1px solid var(--border); margin-top: 1rem;
+}
     .avatar {
       width: 36px; height: 36px; border-radius: 50%;
       background: var(--accent); color: #fff; font-weight: 700; font-size: 0.85rem;
@@ -152,6 +154,30 @@
       .bottom-grid   { grid-template-columns: 1fr; }
       .chart-wrap    { flex-direction: column; align-items: flex-start; }
     }
+    .user-dropdown {
+  display: none;
+  position: absolute;
+  bottom: 75px;
+  left: 10px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 180px;
+  z-index: 20;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.user-dropdown.show { display: block; }
+.user-dropdown-item {
+  padding: 0.6rem 0.75rem;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+.user-dropdown-item:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
   </style>
 </head>
 <body>
@@ -162,21 +188,21 @@
         <div class="house-name">Casa Feliz</div>
         <div class="members">4 miembros</div>
     </div>
-    
     <nav class="sidebar-menu">
-        <a href="dashboard" class="sidebar-item"><i class="fa-solid fa-house"></i>Página principal</a>
-        <a href="ver_gastos" class="sidebar-item"><i class="fa-solid fa-dollar-sign"></i>Gastos</a>
-        <a href="tareas" class="sidebar-item"><i class="fa-solid fa-list-check"></i>Tareas</a>
+        <a href="dashboard" class="sidebar-item"><i class="fa-solid fa-house"></i> Página principal</a>
+        <a href="ver_gastos" class="sidebar-item active"><i class="fa-solid fa-dollar-sign"></i> Gastos</a>
+        <a href="tareas" class="sidebar-item"><i class="fa-solid fa-list-check"></i> Tareas</a>
         <a href="ranking" class="sidebar-item"><i class="fa-solid fa-trophy"></i>Ranking</a>
+        <a href="miembros" class="sidebar-item"><i class="fa-solid fa-users"></i> Miembros</a>
     </nav>
-    
-    <div class="sidebar-user">
-        <div class="avatar">M</div>
+    <div class="sidebar-user" id="selector-usuario">
+        <div class="avatar" id="user-avatar">M</div>
         <div class="user-info">
-            <div class="name">Malena</div>
-            <div class="role">Integrantes</div>
+            <div class="name" id="user-name">Malena</div>
+            <div class="role">Cambiar usuario ▾</div>
         </div>
     </div>
+    <div id="user-dropdown" class="user-dropdown"></div>
 </aside>
   <!-- ═══ MAIN ═══ -->
   <main class="main-content">
@@ -232,6 +258,7 @@
 </div>
 <!-- Chart.js para el donut -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="js/comun.js"></script>
 <script src="js/ver_gastos.js"></script>
 </body>
 </html>

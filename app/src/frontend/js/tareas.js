@@ -1,5 +1,5 @@
 const URL_API = 'http://localhost:8000/api/v1/tareas';
-const ID_USER = 2;
+const ID_USER = getUsuarioActual().id_user;
 
 const coloresPorCategoria = {
     1: '#00bfa5', // Limpieza
