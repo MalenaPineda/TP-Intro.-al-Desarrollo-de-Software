@@ -341,7 +341,8 @@ function registrarHandlerFormulario() {
 
             form.reset();   // limpia el formulario tras crear con éxito
             await cargarTareas();  // muestra la nueva tarea en la tabla
-            mostrarToast('Tarea creada exitosamente');       //función para mostrar exito de la acción
+            alert("Tarea creada exitosamente")
+            //mostrarToast('Tarea creada exitosamente');       //función para mostrar exito de la acción
 
         } catch (error) {
             console.error("Error al crear tarea", error);
