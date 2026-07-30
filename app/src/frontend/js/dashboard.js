@@ -1,4 +1,6 @@
 const URL_API = `${window.location.origin}/api/v1/gastos`;
+const URL_API = `${window.location.origin}/api/v1/tareas`;
+
 
 const coloresPorCategoria = {
     1: "#00bfa5",
