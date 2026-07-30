@@ -208,6 +208,7 @@ function mostrarTareasDeOtros(tareas)
 
 async function elegirTarea(id_tarea) {
     try {
+        console.log("ID_USER:", ID_USER);  // agregar esto
         const res = await fetch(`${URL_API}/${id_tarea}/usuarios`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},

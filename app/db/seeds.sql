@@ -47,9 +47,13 @@ INSERT INTO tareas (descripcion, fecha_vencimiento, diaria, estado, notas, id_ca
 ('Comprar flores para el living', '2026-08-01', FALSE, 'pendiente', NULL, 6);
 -- Insignias
 INSERT INTO insignias (nombre, descripcion, cant_tarea, id_categoria_tarea, icono) VALUES 
-('Chef del mes', 'Completa 20 tareas de cocina', 20, 2, 'chef.png'),
-('Eco-friendly', 'Saca la basura 15 veces', 15, 1, 'eco.png'),
-('Comprador estrella', 'Realiza 10 compras', 10, 6, 'shopping.png');
+('Chef del mes', 'Completa 3 tareas de cocina', 3, 2, 'chef.png'),
+('Eco-friendly', 'Saca la basura 3 veces', 3, 1, 'eco.png'),
+('Comprador estrella', 'Realiza 3 compras', 3, 6, 'shopping.png');
+INSERT INTO insignias (nombre, descripcion, cant_tarea, id_categoria_tarea, icono) VALUES
+('Manitas de oro', 'Completa 3 tareas de mantenimiento', 3, 3, 'manitas.png'),
+('Pulgar verde', 'Completa 3 tareas de jardinería', 3, 4, 'pulgar.png'),
+('Amigo de los animales', 'Completa 3 tareas de mascotas', 3, 5, 'mascotas.png');
 -- Relación tarea-usuario
 INSERT INTO tarea_user (id_tarea, id_user) VALUES 
 (1, 4),

@@ -52,7 +52,7 @@
       padding: 0.6rem 0.75rem; border-radius: 10px;
       color: #444; font-size: 0.92rem; cursor: pointer;
       margin-bottom: 2px; text-decoration: none;
-      transition: background 0.15s;
+      /*transition: background 0.15s;*/
     }
     .sidebar-item:hover  { background: var(--accent-soft); color: var(--accent); }
     .sidebar-item.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
@@ -229,6 +229,7 @@
     <!-- Bottom grid -->
     <div class="bottom-grid">
       <!-- Por categoría -->
+      <div>
       <div class="panel-card">
         <div class="panel-title">Por categoría</div>
         <div class="chart-wrap">
@@ -236,10 +237,21 @@
           <div class="legend"></div>
         </div>
       </div>
+      <div class="panel-card">
+        <div class="panel-title">Gasto mensual</div>
+        <div class="chart-wrap">
+          <canvas id="barras"></canvas>
+          <div class="legend"></div>
+        </div>
+      </div>
+      
+    </div>
+
       <!-- Transacciones recientes -->
       <div class="panel-card">
         <div class="panel-title">Transacciones recientes</div>
       <div id="lista-gastos"></div>
+     
       </div>
     </div>
   </main>
