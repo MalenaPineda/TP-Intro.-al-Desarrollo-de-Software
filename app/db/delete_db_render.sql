@@ -1,0 +1,9 @@
+DELETE FROM tarea_user;
+DELETE FROM user_insignia;
+DELETE FROM tareas;
+DELETE FROM gastos;
+DELETE FROM insignias;
+DELETE FROM categoria_tareas;
+DELETE FROM categoria_gastos;
+DELETE FROM metodo_pago;
+DELETE FROM usuarios;
