@@ -52,6 +52,10 @@ INSERT INTO insignias (nombre, descripcion, cant_tarea, id_categoria_tarea, icon
 ('Chef del mes', 'Completa 3 tareas de cocina', 3, 2, 'chef.png'),
 ('Eco-friendly', 'Saca la basura 3 veces', 3, 1, 'eco.png'),
 ('Comprador estrella', 'Realiza 3 compras', 3, 6, 'shopping.png');
+INSERT INTO insignias (nombre, descripcion, cant_tarea, id_categoria_tarea, icono) VALUES
+('Manitas de oro', 'Completa 3 tareas de mantenimiento', 3, 3, 'manitas.png'),
+('Pulgar verde', 'Completa 3 tareas de jardinería', 3, 4, 'pulgar.png'),
+('Amigo de los animales', 'Completa 3 tareas de mascotas', 3, 5, 'mascotas.png');
 -- Relación tarea-usuario
 INSERT INTO tarea_user (id_tarea, id_user) VALUES 
 (1, 4),
