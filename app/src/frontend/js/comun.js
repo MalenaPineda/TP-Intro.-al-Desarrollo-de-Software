@@ -50,13 +50,13 @@ async function cargarDropdownMiembros() {
 }
 
 // Muestra/oculta el dropdown al clickear el usuario en el sidebar
-function toggleDropdown() {
+async function toggleDropdown() {
     const dropdown = document.getElementById('user-dropdown');
     if (!dropdown) return;
     if (dropdown.style.display === 'block') {
         ocultarDropdown();
     } else {
-        cargarDropdownMiembros();
+       await cargarDropdownMiembros();
         dropdown.style.display = 'block';
     }
 }

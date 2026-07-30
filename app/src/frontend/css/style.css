@@ -52,6 +52,7 @@ html, body { height: 100%; margin: 0; background: var(--bg); font-family: 'Inter
 }
 .sidebar-user {
   display: flex; align-items: center; gap: 0.65rem;
+  cursor: pointer;
   padding: 0.5rem; border-top: 1px solid var(--border); margin-top: 1rem;
 }
 .avatar {
