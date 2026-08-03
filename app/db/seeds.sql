@@ -39,21 +39,51 @@ INSERT INTO gastos (descripcion, monto, fecha_gasto, id_metodo, categoria, id_us
 ('Pizza del viernes', 6000.00, '2026-07-23', 1, 4, 4);
 -- Tareas del hogar
 INSERT INTO tareas (descripcion, fecha_vencimiento, diaria, estado, notas, id_categoria) VALUES 
-('Lavar los platos', '2026-06-24', TRUE, 'en progreso', 'Después de la cena', 2),
-('Sacar la basura', '2026-06-24', TRUE, 'en progreso', 'Turno de Jesús', 1),
-('Comprar papel higiénico', '2026-06-25', FALSE, 'en progreso', 'Hacer lista de compras', 6),
-('Revisar la lámpara del living', '2026-06-27', FALSE, 'en progreso', 'Posible cambio de foco', 3),
-('Limpiar el baño', '2026-07-28', FALSE, 'pendiente', 'Limpiar pisa y bacha', 1),
-('Comprar flores para el living', '2026-08-01', FALSE, 'pendiente', NULL, 6);
+('Lavar los platos', '2026-06-24', TRUE, 'hecha', 'Después de la cena', 2),
+('Sacar la basura', '2026-06-24', TRUE, 'hecha', 'Turno de Jesús', 1),
+('Comprar papel higiénico', '2026-06-25', FALSE, 'hecha', 'Hacer lista de compras', 6),
+('Revisar la lámpara del living', '2026-06-27', FALSE, 'pendiente', 'Posible cambio de foco', 3),
+('Limpiar el baño', '2026-07-28', FALSE, 'hecha', 'Limpiar pisa y bacha', 1),
+('Comprar flores para el living', '2026-08-01', FALSE, 'pendiente', NULL, 6),
+('Barrer el living', '2026-07-29', TRUE, 'hecha', 'Turno de María', 1),
+('Limpiar los vidrios', '2026-07-30', FALSE, 'hecha', 'Turno de María', 1),
+('Cocinar el asado', '2026-07-31', FALSE, 'hecha', 'Turno de María', 2),
+('Preparar la cena', '2026-08-01', TRUE, 'hecha', 'Turno de María', 2),
+('Arreglar el enchufe', '2026-07-25', FALSE, 'hecha', 'Turno de Pedro', 3),
+('Pintar la pared', '2026-07-26', FALSE, 'hecha', 'Turno de Pedro', 3),
+('Reparar la puerta', '2026-07-27', FALSE, 'hecha', 'Turno de Pedro', 3),
+('Regar las plantas', '2026-07-25', TRUE, 'hecha', 'Turno de Pedro', 4),
+('Cortar el pasto', '2026-07-26', FALSE, 'hecha', 'Turno de Pedro', 4),
+('Podar el arbolito', '2026-07-27', FALSE, 'hecha', 'Turno de Pedro', 4),
+('Pasear al perro', '2026-07-25', TRUE, 'hecha', 'Turno de Pedro', 5),
+('Alimentar al gato', '2026-07-26', TRUE, 'hecha', 'Turno de Pedro', 5),
+('Limpiar la pecera', '2026-07-27', FALSE, 'hecha', 'Turno de Pedro', 5);
 -- Insignias
 INSERT INTO insignias (nombre, descripcion, cant_tarea, id_categoria_tarea, icono) VALUES 
-('Chef del mes', 'Completa 20 tareas de cocina', 20, 2, 'chef.png'),
-('Eco-friendly', 'Saca la basura 15 veces', 15, 1, 'eco.png'),
-('Comprador estrella', 'Realiza 10 compras', 10, 6, 'shopping.png');
+('Chef del mes', 'Completa 3 tareas de cocina', 3, 2, 'chef.png'),
+('Eco-friendly', 'Saca la basura 3 veces', 3, 1, 'eco.png'),
+('Comprador estrella', 'Realiza 3 compras', 3, 6, 'shopping.png');
+INSERT INTO insignias (nombre, descripcion, cant_tarea, id_categoria_tarea, icono) VALUES
+('Manitas de oro', 'Completa 3 tareas de mantenimiento', 3, 3, 'manitas.png'),
+('Pulgar verde', 'Completa 3 tareas de jardinería', 3, 4, 'pulgar.png'),
+('Amigo de los animales', 'Completa 3 tareas de mascotas', 3, 5, 'mascotas.png');
 -- Relación tarea-usuario
 INSERT INTO tarea_user (id_tarea, id_user) VALUES 
 (1, 4),
 (2, 3),
 (3, 5),
 (4, 3),
-(5, 4);
+(5, 4),
+(7, 4),
+(8, 4),
+(9, 4),
+(10, 4),
+(11, 5),
+(12, 5),
+(13, 5),
+(14, 5),
+(15, 5),
+(16, 5),
+(17, 5),
+(18, 5),
+(19, 5);

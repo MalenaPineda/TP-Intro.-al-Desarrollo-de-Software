@@ -7,72 +7,68 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.2/css/bulma.min.css" />
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
   
 </head>
 <body>
-
 <div class="app-layout">
-
   <!-- ═══ SIDEBAR ═══ -->
-  <aside class="sidebar">
+<aside class="sidebar">
     <div class="sidebar-brand">
         <div class="house-name">Casa Feliz</div>
         <div class="members">4 miembros</div>
     </div>
     
     <nav class="sidebar-menu">
-        <a href="dashboard" class="sidebar-item"><i class="fa-solid fa-house"></i>Página principal</a>
-        <a href="ver_gastos" class="sidebar-item"><i class="fa-solid fa-dollar-sign"></i>Gastos</a>
-        <a href="tareas" class="sidebar-item"><i class="fa-solid fa-list-check"></i>Tareas</a>
+        <a href="dashboard" class="sidebar-item"><i class="fa-solid fa-house"></i> Página principal</a>
+        <a href="ver_gastos" class="sidebar-item"><i class="fa-solid fa-dollar-sign"></i> Gastos</a>
+        <a href="tareas" class="sidebar-item active"><i class="fa-solid fa-list-check"></i> Tareas</a>
         <a href="ranking" class="sidebar-item"><i class="fa-solid fa-trophy"></i>Ranking</a>
+        <a href="miembros" class="sidebar-item "><i class="fa-solid fa-users"></i> Miembros</a>
+
     </nav>
     
-    <div class="sidebar-user">
-        <div class="avatar">M</div>
-        <div class="user-info">
-            <div class="name">Malena</div>
-            <div class="role">Integrantes</div>
-        </div>
+ <!-- Nuevo -->
+    <div class="sidebar-user" id="selector-usuario">
+     <div class="avatar" id="user-avatar">M</div>
+      <div class="user-info">
+        <div class="name" id="user-name">Malena</div>
+        <div class="role">Cambiar usuario ▾</div>
     </div>
+</div>
+<div id="user-dropdown" class="user-dropdown">
+    <!-- Se carga dinámicamente desde comun.js -->
+</div>
 </aside>
-
   <!-- ═══ MAIN ═══ -->
   <main class="main-content">
-
     <div class="page-header">
       <div>
         <h1 class="page-title">Tareas</h1>
         <p class="page-subtitle">Organiza y elige las tareas de la casa</p>
       </div>
-
       <a href="/gestion_tareas" class="btn-add">
         <i class="fa-solid fa-list-check"></i> Gestionar tareas
       </a>    </div>
     <div class="tasks-grid">
-
       <!-- Columna 1: Disponibles -->
       <div class="panel-card">
         <div class="panel-title"><i class="fa-solid fa-circle dot-verde"></i> Disponibles</div>
         <div id="lista-disponibles"></div>
       </div>
-
       <!-- Columna 2: Mis tareas -->
       <div class="panel-card">
         <div class="panel-title"><i class="fa-solid fa-circle-check dot-azul"></i> Mis tareas</div>
         <div id="lista-mias"></div>
       </div>
-
       <!-- Columna 3: Tareas de otros -->
       <div class="panel-card">
         <div class="panel-title"><i class="fa-solid fa-users dot-violeta"></i> Tareas de otros</div>
         <div id="lista-otros"></div>
       </div>
-
     </div>
   </main>
 </div>
-
+<script src="js/comun.js"></script>
 <script src="js/tareas.js"></script>
 </body>
 </html>
