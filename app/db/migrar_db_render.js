@@ -13,9 +13,10 @@ async function run(file) {
 }
 
 async function main() {
-    await run("./schemas.sql");
-    await run("./seed.sql");
-    await pool.end();
+  await run("./delete.sql");     // Borra todo
+  await run("./schemas.sql");    // Crea tablas de nuevo
+  await run("./seeds.sql");       // Inserta datos nuevos
+  await pool.end();
   }
 main().catch((err) => {
   console.error("Error:", err);
