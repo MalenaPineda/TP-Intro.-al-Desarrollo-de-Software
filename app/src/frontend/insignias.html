@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CoLiving – Insignias</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.2/css/bulma.min.css" />
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+<div class="app-layout">
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="house-name">Casa Feliz</div>
+      <div class="members" id="cantidad-miembros">4 miembros</div>
+    </div>
+    <nav class="sidebar-menu">
+      <a href="dashboard" class="sidebar-item"><i class="fa-solid fa-house"></i> Página principal</a>
+      <a href="ver_gastos" class="sidebar-item"><i class="fa-solid fa-dollar-sign"></i> Gastos</a>
+      <a href="tareas" class="sidebar-item"><i class="fa-solid fa-list-check"></i> Tareas</a>
+      <a href="ranking" class="sidebar-item"><i class="fa-solid fa-trophy"></i>Ranking</a>
+      <a href="miembros" class="sidebar-item active"><i class="fa-solid fa-users"></i> Miembros</a>
+    </nav>
+    <div class="sidebar-user" id="selector-usuario">
+      <div class="avatar" id="user-avatar">M</div>
+      <div class="user-info">
+        <div class="name" id="user-name">Malena</div>
+        <div class="role">Cambiar usuario ▾</div>
+      </div>
+    </div>
+    <div id="user-dropdown" class="user-dropdown"></div>
+  </aside>
+
+  <main class="main-content">
+
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Insignias</h1>
+      </div>
+    </div>
+
+    <div class="panel-card" style="margin-bottom: 1.5rem;">
+      <div class="panel-title">
+        <i class="fa-solid fa-circle-plus" style="color: var(--teal);"></i> Agregar insignia
+      </div>
+
+      <form id="form-crear-insignia">
+
+        <div class="field mb-4">
+          <label class="label has-text-grey-dark has-text-weight-normal">Nombre</label>
+          <div class="control">
+            <input class="input is-medium" name="nombre" type="text" placeholder="ej. El barredor estrella" required />
+          </div>
+        </div>
+        <div class="field mb-4">
+            <label class="label has-text-grey-dark has-text-weight-normal">Descripcion</label>
+            <div class="control">
+              <input class="input is-medium" name="descripcion" type="text" placeholder="ej. Que bien te ves barriendo Esperancita" required />
+            </div>
+          </div>
+        
+        <div class="columns mb-4">
+
+          <div class="column">
+            <div class="field">
+              <label class="label has-text-grey-dark has-text-weight-normal">Categoría</label>
+              <div class="control">
+                <select name="categoria" id="categoria" class="input is-medium" style="border-radius: 10px;" required>
+                  <option value="">Seleccionar...</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="field">
+              <label class="label has-text-grey-dark has-text-weight-normal">Cantidad de Tareas</label>
+              <div class="control">
+                <input class="input is-medium" name="cantidad" type="number" required />
+              </div>
+            </div>
+          </div>
+            
+          <div class="column">
+            <div class="field">
+              <label class="label has-text-grey-dark has-text-weight-normal">Icono</label>
+              <div class="control">
+                <select name="icono" id="icono" class="input is-medium" style="border-radius: 10px;" required>
+                  <option value="">Seleccionar insignia...</option>
+                  <option value="trophy">🏆 Trophy</option>
+                  <option value="star">⭐ Star</option>
+                  <option value="medal">🥇 Medal</option>
+                  <option value="crown">👑 Crown</option>
+                  <option value="fire">🔥 Fire</option>
+                  <option value="heart">❤️ Heart</option>
+                  <option value="gem">💎 Gem</option>
+                  <option value="shield">🛡️ Shield</option>
+                  <option value="lightning">⚡ Lightning</option>
+                  <option value="sparkles">✨ Sparkles</option>
+                  <option value="ribbon">🎗️ Ribbon</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="field">
+          <div class="control">
+            <button class="button is-fullwidth is-medium py-5" type="submit">
+              <span class="icon mr-2"><i class="fa-solid fa-circle-plus"></i></span>
+              <span>Agregar insignia</span>
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+    <div class="panel-card">
+      <div class="panel-title">
+        <i class="fa-solid fa-list" style="color: var(--accent);"></i> Todas las insignias
+      </div>
+      <div id="lista-insignias"></div>
+    </div>
+
+  </main>
+</div>
+
+<script src="js/insignias.js"></script>
+
+</body>
+</html>
