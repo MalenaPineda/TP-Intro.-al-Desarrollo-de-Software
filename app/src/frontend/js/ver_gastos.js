@@ -185,7 +185,7 @@ function mostrarGastoDelMes(gasto) {
 
 async function obtenerGastoMesUsuario() {
   try {
-    const respuesta = await fetch(`${URL_API}/total-mes/usuario/1`);
+    const respuesta = await fetch(`${URL_API}/total-mes/usuario/${getUsuarioActual().id_user}`);
     if (!respuesta.ok) {
       throw new Error(`Error HTTP: ${respuesta.status}`);
     }
