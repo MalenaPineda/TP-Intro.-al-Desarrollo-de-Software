@@ -165,6 +165,26 @@ grid-template-columns: 1fr 1fr 1fr;
 gap: 1rem;
 }
 
+/* Columnas de tareas con scroll interno (solo página Tareas) */
+.main-content.tasks-page {
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  max-width: 90rem;
+}
+.tasks-page .tasks-grid { flex: 1; min-height: 0; align-items: stretch; }
+.tasks-page .panel-card { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.tasks-page .panel-title { flex-shrink: 0; }
+.tasks-page .task-column-list {
+  flex: 1; min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #ddd transparent;
+}
+.tasks-page .task-column-list::-webkit-scrollbar { width: 0.5rem; }
+.tasks-page .task-column-list::-webkit-scrollbar-thumb { background: #ddd; border-radius: 0.25rem; }
+
 .task-card {
 background: #fff;
 border-radius: var(--radius);
@@ -259,6 +279,7 @@ gap: 0.3rem;
 
 @media (max-width: 768px) {
 .tasks-grid { grid-template-columns: 1fr; }
+.main-content.tasks-page { height: auto; }
 }
 
 /*Notificación submit exitoso */
