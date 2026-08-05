@@ -15,7 +15,7 @@
 <aside class="sidebar">
     <div class="sidebar-brand">
         <div class="house-name">Casa Feliz</div>
-        <div class="members">4 miembros</div>
+        <div class="members" id="cantidad-miembros">4 miembros</div>
     </div>
     
     <nav class="sidebar-menu">
@@ -40,7 +40,7 @@
 </div>
 </aside>
   <!-- ═══ MAIN ═══ -->
-  <main class="main-content">
+  <main class="main-content tasks-page">
     <div class="page-header">
       <div>
         <h1 class="page-title">Tareas</h1>
@@ -53,17 +53,17 @@
       <!-- Columna 1: Disponibles -->
       <div class="panel-card">
         <div class="panel-title"><i class="fa-solid fa-circle dot-verde"></i> Disponibles</div>
-        <div id="lista-disponibles"></div>
+        <div id="lista-disponibles" class="task-column-list"></div>
       </div>
       <!-- Columna 2: Mis tareas -->
       <div class="panel-card">
         <div class="panel-title"><i class="fa-solid fa-circle-check dot-azul"></i> Mis tareas</div>
-        <div id="lista-mias"></div>
+        <div id="lista-mias" class="task-column-list"></div>
       </div>
       <!-- Columna 3: Tareas de otros -->
       <div class="panel-card">
         <div class="panel-title"><i class="fa-solid fa-users dot-violeta"></i> Tareas de otros</div>
-        <div id="lista-otros"></div>
+        <div id="lista-otros" class="task-column-list"></div>
       </div>
     </div>
   </main>
