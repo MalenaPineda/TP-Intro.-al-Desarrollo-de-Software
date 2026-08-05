@@ -7,6 +7,9 @@ const coloresPorCategoria = {
   4: "#f5a623", // cleaning
   5: "#ff6b35", // other
 };
+const nombresMeses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+
+ID_USER = 1
 
 async function obtenerGastos() {
   try {
@@ -267,7 +270,6 @@ function mostrarGrafico(categorias) {
     contenedorLeyenda.appendChild(item);
   });
 }
-const nombresMeses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
 async function obtenerGastosPorMes() {
   try {
@@ -315,8 +317,63 @@ function mostrarGraficoBarras(datos) {
   });
 }
 
+
+async function obtenerGastosUsuarioPorMes() {
+  try {
+    console.log(`${URL_API}/usuario/${ID_USER}/gasto-por-mes`)
+    const respuesta = await fetch(`${URL_API}/usuario/${ID_USER}/gastos-por-mes`);
+    if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
+    const datos = await respuesta.json();
+    mostrarGraficoLinea(datos);
+  } catch (error) {
+    console.error("No se pudieron cargar los gastos por mes:", error);
+  }
+}
+
+function mostrarGraficoLinea(datos) {
+  const etiquetas = datos.map(d => {
+    const fecha = new Date(d.mes);
+    return nombresMeses[fecha.getMonth()];
+  });  
+  const valores = datos.map(d => parseFloat(d.total));
+
+  new Chart(document.getElementById('lineChart'), {
+    type: 'line',
+    data: {
+      labels: etiquetas,
+      datasets: [{
+        label: 'Gastos mensuales',
+        data: valores,
+        borderColor: '#00bfa5',
+        backgroundColor: 'rgba(0, 191, 165, 0.1)',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.4
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: true }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: value => `$${value}`
+          }
+        }
+      }
+    }
+  });
+}
+
+
+
+
 obtenerGastosPorMes();
 obtenerGastosPorCategoria()
 obtenerGastos()
 obtenerGastoMes()
 obtenerGastoMesUsuario()
+obtenerGastosUsuarioPorMes();
