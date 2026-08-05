@@ -69,6 +69,7 @@ function ocultarDropdown() {
 // Inicializa el sidebar: muestra el usuario actual y registra el click
 function initSidebar() {
     actualizarSidebar();
+    cargarCantidadMiembros();   
     const selector = document.getElementById('selector-usuario');
     if (selector) selector.addEventListener('click', toggleDropdown);
     // Cierra el dropdown si se clickea afuera
@@ -79,4 +80,17 @@ function initSidebar() {
     });
 }
 
+//Para que en el side bar se muestre la cantidad de miembros en la casa de forma dinámica
+async function cargarCantidadMiembros() {
+    const elemento = document.getElementById('cantidad-miembros');
+    if (!elemento) return;
+    try {
+        const res = await fetch(URL_API_USUARIOS); // solo usuarios activos
+        if (!res.ok) throw new Error('Error al cargar miembros');
+        const miembros = await res.json();
+        elemento.textContent = miembros.length === 1 ? '1 miembro' : `${miembros.length} miembros`;
+    } catch (error) {
+        console.error('Error al cargar cantidad de miembros', error); // conserva el texto por defecto
+    }
+}
 initSidebar();

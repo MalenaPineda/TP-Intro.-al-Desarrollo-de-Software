@@ -186,7 +186,7 @@
   <aside class="sidebar">
     <div class="sidebar-brand">
         <div class="house-name">Casa Feliz</div>
-        <div class="members">4 miembros</div>
+        <div class="members" id="cantidad-miembros">4 miembros</div>
     </div>
     <nav class="sidebar-menu">
         <a href="dashboard" class="sidebar-item"><i class="fa-solid fa-house"></i> Página principal</a>
@@ -216,46 +216,46 @@
         <i class="fa-solid fa-circle-plus"></i> Agregar gasto
       </a>
     </div>
-    <div class="summary-grid">
-      <div class="summary-card">
-        <div class="summary-label">Gasto del mes</div>
-        <div class="summary-value teal" id="gasto-mes"></div>
-      </div>
-      <div class="summary-card">
-        <div class="summary-label">Mi gasto</div>
-        <div class="summary-value purple" id="gasto-user"></div>
-      </div>
-    </div>
-    <!-- Bottom grid -->
-    <div class="bottom-grid">
-      <!-- Por categoría -->
-      <div>
-      <div class="panel-card">
-        <div class="panel-title">Por categoría</div>
-        <div class="chart-wrap">
-          <canvas id="donut"></canvas>
-          <div class="legend"></div>
-        </div>
-      </div>
-      <div class="panel-card">
-        <div class="panel-title">Gasto mensual</div>
-        <div class="chart-wrap">
-          <canvas id="barras"></canvas>
-          <div class="legend"></div>
-        </div>
-      </div>
-      
+<!-- Summary cards -->
+<div class="summary-grid">
+  <div class="summary-card">
+    <div class="summary-label">Gasto del mes</div>
+    <div class="summary-value teal" id="gasto-mes"></div>
+  </div>
+  <div class="summary-card">
+    <div class="summary-label">Mi gasto</div>
+    <div class="summary-value purple" id="gasto-user"></div>
+  </div>
+</div>
+
+<!-- Gráficos (izq) + Transacciones (der) -->
+<div class="bottom-grid">
+  <!-- Gráficos apilados verticalmente -->
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <div class="panel-card">
+      <div class="panel-title">Por categoría</div>
+      <canvas id="donut"></canvas>
     </div>
 
-      <!-- Transacciones recientes -->
-      <div class="panel-card">
-        <div class="panel-title">Transacciones recientes</div>
-      <div id="lista-gastos"></div>
-     
-      </div>
+    <div class="panel-card">
+      <div class="panel-title">Gasto mensual</div>
+      <canvas id="barras"></canvas>
     </div>
-  </main>
+
+    <div class="panel-card">
+      <div class="panel-title">Gasto por usuario</div>
+      <canvas id="lineChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Transacciones (derecha) -->
+  <div class="panel-card">
+    <div class="panel-title">Transacciones recientes</div>
+    <div id="lista-gastos"></div>
+  </div>
 </div>
+
+  </main>
 <!-- Chart.js para el donut -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="js/comun.js"></script>
