@@ -7,6 +7,14 @@ CREATE TABLE usuarios (
     activo BOOLEAN DEFAULT TRUE
 );
 
+CREATE TABLE iconos (
+    id_icono SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    clase VARCHAR(100) NOT NULL,
+    color VARCHAR(50)
+);
+
+
 CREATE TABLE categoria_tareas (
     id_categoria SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL
@@ -53,8 +61,9 @@ CREATE TABLE insignias (
     descripcion VARCHAR(255) NOT NULL,
     cant_tarea INT NOT NULL,
     id_categoria_tarea INT,
-    icono VARCHAR(255),
-    FOREIGN KEY (id_categoria_tarea) REFERENCES categoria_tareas(id_categoria)
+    id_icono INT,
+    FOREIGN KEY (id_categoria_tarea) REFERENCES categoria_tareas(id_categoria),
+    FOREIGN KEY (id_icono) REFERENCES iconos(id_icono)
 );
 
 CREATE TABLE user_insignia (
@@ -74,3 +83,4 @@ CREATE TABLE tarea_user (
     FOREIGN KEY (id_tarea) REFERENCES tareas(id_tarea),
     FOREIGN KEY (id_user) REFERENCES usuarios(id_user)
 );
+
