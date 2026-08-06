@@ -14,26 +14,26 @@
 
   <aside class="sidebar">
     <div class="sidebar-brand">
-      <div class="house-name">Casa Feliz</div>
-      <div class="members" id="cantidad-miembros">4 miembros</div>
+        <div class="house-name">Casa Feliz</div>
+        <div class="members" id="cantidad-miembros">4 miembros</div>
     </div>
     <nav class="sidebar-menu">
-      <a href="dashboard" class="sidebar-item"><i class="fa-solid fa-house"></i> Página principal</a>
-      <a href="ver_gastos" class="sidebar-item"><i class="fa-solid fa-dollar-sign"></i> Gastos</a>
-      <a href="tareas" class="sidebar-item"><i class="fa-solid fa-list-check"></i> Tareas</a>
-      <a href="ranking" class="sidebar-item"><i class="fa-solid fa-trophy"></i>Ranking</a>
-      <a href="miembros" class="sidebar-item active"><i class="fa-solid fa-users"></i> Miembros</a>
+        <a href="dashboard" class="sidebar-item"><i class="fa-solid fa-house"></i> Página principal</a>
+        <a href="ver_gastos" class="sidebar-item"><i class="fa-solid fa-dollar-sign"></i> Gastos</a>
+        <a href="tareas" class="sidebar-item active"><i class="fa-solid fa-list-check"></i> Tareas</a>
+        <a href="ranking" class="sidebar-item"><i class="fa-solid fa-trophy"></i>Ranking</a>
+        <a href="miembros" class="sidebar-item"><i class="fa-solid fa-users"></i> Miembros</a>
+        <a href="insignias" class="sidebar-item"><i class="fa-solid fa-users"></i>Crear insignias</a>
     </nav>
     <div class="sidebar-user" id="selector-usuario">
-      <div class="avatar" id="user-avatar">M</div>
-      <div class="user-info">
-        <div class="name" id="user-name">Malena</div>
-        <div class="role">Cambiar usuario ▾</div>
-      </div>
+        <div class="avatar" id="user-avatar">M</div>
+        <div class="user-info">
+            <div class="name" id="user-name">Malena</div>
+            <div class="role">Cambiar usuario ▾</div>
+        </div>
     </div>
     <div id="user-dropdown" class="user-dropdown"></div>
-  </aside>
-
+</aside>
   <main class="main-content">
 
     <div class="page-header">
@@ -88,20 +88,7 @@
             <div class="field">
               <label class="label has-text-grey-dark has-text-weight-normal">Icono</label>
               <div class="control">
-                <select name="icono" id="icono" class="input is-medium" style="border-radius: 10px;" required>
-                  <option value="">Seleccionar insignia...</option>
-                  <option value="trophy">🏆 Trophy</option>
-                  <option value="star">⭐ Star</option>
-                  <option value="medal">🥇 Medal</option>
-                  <option value="crown">👑 Crown</option>
-                  <option value="fire">🔥 Fire</option>
-                  <option value="heart">❤️ Heart</option>
-                  <option value="gem">💎 Gem</option>
-                  <option value="shield">🛡️ Shield</option>
-                  <option value="lightning">⚡ Lightning</option>
-                  <option value="sparkles">✨ Sparkles</option>
-                  <option value="ribbon">🎗️ Ribbon</option>
-                </select>
+                <div id="icono-contenedor"></div>
               </div>
             </div>
           </div>
