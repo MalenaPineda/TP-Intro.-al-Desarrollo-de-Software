@@ -226,6 +226,7 @@ async function obtenerGastoMes() {
     }
 }
 
+/*
 async function obtenerGastoMesUsuario() {
     try {
         const gastosMes = await fetch(`${URL_API}/total-mes`);
@@ -245,6 +246,25 @@ async function obtenerGastoMesUsuario() {
             }).format(Number(parte));
         }
 
+    } catch (error) {
+        console.error("No se pudo cargar el gasto del usuario:", error);
+    }
+}
+    */
+//función adaptada para que tenga en cuenta el usuario actual para mostrar gastos
+async function obtenerGastoMesUsuario() {
+    try {
+        const idUser = getUsuarioActual().id_user;
+        const respuesta = await fetch(`${URL_API}/total-mes/usuario/${idUser}`);
+        if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
+        const gasto = await respuesta.json();
+        const elemento = document.getElementById("gasto-user");
+        if (elemento) {
+            elemento.textContent = new Intl.NumberFormat('es-AR', {
+                style: 'currency',
+                currency: 'ARS'
+            }).format(Number(gasto.total ?? 0));
+        }
     } catch (error) {
         console.error("No se pudo cargar el gasto del usuario:", error);
     }
