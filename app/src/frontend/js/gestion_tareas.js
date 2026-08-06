@@ -15,7 +15,7 @@ async function init() {
     await obtenerCategorias();
     await cargarTareas();
     registrarHandlerFormulario();
-    document.querySelector('[name="fecha_vencimiento"]').min = new Date().toISOString().substring(0,10) //
+    document.querySelector('[name="fecha_vencimiento"]').min = new Date().toISOString().substring(0, 10) //
 }
 //CATEGORIAS
 
@@ -23,11 +23,11 @@ async function obtenerCategorias() {
     try {
 
         const res = await fetch(`${URL_API}/nombre-categoria-tarea`);
-        if(!res.ok) throw new Error(`Error HTTP: ${res.status}`);
+        if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
         const categorias = await res.json();
         mostrarCategoriasEnSelect(categorias);
     } catch (error) {
-        console.error("Error al cargar categorías: ",error);
+        console.error("Error al cargar categorías: ", error);
     }
 }
 
@@ -47,7 +47,7 @@ function mostrarCategoriasEnSelect(categorias) {
 async function cargarTareas() {
     try {
         const res = await fetch(`${URL_API}/completas`);
-        if(!res.ok) {
+        if (!res.ok) {
             throw new Error(`Error HTTP: ${res.status}`);
         }
         const tareas = await res.json();
@@ -60,10 +60,10 @@ async function cargarTareas() {
 //Recibe el arreglo o lista de tareas y armo la tabla completa dentro de #lista-tareas-gestion, una fila (t-eow) por tarea
 function mostrarTareasEnLista(tareas) {
     const contenedor = document.getElementById('lista-tareas-gestion');
-    contenedor.innerHTML=''; //Limpia la tabla antes de crear otra
+    contenedor.innerHTML = ''; //Limpia la tabla antes de crear otra
 
-//En el caso de que no hayan tareas se muestra este mensaje.
-    if(tareas.length == 0) {
+    //En el caso de que no hayan tareas se muestra este mensaje.
+    if (tareas.length == 0) {
         const mensajeVacio = document.createElement('p');
         mensajeVacio.textContent = "No hay tareas registradas";
         mensajeVacio.className = 'has-text-grey has-text-centered';
@@ -102,11 +102,11 @@ function crearFila(tarea) {
     //tarea.usuario puede venir [null] si no tiene usuario asignado. Así que se filtra
     const usuarioAsignado = tarea.usuario || 'Sin asignar'; //?,[0] opcional chaining, si lo de la izq es null no tira error, devuelve undefined
 
-    
+
     const metaTarea = document.createElement('div');
     metaTarea.className = 'tx-meta';
     metaTarea.textContent = `${tarea.categoria} · Vence ${formatearFecha(tarea.fecha_vencimiento)} · ${usuarioAsignado}`;
-    
+
     //Agrego elementos 
     infoTarea.appendChild(nombreTarea);
     infoTarea.appendChild(metaTarea);
@@ -114,7 +114,7 @@ function crearFila(tarea) {
     //Parte de estado (pendiente / en progreso / hecha), con su color acorde
     const estadoTarea = document.createElement('span');
     estadoTarea.className = `badge-estado ${obtenerClasesSegunEstado(tarea.estado)}`;
-    estadoTarea.textContent = ponerPrimeraLetraMayuscula(tarea.estado); 
+    estadoTarea.textContent = ponerPrimeraLetraMayuscula(tarea.estado);
 
 
     //Columna de botones de acción: Editar y Eliminar
@@ -125,14 +125,14 @@ function crearFila(tarea) {
     botonEditar.className = 'btn-hecha'; //Reusamos el estilo que ya existe
     botonEditar.textContent = 'Editar';
     //Al hacer click transforma ESTA FILA en un formulario de edición
-    botonEditar.addEventListener("click", () => activarModoedicion(fila,tarea));
+    botonEditar.addEventListener("click", () => activarModoedicion(fila, tarea));
 
 
     const botonEliminar = document.createElement('button');
     botonEliminar.className = 'btn-hecha';
     botonEliminar.textContent = 'Eliminar'
     //Al hacer click elimina la tarea (obvio)
-    botonEliminar.addEventListener("click",() => eliminarTarea(tarea.id_tarea));
+    botonEliminar.addEventListener("click", () => eliminarTarea(tarea.id_tarea));
 
     acciones.appendChild(botonEditar);
     acciones.appendChild(botonEliminar);
@@ -157,8 +157,8 @@ La fila se vacía y se reemplaza por un mini formulario
 
 
 //Vacía la fila actual y pone el formulario de edición
-async function activarModoedicion(fila,tarea) {
-    fila.innerHTML='';
+async function activarModoedicion(fila, tarea) {
+    fila.innerHTML = '';
     const form = await construirFormularioEdicion(fila, tarea);
     fila.appendChild(form);
 
@@ -172,7 +172,7 @@ async function activarModoedicion(fila,tarea) {
 - categoria (select y fecha de vencimiento)
 - botones guardar / cancelar
 */
-async function construirFormularioEdicion(fila,tarea) {
+async function construirFormularioEdicion(fila, tarea) {
     const form = document.createElement('div');
     form.className = 'edit-form';
 
@@ -184,7 +184,7 @@ async function construirFormularioEdicion(fila,tarea) {
     const inputDescripcion = document.createElement('input');
     inputDescripcion.className = 'input is-small';
     inputDescripcion.type = 'text';
-    inputDescripcion.value = tarea.descripcion ; //Precarga el valor actual
+    inputDescripcion.value = tarea.descripcion; //Precarga el valor actual
 
     const inputNotas = document.createElement('input');
     inputNotas.className = 'input is-small';
@@ -205,9 +205,9 @@ async function construirFormularioEdicion(fila,tarea) {
     //Pedimos categorias a la API
     try {
         const res = await fetch(`${URL_API}/nombre-categoria-tarea`);
-        if(!res.ok) throw new Error(`Error HTTP: ${res.status}`);
+        if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
         const categorias = await res.json();
-        
+
         categorias.forEach(categoria => {
             const opcion = document.createElement('option');
             opcion.value = categoria.id_categoria;
@@ -216,16 +216,16 @@ async function construirFormularioEdicion(fila,tarea) {
             selectCategoria.appendChild(opcion);
         });
     } catch (error) {
-        console.error("Error al carar categorías para edición",error);
-    } 
+        console.error("Error al carar categorías para edición", error);
+    }
 
     //Ahora la fecha
     const inputFecha = document.createElement('input');
     inputFecha.className = 'input is-small';
     inputFecha.type = 'date';
     inputFecha.value = formatoInputFecha(tarea.fecha_vencimiento);
-    inputFecha.min = new Date().toISOString().substring(0,10); //Establece mínimo para que no se pueda poner fecha pasada a día actual
-    
+    inputFecha.min = new Date().toISOString().substring(0, 10); //Establece mínimo para que no se pueda poner fecha pasada a día actual
+
     //Agregamos al elemento
     editDatos.appendChild(selectCategoria);
     editDatos.appendChild(inputFecha);
@@ -243,13 +243,13 @@ async function construirFormularioEdicion(fila,tarea) {
         const tareaEditada = {
             descripcion: inputDescripcion.value,
             notas: inputNotas.value,
-            id_categoria : selectCategoria.value,
-            fecha_vencimiento : inputFecha.value || null 
+            id_categoria: selectCategoria.value,
+            fecha_vencimiento: inputFecha.value || null
         };
-        guardarEdicion(tarea.id_tarea,tareaEditada); //Guardamos
-        
+        guardarEdicion(tarea.id_tarea, tareaEditada); //Guardamos
+
     });
-        
+
     const botonCancelar = document.createElement('button');
     botonCancelar.className = 'btn-hecha';
     botonCancelar.textContent = 'Cancelar';
@@ -265,17 +265,17 @@ async function construirFormularioEdicion(fila,tarea) {
     form.appendChild(editAcciones);
 
     return form;
-    }
+}
 
 
-    //Funcion para cancelar la edición, reconstruye la fila desde cero con los datos originales de la tarea. No solo en el html.
-    function cancelarEdicion(fila,tarea) {
-        const filaOriginal = crearFila(tarea);
-        fila.replaceWith(filaOriginal); //replaceWith es funcion de js vanilla, se usa para intercambiar valores directamente
-    }
+//Funcion para cancelar la edición, reconstruye la fila desde cero con los datos originales de la tarea. No solo en el html.
+function cancelarEdicion(fila, tarea) {
+    const filaOriginal = crearFila(tarea);
+    fila.replaceWith(filaOriginal); //replaceWith es funcion de js vanilla, se usa para intercambiar valores directamente
+}
 
-    //GUARDAR CAMBIOS
-    //Manda el put al back con los datos editados, si sale bien se recarga la página para reflejar el cambio.
+//GUARDAR CAMBIOS
+//Manda el put al back con los datos editados, si sale bien se recarga la página para reflejar el cambio.
 async function guardarEdicion(idTarea, tareaEditada) {
     try {
         const res = await fetch(`${URL_API}/${idTarea}`, {
@@ -325,7 +325,7 @@ function registrarHandlerFormulario() {
         // que coincidir con los nombres usados en el HTML
         const datos = new FormData(form);
         const nuevaTarea = {
-            descripcion: datos.get('descripcion'), 
+            descripcion: datos.get('descripcion'),
             id_categoria: datos.get('id_categoria'),
             fecha_vencimiento: datos.get('fecha_vencimiento') || null, // opcional
             notas: datos.get('notas'),
@@ -365,7 +365,7 @@ function formatoInputFecha(fechaISO) {
 }
 //Devuelve la clase css del badge segun el estao de la tarea
 function obtenerClasesSegunEstado(estado) {
-if (estado === 'pendiente') return 'badge-pendiente';
+    if (estado === 'pendiente') return 'badge-pendiente';
     if (estado === 'en progreso') return 'badge-en-progreso';
     if (estado === 'hecha') return 'badge-hecha';
     return ''; // estado desconocido, sin color especial    
@@ -377,11 +377,11 @@ function ponerPrimeraLetraMayuscula(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 //Función para mostrar acción exitosa o fallida
-function mostrarToast(mensaje, tipo='exito') {
+function mostrarToast(mensaje, tipo = 'exito') {
     const toast = document.getElementById('toast');
     toast.textContent = mensaje;
-    toast.className = `toast ${tipo}`; 
-    setTimeout(()=>toast.classList.add('show'),10);
+    toast.className = `toast ${tipo}`;
+    setTimeout(() => toast.classList.add('show'), 10);
     setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
