@@ -149,6 +149,19 @@ canvas#donut { width: 160px !important; height: 160px !important; flex-shrink: 0
 .tx-total { font-size: 0.9rem; font-weight: 700; color: #1a1a2e; }
 .tx-each  { font-size: 0.75rem; color: var(--text-muted); }
 
+/* ── Lista de tareas con scroll (dashboard) ──
+   El panel "Tareas asignadas" muestra todas las tareas; si superan la
+   altura máxima, se desplazan con scroll en vez de desbordar la página.
+   Replica el estilo de scroll fino usado en la página de tareas. */
+.task-list {
+  max-height: 320px;            /* Altura máxima del panel; si hay más tareas, scrollea */
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #ddd transparent;
+}
+.task-list::-webkit-scrollbar { width: 0.5rem; }
+.task-list::-webkit-scrollbar-thumb { background: #ddd; border-radius: 0.25rem; }
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .sidebar       { display: none; }

@@ -1,4 +1,6 @@
 const URL_API = "http://localhost:8000/api/v1/gastos";
+const URL_API_TAREAS = "http://localhost:8000/api/v1/tareas"; //Agrego parte de tareas para dashboard dinámico
+
 
 const coloresPorCategoria = {
     1: "#00bfa5",
@@ -11,7 +13,7 @@ const coloresPorCategoria = {
 
 document.addEventListener("DOMContentLoaded", () => {
     mostrarFecha();
-    actualizarTarjetasTareas();
+    cargarTareasDashboard();
     inicializarInteraccionTareas();
     cargarGastosRecientes();
     obtenerGastoMes();
@@ -48,7 +50,7 @@ function formatearFecha(fecha) {
         year: 'numeric'
     });
 }
-function actualizarTarjetasTareas() {
+/*function actualizarTarjetasTareas() {
     const tareas = [
         { nombre: "Limpiar la cocina", asignado: "Alex", estado: "en progreso" },
         { nombre: "Sacar la basura", asignado: "Jordan", estado: "en progreso" },
@@ -66,32 +68,131 @@ function actualizarTarjetasTareas() {
 
     document.getElementById('pending-tasks').textContent = tareasPendientes;
     document.getElementById('my-tasks').textContent = `${misTareasHechas} de ${misTareasTotales}`;
+}*/
+
+//Agrego función con endpoints corresponedientes a tareas
+async function cargarTareasDashboard() {
+    try {
+        const [tareasCompletas, misTareas] = await Promise.all([
+            fetch(`${URL_API_TAREAS}/completas`),
+            fetch(`${URL_API_TAREAS}/mias/${getUsuarioActual().id_user}`)
+        ]);
+        if (!tareasCompletas.ok || !misTareas.ok) {
+            throw new Error(`Error HTTP: ${tareasCompletas.status} / ${misTareas.status}`);
+        }
+
+        const tareas = await tareasCompletas.json();
+        const misTareasArreglo = await misTareas.json();
+
+        const pendientes = tareas.filter( t=> t.estado!=="hecha").length //Para contar tareas pendientes de los demás
+        document.getElementById('pending-tasks').textContent = pendientes;
+
+        const hechas = misTareasArreglo.filter(t=>t.estado === "hecha").length //Para contar mis tareas pendientes
+        document.getElementById('my-tasks').textContent = `${hechas} de ${misTareasArreglo.length}`;
+
+        renderizarTareasAsignadas(tareas);
+    } catch (error) {
+        console.error("Error al cargar tareas del dashboard", error);
+    }
 }
-function inicializarInteraccionTareas() {
-    const botonesEstado = document.querySelectorAll('.badge-estado');
-    botonesEstado.forEach(boton => {
-        boton.addEventListener('click', function () {
-            if (this.classList.contains('estado-pendiente')) {
-                this.classList.remove('estado-pendiente');
-                this.classList.add('estado-progreso');
-                this.textContent = 'En progreso';
-            }
-            else if (this.classList.contains('estado-progreso')) {
-                this.classList.remove('estado-progreso');
-                this.classList.add('estado-hecha');
-                this.textContent = 'Hecha';
-            }
-            else if (this.classList.contains('estado-hecha')) {
-                this.classList.remove('estado-hecha');
-                this.classList.add('estado-pendiente');
-                this.textContent = 'Pendiente';
-            }
-            //  "fetch()" 
-        });
+
+function renderizarTareasAsignadas(tareas) {
+    const contenedor = document.getElementById('lista-tareas-asignadas');
+    contenedor.innerHTML = '';
+
+    if (tareas.length === 0) {
+        contenedor.innerHTML = '<p class="has-text-grey"> No hay tareas registradas. </p> ';
+        return;
+    }
+    tareas.forEach(tarea=> {
+        const fila = document.createElement('div');
+        fila.className = 'tx-row';
+        fila.style.cssText = 'background: var(--bg); padding: 0.8rem; border-radius: 8px; border: none; margin-bottom: 0.5rem;'
+
+        const info = document.createElement('div');
+        info.className = 'tx-info';
+
+        const nombre = document.createElement('div');
+        nombre.className = 'tx-name';
+        nombre.textContent = tarea.descripcion;
+
+        const meta = document.createElement('div');
+        meta.className = 'tx-meta';
+        meta.textContent = tarea.usuario || 'Sin asignar';
+
+        info.appendChild(nombre);
+        info.appendChild(meta);
+
+        const badge = document.createElement('span');
+        badge.className = `badge-estado ${clasesSegunEstado(tarea.estado)}`;
+        badge.textContent = etiquetaEstado(tarea.estado);
+        badge.dataset.idTarea = tarea.id_tarea;
+        badge.dataset.estado = tarea.estado;
+
+        fila.appendChild(info);
+        fila.appendChild(badge);
+        contenedor.appendChild(fila);
+        
     });
-
+}
+//Helpers para tareas
+function clasesSegunEstado(estado) {
+    if(estado === 'pendiente') return 'badge-pendiente';
+    if(estado === 'en progreso') return 'badge-en-progreso';
+    if(estado === 'hecha') return 'badge-hecha';
+    return '';
 }
 
+function etiquetaEstado(estado) {
+    if (estado === 'pendiente') return 'Pendiente';
+    if (estado === 'en progreso') return 'En progreso';
+    if (estado === 'hecha') return 'Hecha'
+    return '';
+}
+
+function siguienteEstado(estado) {
+    if (estado === 'pendiente') return 'en progreso';
+    if (estado === 'en progreso') return 'hecha';
+    return 'pendiente';
+}
+
+
+//Registra el click sobre los badges de estado
+//Uso delegación de eventos en el contenedor: así funciona aunque la lista se re-renderice
+function inicializarInteraccionTareas() {
+    const contenedor = document.getElementById('lista-tareas-asignadas');
+    if (!contenedor) return;
+
+    contenedor.addEventListener('click', async (evento) => {
+        //closest busca el badge más cercano al elemento clickeado (por si el click cae en un hijo)
+        const badge = evento.target.closest('.badge-estado');
+        if (!badge) return;
+
+        //Leo la tarea y su estado actual desde los data-* del badge
+        const idTarea = badge.dataset.idTarea;
+        const nuevoEstado = siguienteEstado(badge.dataset.estado);
+
+        //Bloqueo clicks mientras se guarda para evitar envíos duplicados
+        badge.style.pointerEvents = 'none';
+
+        try {
+            //Persisto el nuevo estado en el backend
+            const res = await fetch(`${URL_API_TAREAS}/${idTarea}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ estado: nuevoEstado })
+            });
+            if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
+
+            //Refresco contadores y lista con los datos actualizados
+            await cargarTareasDashboard();
+        } catch (error) {
+            //Si falla, habilito el badge de nuevo para que el usuario pueda reintentar
+            badge.style.pointerEvents = '';
+            console.error("Error al cambiar estado de la tarea:", error);
+        }
+    });
+}
 async function cargarGastosRecientes() {
     try {
         const respuesta = await fetch(URL_API);
