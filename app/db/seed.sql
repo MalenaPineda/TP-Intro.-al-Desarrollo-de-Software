@@ -66,3 +66,19 @@ VALUES
 (2, 1),
 (3, 3),
 (4, 1);
+
+INSERT INTO iconos (nombre, clase, color) VALUES
+('Trofeo', 'fa-trophy', '#FFD700'),
+('Estrella', 'fa-star', '#FFD700'),
+('Medalla', 'fa-medal', '#FFD700'),
+('Corona', 'fa-crown', '#FFD700'),
+('Fuego', 'fa-fire', '#FF4500'),
+('Corazón', 'fa-heart', '#FF0000'),
+('Gema', 'fa-gem', '#00BFFF'),
+('Escudo', 'fa-shield', '#4169E1'),
+('Rayo', 'fa-bolt', '#FFD700'),
+('Escoba', 'fa-broom', '#00BFA5'),
+('Cubiertos', 'fa-utensils', '#F5A623'),
+('Llave inglesa', 'fa-wrench', '#7C4DFF'),
+('Hoja', 'fa-leaf', '#00BFA5'),
+('Pata', 'fa-paw', '#FF6B35');
