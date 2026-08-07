@@ -1,4 +1,5 @@
 const URL_API = "http://localhost:8000/api/v1/gastos";
+const URL_TAREAS = "http://localhost:8000/api/v1/tareas";
 
 const coloresPorCategoria = {
     1: "#00bfa5",
@@ -11,8 +12,8 @@ const coloresPorCategoria = {
 
 document.addEventListener("DOMContentLoaded", () => {
     mostrarFecha();
-    actualizarTarjetasTareas();
-    inicializarInteraccionTareas();
+    cargarTareas();
+    obtenerMisTareas();
     cargarGastosRecientes();
     obtenerGastoMes();
     obtenerGastoMesUsuario();
@@ -48,48 +49,139 @@ function formatearFecha(fecha) {
         year: 'numeric'
     });
 }
-function actualizarTarjetasTareas() {
-    const tareas = [
-        { nombre: "Limpiar la cocina", asignado: "Alex", estado: "en progreso" },
-        { nombre: "Sacar la basura", asignado: "Jordan", estado: "en progreso" },
-        { nombre: "Hacer la compra", asignado: "You", estado: "pendiente" },
-        { nombre: "Regar las plantas", asignado: "Sam", estado: "hecha" },
-        { nombre: "Aspirar el salón", asignado: "You", estado: "en progreso" }
-    ];
-    const formateadorDinero = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD'
-    });
-    const tareasPendientes = tareas.filter(tarea => tarea.estado !== "hecha").length;
-    const misTareasTotales = tareas.filter(tarea => tarea.asignado === "You").length;
-    const misTareasHechas = tareas.filter(tarea => tarea.asignado === "You" && tarea.estado === "hecha").length;
 
-    document.getElementById('pending-tasks').textContent = tareasPendientes;
-    document.getElementById('my-tasks').textContent = `${misTareasHechas} de ${misTareasTotales}`;
+async function cargarTareas() {
+    try {
+        const respuesta = await fetch(`${URL_TAREAS}/completas`);
+
+        if (!respuesta.ok) {
+            throw new Error("Error al obtener tareas");
+        }
+
+        const tareas = await respuesta.json();
+
+        mostrarTareas(tareas);
+
+        actualizarCantidadTareas(tareas);
+
+        actualizarMisTareas(tareas);
+
+    } catch (error) {
+        console.error("Error cargando tareas:", error);
+    }
 }
-function inicializarInteraccionTareas() {
-    const botonesEstado = document.querySelectorAll('.badge-estado');
-    botonesEstado.forEach(boton => {
-        boton.addEventListener('click', function () {
-            if (this.classList.contains('estado-pendiente')) {
-                this.classList.remove('estado-pendiente');
-                this.classList.add('estado-progreso');
-                this.textContent = 'En progreso';
-            }
-            else if (this.classList.contains('estado-progreso')) {
-                this.classList.remove('estado-progreso');
-                this.classList.add('estado-hecha');
-                this.textContent = 'Hecha';
-            }
-            else if (this.classList.contains('estado-hecha')) {
-                this.classList.remove('estado-hecha');
-                this.classList.add('estado-pendiente');
-                this.textContent = 'Pendiente';
-            }
-            //  "fetch()" 
-        });
-    });
 
+
+function mostrarTareas(tareas) {
+
+    const lista = document.getElementById("lista-tareas");
+    if (!lista) return;
+    lista.innerHTML = "";
+    tareas.slice(0, 5).forEach(tarea => {
+
+        let estadoClase = "";
+
+        if (tarea.estado === "hecha") {
+            estadoClase = "badge-hecha";
+        }
+        else if (tarea.estado === "en progreso") {
+            estadoClase = "badge-en-progreso";
+        }
+        else {
+            estadoClase = "badge-pendiente";
+        }
+
+
+        lista.innerHTML += `
+        <div class="tx-row" 
+        style="background: var(--bg); padding: 0.8rem; border-radius: 8px; border:none; margin-bottom:0.5rem;">
+
+            <div class="tx-info">
+                <div class="tx-name">
+                    ${tarea.descripcion}
+                </div>
+
+                <div class="tx-meta">
+                    ${tarea.usuario ?? "Sin asignar"}
+                </div>
+            </div>
+
+            <div>
+                <span class="badge-estado ${estadoClase}">
+                    ${tarea.estado}
+                </span>
+            </div>
+            <div>
+                    <button class="btn-hecha" onclick="cambiarEstadoDashboard(${tarea.id_tarea}, 'en progreso')">
+                        En progreso
+                </button>
+
+                <button class="btn-hecha" onclick="cambiarEstadoDashboard(${tarea.id_tarea}, 'hecha')">
+                    Hecha
+                </button>
+            </div>
+        </div>
+        `;
+    });
+}
+
+function actualizarCantidadTareas(tareas) {
+
+    const pendientes = tareas.filter(
+        tarea => tarea.estado !== "hecha"
+    );
+
+    const elemento = document.getElementById("pending-tasks");
+
+    if (elemento) {
+        elemento.textContent = pendientes.length;
+    }
+}
+
+function actualizarMisTareas(tareas) {
+
+    const misTareas = tareas.filter(
+        tarea => tarea.usuario === "Malena"
+    );
+
+    const elemento = document.getElementById("my-tasks");
+
+    if (elemento) {
+        elemento.textContent = misTareas.length;
+    }
+}
+async function cambiarEstadoDashboard(id, estado) {
+    try {
+        const respuesta = await fetch(`${URL_TAREAS}/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                estado: estado
+            })
+        });
+
+        if (!respuesta.ok) {
+            throw new Error("Error cambiando estado");
+        }
+        await cargarTareas();
+    } catch (error) {
+        console.error(error);
+    }
+}
+async function obtenerMisTareas() {
+    try {
+        const respuesta = await fetch(`${URL_TAREAS}/mias/3`);
+        const tareas = await respuesta.json();
+        const elemento = document.getElementById("my-tasks");
+
+        if (elemento) {
+            elemento.textContent = tareas.length;
+        }
+    } catch (error) {
+        console.error("Error mis tareas", error);
+    }
 }
 
 async function cargarGastosRecientes() {
@@ -134,6 +226,7 @@ async function obtenerGastoMes() {
     }
 }
 
+/*
 async function obtenerGastoMesUsuario() {
     try {
         const gastosMes = await fetch(`${URL_API}/total-mes`);
@@ -153,6 +246,25 @@ async function obtenerGastoMesUsuario() {
             }).format(Number(parte));
         }
 
+    } catch (error) {
+        console.error("No se pudo cargar el gasto del usuario:", error);
+    }
+}
+    */
+//función adaptada para que tenga en cuenta el usuario actual para mostrar gastos
+async function obtenerGastoMesUsuario() {
+    try {
+        const idUser = getUsuarioActual().id_user;
+        const respuesta = await fetch(`${URL_API}/total-mes/usuario/${idUser}`);
+        if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
+        const gasto = await respuesta.json();
+        const elemento = document.getElementById("gasto-user");
+        if (elemento) {
+            elemento.textContent = new Intl.NumberFormat('es-AR', {
+                style: 'currency',
+                currency: 'ARS'
+            }).format(Number(gasto.total ?? 0));
+        }
     } catch (error) {
         console.error("No se pudo cargar el gasto del usuario:", error);
     }

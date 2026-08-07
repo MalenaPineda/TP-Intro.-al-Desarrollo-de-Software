@@ -17,7 +17,7 @@
     <aside class="sidebar">
         <div class="sidebar-brand">
             <div class="house-name">Casa Feliz</div>
-            <div class="members">4 miembros</div>
+            <div class="members" id="cantidad-miembros">4 miembros</div>
         </div>
         <nav class="sidebar-menu">
             <a href="dashboard" class="sidebar-item active"><i class="fa-solid fa-house"></i> Página principal</a>
@@ -47,7 +47,7 @@
     <section class="summary-grid">
     <div class="summary-card">
         <p class="summary-label">Tareas pendientes</p>
-        <h2 class="summary-value blue" id="pending-tasks">5</h2>
+        <h2 class="summary-value blue" id="pending-tasks">...</h2>
     </div>
     <div class="summary-card">
         <p class="summary-label">Gastos del mes</p>
@@ -58,7 +58,6 @@
     <div class="summary-card">
         <p class="summary-label">Tus tareas</p>
         <h2 class="summary-value purple" id="my-tasks">
-            0 de 5
         </h2>
     </div>
     </section> 
@@ -67,32 +66,14 @@
         <div class="panel-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.1rem;">
                 <h3 class="panel-title" style="margin-bottom: 0;">Tareas asignadas</h3>
-                <a href="#" style="font-size: 0.8rem; color: var(--c-utilities); text-decoration: none;">Ver todas</a>
+                <a href="tareas.html" style="font-size: 0.8rem; color: var(--c-utilities); text-decoration: none;">
+                    Ver todas
+                </a>
             </div>
-            
-        <div class="task-list">
-        <!-- Tarea 1 -->
-        <div class="tx-row" style="background: var(--bg); padding: 0.8rem; border-radius: 8px; border: none; margin-bottom: 0.5rem;">
-            <div class="tx-info">
-                <div class="tx-name">Limpiar la cocina</div>
-                <div class="tx-meta">Alex</div>
+            <div class="task-list" id="lista-tareas">
             </div>
-            <div>
-                <span class="badge-estado estado-progreso">En progreso</span>
-            </div>
-    </div>
-    <!-- Tarea 2 -->
-                <div class="tx-row" style="background: var(--bg); padding: 0.8rem; border-radius: 8px; border: none; margin-bottom: 0.5rem;">
-                    <div class="tx-info">
-                        <div class="tx-name">Hacer la compra</div>
-                        <div class="tx-meta">Tu</div>
-                    </div>
-                    <div>
-                        <span class="badge-estado estado-pendiente">Pendiente</span>
-                    </div>
-                </div>
-            </div>
-        </div> 
+
+        </div>
 
         <div class="panel-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.1rem;">
