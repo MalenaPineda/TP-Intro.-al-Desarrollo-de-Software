@@ -14,8 +14,10 @@ export async function getGastos() {
     FROM gastos g
     JOIN usuarios u ON g.id_user = u.id_user
     JOIN metodo_pago m ON g.id_metodo = m.id
+    WHERE EXTRACT(MONTH FROM g.fecha_gasto) = EXTRACT(MONTH FROM CURRENT_DATE)
+    AND EXTRACT(YEAR FROM g.fecha_gasto) = EXTRACT(YEAR FROM CURRENT_DATE)
     ORDER BY g.fecha_gasto DESC
-  `)
+  `);
   return result.rows;
 }
 
