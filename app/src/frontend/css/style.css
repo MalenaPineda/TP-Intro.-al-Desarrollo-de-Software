@@ -73,7 +73,7 @@ html, body { height: 100%; margin: 0; background: var(--bg); font-family: 'Inter
 /* ── Page header ── */
 .page-header {
   display: flex; align-items: flex-start; justify-content: space-between;
-  margin-bottom: 1.75rem;
+  margin-bottom: 1rem;
 }
 .page-title    { font-size: 1.65rem; font-weight: 700; color: #1a1a2e; margin-bottom: 0.1rem; }
 .page-subtitle { font-size: 0.88rem; color: var(--text-muted); }
@@ -372,4 +372,17 @@ body {
 
 .hero-body .container {
     transform: translateY(60px);
+}
+
+.link-resumen {
+    display: inline-block;
+    margin-top: 0.4rem;
+    font-size: 0.9rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.link-resumen:hover {
+    text-decoration: underline;
 }

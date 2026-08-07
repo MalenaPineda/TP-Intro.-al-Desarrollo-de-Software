@@ -96,21 +96,6 @@ rutaTareas.get("/ranking", async (req, res) => {
 });
 
 
-//Mostrar tareas por id
-rutaTareas.get('/:id', async (req,res) => {
-    try {
-        const {id} = req.params;
-        const tarea = await getTareasPorId(id);
-
-        if (!tarea) {
-            return res.status(404).json({error: "Tarea no encontrada"});
-        }
-        res.json(tarea)
-    } catch(error) {
-        console.error("Error al obtener tarea", error);
-        res.status(500).json({error: "Error interno del servidor"});
-    }
-});
 
 
 
@@ -223,3 +208,18 @@ rutaTareas.put('/:id', async (req,res)=> {
     }   
  })
 
+//Mostrar tareas por id
+rutaTareas.get('/:id', async (req,res) => {
+    try {
+        const {id} = req.params;
+        const tarea = await getTareasPorId(id);
+
+        if (!tarea) {
+            return res.status(404).json({error: "Tarea no encontrada"});
+        }
+        res.json(tarea)
+    } catch(error) {
+        console.error("Error al obtener tarea", error);
+        res.status(500).json({error: "Error interno del servidor"});
+    }
+});
