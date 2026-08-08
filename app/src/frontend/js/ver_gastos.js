@@ -9,7 +9,7 @@ const coloresPorCategoria = {
 };
 const nombresMeses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
-ID_USER = 1
+// ID_USER = 1
 
 async function obtenerGastos() {
   try {
@@ -320,8 +320,8 @@ function mostrarGraficoBarras(datos) {
 
 async function obtenerGastosUsuarioPorMes() {
   try {
-    console.log(`${URL_API}/usuario/${ID_USER}/gasto-por-mes`)
-    const respuesta = await fetch(`${URL_API}/usuario/${ID_USER}/gastos-por-mes`);
+    console.log(`${URL_API}/usuario/${getUsuarioActual().id_user}/gasto-por-mes`)
+    const respuesta = await fetch(`${URL_API}/usuario/${getUsuarioActual().id_user}/gastos-por-mes`);
     if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
     const datos = await respuesta.json();
     mostrarGraficoLinea(datos);
