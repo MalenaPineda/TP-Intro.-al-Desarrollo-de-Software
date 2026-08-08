@@ -42,6 +42,8 @@ rutaUsuarios.post('/',async (req,res)=> {
         if(!nombre || !email || !contrasenia) {
             return res.status(400).json({error: "Campos obligatorios no llenados"});
         }
+        const errorFecha = validarFechaNacimiento(fecha_nacimiento);
+        if(errorFecha) return res.status(400).json({error: errorFecha});
 
         const usuario = await crearUsuario(nombre, email, contrasenia,fecha_nacimiento);
         res.status(201).json(usuario);
@@ -72,7 +74,11 @@ rutaUsuarios.put("/:id", async (req, res) => {
     if (!nombre || !email || !contrasenia) {
       return res.status(400).json({error: "Campos obligatorios: nombre, email, contraseña"});
     }
-
+    //Validación de edad mínima
+    const errorFecha = validarFechaNacimiento(fecha_nacimiento);
+    if (errorFecha) {
+      return res.status(400).json({ error: errorFecha });
+    }
     const usuario = await editarUsuario(id,nombre,email,contrasenia,fecha_nacimiento);
     res.json(usuario);
   } catch (error) {
@@ -85,6 +91,7 @@ rutaUsuarios.put("/:id", async (req, res) => {
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });
+
 
 // DELETE  — Borrar usuario Soft delete (desactivar usuario)
 rutaUsuarios.delete("/:id", async (req, res) => {
@@ -104,3 +111,18 @@ rutaUsuarios.delete("/:id", async (req, res) => {
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });
+
+//Validar que la fecha de nacimiento no sea futura ni menor al establecido (15 años)
+//Devuelve un mensaje de error o null si es válida
+function validarFechaNacimiento(fechaNacimiento) {
+  if(!fechaNacimiento) return null;
+  const hoy = new Date();
+  hoy.setHours(0,0,0,0);
+  const fecha = new Date(`${fechaNacimiento}T00:00:00`); //Fecha sin zona horaria
+  const edadMin = new Date();
+  edadMin.setFullYear(edadMin.getFullYear()-15);
+  if(fecha>hoy) return "La fecha de nacimiento no puede ser futura";
+  if(fecha>edadMin) return "Tiene que ser mayor de 15 años";
+  return null;
+}
+
