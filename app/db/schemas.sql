@@ -50,6 +50,7 @@ CREATE TABLE tareas (
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     diaria BOOLEAN DEFAULT FALSE,
     estado VARCHAR(30) DEFAULT 'pendiente',
+    fecha_completada TIMESTAMP,
     notas VARCHAR(255),
     id_categoria INT NOT NULL,
     FOREIGN KEY (id_categoria) REFERENCES categoria_tareas(id_categoria)

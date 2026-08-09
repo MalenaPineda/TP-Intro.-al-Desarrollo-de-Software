@@ -41,3 +41,51 @@ function mostrarRanking(ranking) {
   });
 }
 obtenerRanking();
+
+const URL_API_PUNTOS = "http://localhost:8000/api/v1/tareas/puntos-del-mes";
+
+const coloresNivel = {
+  "Novato": "#8bc34a",
+  "Colaborador": "#00bfa5",
+  "Experto": "#7c4dff",
+  "Maestro de la casa": "#ffd700"
+};
+
+async function obtenerPuntos() {
+  try {
+    const respuesta = await fetch(URL_API_PUNTOS);
+    if (!respuesta.ok) {
+      throw new Error(`Error HTTP: ${respuesta.status}`);
+    }
+    const puntos = await respuesta.json();
+    mostrarPuntos(puntos);
+  } catch (error) {
+    console.error("No se pudieron cargar los puntos:", error);
+  }
+}
+
+function mostrarPuntos(puntos) {
+  const contenedor = document.getElementById("lista-puntos");
+  contenedor.innerHTML = "";
+  if (puntos.length === 0) {
+    contenedor.innerHTML = "<p>Todavía no hay puntos este mes.</p>";
+    return;
+  }
+  puntos.forEach((usuario) => {
+    const color = coloresNivel[usuario.nivel] || "#888";
+    const fila = document.createElement("div");
+    fila.className = "tx-row";
+    fila.innerHTML = `
+      <div class="tx-info">
+        <div class="tx-name">${usuario.nombre}</div>
+        <div class="tx-meta"><span style="color:${color}; font-weight:600;">${usuario.nivel}</span></div>
+      </div>
+      <div class="tx-amounts">
+        <div class="tx-total">${usuario.puntos} pts</div>
+      </div>
+    `;
+    contenedor.appendChild(fila);
+  });
+}
+
+obtenerPuntos();
