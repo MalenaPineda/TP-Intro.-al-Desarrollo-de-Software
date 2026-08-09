@@ -58,15 +58,30 @@ INSERT INTO tareas (descripcion, fecha_vencimiento, diaria, estado, notas, id_ca
 ('Pasear al perro', '2026-07-25', TRUE, 'hecha', 'Turno de Pedro', 5),
 ('Alimentar al gato', '2026-07-26', TRUE, 'hecha', 'Turno de Pedro', 5),
 ('Limpiar la pecera', '2026-07-27', FALSE, 'hecha', 'Turno de Pedro', 5);
+-- Iconos
+INSERT INTO iconos (nombre, clase, color) VALUES
+('Trofeo', 'fa-trophy', '#FFD700'),
+('Estrella', 'fa-star', '#FFD700'),
+('Medalla', 'fa-medal', '#FFD700'),
+('Corona', 'fa-crown', '#FFD700'),
+('Fuego', 'fa-fire', '#FF4500'),
+('Corazón', 'fa-heart', '#FF0000'),
+('Gema', 'fa-gem', '#00BFFF'),
+('Escudo', 'fa-shield', '#4169E1'),
+('Rayo', 'fa-bolt', '#FFD700'),
+('Escoba', 'fa-broom', '#00BFA5'),
+('Cubiertos', 'fa-utensils', '#F5A623'),
+('Llave inglesa', 'fa-wrench', '#7C4DFF'),
+('Hoja', 'fa-leaf', '#00BFA5'),
+('Pata', 'fa-paw', '#FF6B35');
 -- Insignias
-INSERT INTO insignias (nombre, descripcion, cant_tarea, id_categoria_tarea, icono) VALUES 
-('Chef del mes', 'Completa 3 tareas de cocina', 3, 2, 'chef.png'),
-('Eco-friendly', 'Saca la basura 3 veces', 3, 1, 'eco.png'),
-('Comprador estrella', 'Realiza 3 compras', 3, 6, 'shopping.png');
-INSERT INTO insignias (nombre, descripcion, cant_tarea, id_categoria_tarea, icono) VALUES
-('Manitas de oro', 'Completa 3 tareas de mantenimiento', 3, 3, 'manitas.png'),
-('Pulgar verde', 'Completa 3 tareas de jardinería', 3, 4, 'pulgar.png'),
-('Amigo de los animales', 'Completa 3 tareas de mascotas', 3, 5, 'mascotas.png');
+INSERT INTO insignias (nombre, descripcion, cant_tarea, id_categoria_tarea, id_icono) VALUES 
+('Chef del mes', 'Completa 3 tareas de cocina', 3, 2, 11),
+('Eco-friendly', 'Saca la basura 3 veces', 3, 1, 10),
+('Comprador estrella', 'Realiza 3 compras', 3, 6, 2),
+('Manitas de oro', 'Completa 3 tareas de mantenimiento', 3, 3, 12),
+('Pulgar verde', 'Completa 3 tareas de jardinería', 3, 4, 13),
+('Amigo de los animales', 'Completa 3 tareas de mascotas', 3, 5, 14);
 -- Relación tarea-usuario
 INSERT INTO tarea_user (id_tarea, id_user) VALUES 
 (1, 4),

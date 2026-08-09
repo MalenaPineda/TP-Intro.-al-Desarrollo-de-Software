@@ -85,7 +85,7 @@ rutaTareas.get("/ranking", async (req, res) => {
       ...usuario,
       insignias: insigniasPorUsuario
         .filter((i) => i.id_user === usuario.id_user)
-        .map((i) => ({ nombre: i.insignia, icono: i.icono })),
+        .map((i) => ({ nombre: i.insignia, icono_clase: i.icono_clase, icono_color: i.icono_color })),
     }));
 
     res.json(rankingConInsignias);
