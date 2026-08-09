@@ -84,13 +84,13 @@ async function cargarTareasDashboard() {
         const tareas = await tareasCompletas.json();
         const misTareasArreglo = await misTareas.json();
 
-        const pendientes = tareas.filter( t=> t.estado!=="hecha").length //Para contar tareas pendientes de los demás
+        const pendientes = tareas.filter(t => t.estado !== "hecha").length //Para contar tareas pendientes de los demás
         document.getElementById('pending-tasks').textContent = pendientes;
 
-        const hechas = misTareasArreglo.filter(t=>t.estado === "hecha").length //Para contar mis tareas pendientes
+        const hechas = misTareasArreglo.filter(t => t.estado === "hecha").length //Para contar mis tareas pendientes
         document.getElementById('my-tasks').textContent = `${hechas} de ${misTareasArreglo.length}`;
 
-        renderizarTareasAsignadas(tareas);
+        renderizarTareasAsignadas(misTareasArreglo);
     } catch (error) {
         console.error("Error al cargar tareas del dashboard", error);
     }
@@ -104,7 +104,7 @@ function renderizarTareasAsignadas(tareas) {
         contenedor.innerHTML = '<p class="has-text-grey"> No hay tareas registradas. </p> ';
         return;
     }
-    tareas.forEach(tarea=> {
+    tareas.forEach(tarea => {
         const fila = document.createElement('div');
         fila.className = 'tx-row';
         fila.style.cssText = 'background: var(--bg); padding: 0.8rem; border-radius: 8px; border: none; margin-bottom: 0.5rem;'
@@ -132,14 +132,14 @@ function renderizarTareasAsignadas(tareas) {
         fila.appendChild(info);
         fila.appendChild(badge);
         contenedor.appendChild(fila);
-        
+
     });
 }
 //Helpers para tareas
 function clasesSegunEstado(estado) {
-    if(estado === 'pendiente') return 'badge-pendiente';
-    if(estado === 'en progreso') return 'badge-en-progreso';
-    if(estado === 'hecha') return 'badge-hecha';
+    if (estado === 'pendiente') return 'badge-pendiente';
+    if (estado === 'en progreso') return 'badge-en-progreso';
+    if (estado === 'hecha') return 'badge-hecha';
     return '';
 }
 
