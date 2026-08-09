@@ -37,7 +37,7 @@ export async function editarTarea(id,descripcion,fecha_vencimiento,id_categoria,
 }
 
 export async function cambiarEstadoTarea(id,estado) {
-    const resultado = await db.query("UPDATE tareas SET estado = $1 WHERE id_tarea = $2 RETURNING *",[estado, id]);
+    const resultado = await db.query(estado === 'hecha' ? "UPDATE tareas SET estado = $1, fecha_completada = CURRENT_TIMESTAMP WHERE id_tarea = $2 RETURNING *" : "UPDATE tareas SET estado = $1, fecha_completada = NULL WHERE id_tarea = $2 RETURNING *", [estado, id]);
     return resultado.rows[0];
 }
 //Función para solicitar a la base de datos las tareas con toda la información necesaria. 
@@ -137,6 +137,23 @@ export async function getInsigniasPorUsuario() {
     AND i.id_categoria_tarea = t.id_categoria
     GROUP BY u.id_user, i.id_insignia, i.nombre, ic.clase, ic.color
     HAVING COUNT(t.id_tarea) >= i.cant_tarea
+  `);
+  return result.rows;
+}
+
+export async function getPuntosDelMes() {
+  const result = await db.query(`
+    SELECT
+      u.id_user,
+      u.nombre,
+      COUNT(t.id_tarea) AS puntos
+    FROM tarea_user tu, tareas t, usuarios u
+    WHERE tu.id_tarea = t.id_tarea
+    AND tu.id_user = u.id_user
+    AND t.estado = 'hecha'
+    AND DATE_TRUNC('month', t.fecha_completada) = DATE_TRUNC('month', CURRENT_DATE)
+    GROUP BY u.id_user, u.nombre
+    ORDER BY puntos DESC
   `);
   return result.rows;
 }

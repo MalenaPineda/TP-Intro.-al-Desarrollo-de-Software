@@ -1,7 +1,7 @@
 
 
 import { Router } from 'express';
-import { getTareas,getNombreCategoriaTarea,getRankingTareas, getTareasPorId,crearTarea, borrarTarea, cambiarEstadoTarea, getTareasCompletas, asignarUsuario, getMisTareas, getTareasDeOtros, getTareasDisponibles,editarTarea, getInsigniasPorUsuario } from '../../../db/tareas.js';
+import { getTareas,getNombreCategoriaTarea,getRankingTareas, getTareasPorId,crearTarea, borrarTarea, cambiarEstadoTarea, getTareasCompletas, asignarUsuario, getMisTareas, getTareasDeOtros, getTareasDisponibles,editarTarea, getInsigniasPorUsuario, getPuntosDelMes } from '../../../db/tareas.js';
 
 export const rutaTareas = Router();
 
@@ -91,6 +91,29 @@ rutaTareas.get("/ranking", async (req, res) => {
     res.json(rankingConInsignias);
   } catch (error) {
     console.error("Error al obtener el ranking:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
+rutaTareas.get("/puntos-del-mes", async (req, res) => {
+  try {
+    const puntos = await getPuntosDelMes();
+    const puntosConNivel = puntos.map((usuario) => {
+      let nivel;
+      if (usuario.puntos >= 31) {
+        nivel = "Maestro de la casa";
+      } else if (usuario.puntos >= 16) {
+        nivel = "Experto";
+      } else if (usuario.puntos >= 7) {
+        nivel = "Colaborador";
+      } else {
+        nivel = "Novato";
+      }
+      return { ...usuario, nivel };
+    });
+    res.json(puntosConNivel);
+  } catch (error) {
+    console.error("Error al obtener los puntos del mes:", error);
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });
