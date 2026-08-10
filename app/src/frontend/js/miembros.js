@@ -1,12 +1,22 @@
 const URL_API = 'http://localhost:8000/api/v1/usuarios';
 
+// función auxiliar para establecer la fecha máxima en el input de fecha de nacimiento
+function establecerFechaMaxima() {
+    const fechaMaxima = hace15AniosISO(); //Agrego función que calcula15 años comó mínimo de edad
+    
+
+    const inputFecha = document.querySelector('input[name="fecha_nacimiento"]');
+
+    if (inputFecha) {
+        inputFecha.max = fechaMaxima;
+    }
+}
+
 //Funcion auxiliar para cargar todo
 async function init() {
     await cargarMiembros();
     registrarHandlerFormulario();
-    //Evita fechas futuras o menores a 15 años atrás
-    const inputFechaAlta = document.querySelector('input[name="fecha_nacimiento"]');
-    if (inputFechaAlta) inputFechaAlta.max = hace15AniosISO();
+    establecerFechaMaxima();
 }
 //Para obtener ususarios activos del back
 async function cargarMiembros() {
@@ -31,7 +41,7 @@ function mostrarMiembrosEnLista(miembros) {
         mensajeVacio.className = 'has-text-grey has-text-centered';
         contenedor.appendChild(mensajeVacio);
         return;
-    } 
+    }
     //Crea una fila por cada miembro usando el DOM
     miembros.forEach(miembro => {
         contenedor.appendChild(crearFila(miembro));
@@ -81,7 +91,7 @@ function crearFila(miembro) {
     botonEditar.textContent = 'Editar';
     // Activa el formulario de edición inline al hacer click
     botonEditar.addEventListener('click', () => activarModoEdicion(fila, miembro));
-     
+
     //BOTON ELIMINAR
     const botonEliminar = document.createElement('button');
     botonEliminar.className = 'btn-hecha';
@@ -138,13 +148,16 @@ async function construirFormularioEdicion(fila, miembro) {
 
     const inputContrasenia = document.createElement('input');
     inputContrasenia.className = 'input is-small';
+    // label contrasenia
     inputContrasenia.type = 'password';
     inputContrasenia.placeholder = 'Nueva contraseña';
     inputContrasenia.value = miembro.contrasenia;
-    
+
     const inputFecha = document.createElement('input');
     inputFecha.className = 'input is-small';
     inputFecha.type = 'date';
+    // max de la fecha de nacimiento
+    //inputFecha.max = new Date().toISOString().split('T')[0];
     // substring(0, 10) extrae "aaaa-mm-dd" del formato ISO completo. En este caso mostramos año al ser una fecha de cumpleaños
     inputFecha.value = miembro.fecha_nacimiento
         ? miembro.fecha_nacimiento.substring(0, 10)
@@ -195,7 +208,7 @@ async function construirFormularioEdicion(fila, miembro) {
 
 
 //Esto restaura la fila a su estado original (descarta edición)
-function cancelarEdicion(fila,miembro) {
+function cancelarEdicion(fila, miembro) {
     const filaOriginal = crearFila(miembro);
     fila.replaceWith(filaOriginal);
 }
@@ -216,7 +229,7 @@ async function guardarEdicion(id,datosEditados) {
     try { 
         const res = await fetch(`${URL_API}/${id}`, {
             method: 'PUT',
-            headers: {'Content-Type' : 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(datosEditados),
         });
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
@@ -333,4 +346,6 @@ const esFechaFutura = (fecha) => !!fecha && fecha > hoyISO();
 const esMenor = (fecha) => !!fecha && fecha > hace15AniosISO();
 
 // Punto de entrada: ejecuta init cuando el DOM está listo
-init();        
+init();
+// llamada a la función para establecer la fecha máxima
+//establecerFechaMaxima();    
