@@ -269,7 +269,7 @@ cursor: pointer;
 /* ── Edición inline de tareas (gestion_tareas) ── */
 .edit-form {
 display: flex;
-align-items: center;
+align-items: stretch;
 gap: 0.75rem;
 width: 100%;
 }
@@ -289,6 +289,11 @@ min-width: 140px;
 display: flex;
 flex-direction: column;
 gap: 0.3rem;
+justify-content: center;
+}
+/* Aviso de ayuda (p.ej. "Edad mínima: 15 años") pegado abajo, sin empujar el layout */
+.edit-form .edit-datos .help {
+margin-top: auto;
 }
 
 @media (max-width: 768px) {
