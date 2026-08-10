@@ -91,6 +91,7 @@ async function cargarTareasDashboard() {
         document.getElementById('my-tasks').textContent = `${hechas} de ${misTareasArreglo.length}`;
 
         renderizarTareasAsignadas(misTareasArreglo);
+        mostrarProximasAVencer(tareas);
     } catch (error) {
         console.error("Error al cargar tareas del dashboard", error);
     }
@@ -129,11 +130,68 @@ function renderizarTareasAsignadas(tareas) {
         badge.dataset.idTarea = tarea.id_tarea;
         badge.dataset.estado = tarea.estado;
 
+        const estadoVencimiento = crearAvisoVencimiento(tarea);
+
         fila.appendChild(info);
         fila.appendChild(badge);
+        if(estadoVencimiento) { fila.appendChild(estadoVencimiento)}
         contenedor.appendChild(fila);
 
     });
+}
+
+//Muestra las tareas que están vencidas o vencen dentro de 3 días o menos
+//Se muestran ordenados por fecha de vencimiento
+function mostrarProximasAVencer(tareas) {
+    const contenedor = document.getElementById('lista-proximas-a-vencer');
+    if(!contenedor) {
+        return;
+    }
+
+    contenedor.innerHTML= '';
+
+    //Filtramos las tareas NO hechas que estén por vencer
+    const proximas = tareas
+    .filter(tarea => tarea.estado !== 'hecha' && infoVencimiento(tarea.fecha_vencimiento))
+    .sort((a,b) => (a.fecha_vencimiento || '').localeCompare(b.fecha_vencimiento || ''));
+
+    //Si no hay nada vencido o por vencer, se muestra mensaje correspondiente
+    if(proximas.length === 0) {
+        contenedor.innerHTML = '<p class="has-text-grey">No hay tareas por vencer.</p>';
+        return;
+    }
+
+    proximas.forEach(tarea=> {
+        const info = infoVencimiento(tarea.fecha_vencimiento);
+
+        const fila = document.createElement('div');
+        fila.className = "tx-row";
+        fila.style.cssText = 'background: var(--bg); padding: 0.8rem; border-radius: 8px; border: none; margin-bottom: 0.5rem;'; 
+        
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'tx-info';
+
+        const nombre = document.createElement('div');
+        nombre.className = 'tx-name';
+        nombre.textContent = tarea.descripcion;
+
+        const meta = document.createElement('div');
+        meta.className = 'tx-meta';
+        meta.textContent = `${tarea.categoria} · ${tarea.usuario || 'Sin asignar'}`;
+
+        infoDiv.appendChild(nombre);
+        infoDiv.appendChild(meta);
+
+        const badge = document.createElement('span');
+        badge.className = `badge-vencimiento ${info.tipo}`;
+        badge.textContent = info.texto;
+
+        fila.appendChild(infoDiv);
+        fila.appendChild(badge);
+        contenedor.appendChild(fila);        
+
+    });
+
 }
 //Helpers para tareas
 function clasesSegunEstado(estado) {
