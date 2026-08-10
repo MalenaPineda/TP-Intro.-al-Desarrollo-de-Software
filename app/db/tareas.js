@@ -83,10 +83,11 @@ export async function getTareasDisponibles() {
 
 export async function getMisTareas(id_user) {
     const resultado = await db.query(`
-        SELECT tareas.*, categoria_tareas.nombre AS categoria
+        SELECT tareas.*, categoria_tareas.nombre AS categoria, usuarios.nombre AS usuario
         FROM tareas
         JOIN categoria_tareas ON tareas.id_categoria = categoria_tareas.id_categoria
         JOIN tarea_user ON tareas.id_tarea = tarea_user.id_tarea
+        JOIN usuarios ON tarea_user.id_user = usuarios.id_user
         WHERE tarea_user.id_user = $1
     `, [id_user]);
     return resultado.rows;
