@@ -1,4 +1,5 @@
 const URL_API = 'http://localhost:8000/api/v1/usuarios';
+
 //Funcion auxiliar para cargar todo
 async function init() {
     await cargarMiembros();
@@ -149,9 +150,15 @@ async function construirFormularioEdicion(fila, miembro) {
         ? miembro.fecha_nacimiento.substring(0, 10)
         : '';
     inputFecha.max = hace15AniosISO(); //Función para agregar máximo de la fecha hace 15 años
+    const aviso = document.createElement('p');
+    aviso.className = "help";
+    aviso.textContent = "Edad mínima: 15 años";
+
 
     editDatos.appendChild(inputContrasenia);
     editDatos.appendChild(inputFecha);
+    editDatos.appendChild(aviso);
+    
  // Columna derecha: botones Guardar / Cancelar
     const editAcciones = document.createElement('div');
     editAcciones.className = 'edit-acciones';
