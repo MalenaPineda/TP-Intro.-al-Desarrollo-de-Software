@@ -1,5 +1,5 @@
-const URL_GASTOS = "http://localhost:8000/api/v1/gastos";
-const URL_CATEGORIAS = "http://localhost:8000/api/v1/gastos/nombre-categoria";
+const URL_GASTOS = `${window.location.origin}/api/v1/gastos`;
+const URL_CATEGORIAS = `${window.location.origin}/api/v1/gastos/nombre-categoria`;
 
 let todosLosGastos = [];
 let categoriasDisponibles = [];

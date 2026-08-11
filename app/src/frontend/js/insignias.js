@@ -1,5 +1,5 @@
-const URL_API = 'http://localhost:8000/api/v1/insignias';
-const URL_API_TAREA = "http://localhost:8000/api/v1/tareas";
+const URL_API = `${window.location.origin}/api/v1/insignias`;
+const URL_API_TAREA = `${window.location.origin}/api/v1/tareas`;
 
 let iconoElegidoCrear = null;
 

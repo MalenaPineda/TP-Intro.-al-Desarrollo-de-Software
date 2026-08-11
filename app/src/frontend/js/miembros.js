@@ -1,4 +1,4 @@
-const URL_API = 'http://localhost:8000/api/v1/usuarios';
+const URL_API = `${window.location.origin}/api/v1/usuarios`;
 
 // función auxiliar para establecer la fecha máxima en el input de fecha de nacimiento
 function establecerFechaMaxima() {
