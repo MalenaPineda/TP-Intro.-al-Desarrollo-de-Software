@@ -143,12 +143,12 @@ export async function getInsigniasPorUsuario() {
       i.nombre AS insignia,
       ic.clase AS icono_clase,
       ic.color AS icono_color
-    FROM usuarios u, tarea_user tu, tareas t, insignias i
-    LEFT JOIN iconos ic ON i.id_icono = ic.id_icono
-    WHERE tu.id_user = u.id_user
-    AND tu.id_tarea = t.id_tarea
-    AND t.estado = 'hecha'
-    AND i.id_categoria_tarea = t.id_categoria
+    FROM usuarios u
+    JOIN tarea_user tu ON tu.id_user = u.id_user
+    JOIN tareas t ON tu.id_tarea = t.id_tarea
+    JOIN insignias i ON i.id_categoria_tarea = t.id_categoria
+    LEFT JOIN iconos ic ON ic.id_icono = i.icono
+    WHERE t.estado = 'hecha'
     GROUP BY u.id_user, i.id_insignia, i.nombre, ic.clase, ic.color
     HAVING COUNT(t.id_tarea) >= i.cant_tarea
   `);
