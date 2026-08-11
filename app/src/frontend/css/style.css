@@ -18,7 +18,7 @@
   --c-other:     #ff6b35;
 }
 
-html, body { height: 100%; margin: 0; background: var(--bg); font-family: 'Inter', system-ui, sans-serif; }
+html, body { height: 100%; margin: 0; background: white; font-family: 'Inter', system-ui, sans-serif; }
 
 /* ── Layout ── */
 .app-layout { display: flex; min-height: 100vh; }
