@@ -173,5 +173,4 @@ function crearAvisoVencimiento(tarea) {
 
     avisoVencimiento.textContent = info.texto;
     return avisoVencimiento;
-
 }
