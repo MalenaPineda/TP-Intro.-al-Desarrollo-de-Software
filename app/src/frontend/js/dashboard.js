@@ -1,5 +1,5 @@
 const URL_API = `${window.location.origin}/api/v1/gastos`;
-const URL_TAREAS = `${window.location.origin}/api/v1/tareas`;
+const URL_API_TAREAS = `${window.location.origin}/api/v1/tareas`;
 
 
 const coloresPorCategoria = {
