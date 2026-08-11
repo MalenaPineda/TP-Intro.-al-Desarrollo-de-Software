@@ -15,7 +15,7 @@ async function run(file) {
 async function main() {
   await run("./delete.sql");     // Borra todo
   await run("./schemas.sql");    // Crea tablas de nuevo
-  await run("./seeds.sql");       // Inserta datos nuevos
+  await run("./seed.sql");       // Inserta datos nuevos
   await pool.end();
   }
 main().catch((err) => {
