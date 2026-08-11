@@ -115,7 +115,8 @@ function crearFila(tarea) {
     const estadoTarea = document.createElement('span');
     estadoTarea.className = `badge-estado ${obtenerClasesSegunEstado(tarea.estado)}`;
     estadoTarea.textContent = ponerPrimeraLetraMayuscula(tarea.estado);
-
+    //Muestra cuánto falta para vencer si corresponde
+    const estadoVencimiento = crearAvisoVencimiento(tarea);
 
     //Columna de botones de acción: Editar y Eliminar
     const acciones = document.createElement('div');
@@ -142,6 +143,7 @@ function crearFila(tarea) {
     fila.appendChild(puntoCategoria);
     fila.appendChild(infoTarea);
     fila.appendChild(estadoTarea);
+    if(estadoVencimiento) {fila.appendChild(estadoVencimiento)};
     fila.appendChild(acciones);
 
     return fila;

@@ -37,7 +37,7 @@ export async function editarTarea(id,descripcion,fecha_vencimiento,id_categoria,
 }
 
 export async function cambiarEstadoTarea(id,estado) {
-    const resultado = await db.query("UPDATE tareas SET estado = $1 WHERE id_tarea = $2 RETURNING *",[estado, id]);
+    const resultado = await db.query(estado === 'hecha' ? "UPDATE tareas SET estado = $1, fecha_completada = CURRENT_TIMESTAMP WHERE id_tarea = $2 RETURNING *" : "UPDATE tareas SET estado = $1, fecha_completada = NULL WHERE id_tarea = $2 RETURNING *", [estado, id]);
     return resultado.rows[0];
 }
 //Función para solicitar a la base de datos las tareas con toda la información necesaria. 
@@ -83,10 +83,11 @@ export async function getTareasDisponibles() {
 
 export async function getMisTareas(id_user) {
     const resultado = await db.query(`
-        SELECT tareas.*, categoria_tareas.nombre AS categoria
+        SELECT tareas.*, categoria_tareas.nombre AS categoria, usuarios.nombre AS usuario
         FROM tareas
         JOIN categoria_tareas ON tareas.id_categoria = categoria_tareas.id_categoria
         JOIN tarea_user ON tareas.id_tarea = tarea_user.id_tarea
+        JOIN usuarios ON tarea_user.id_user = usuarios.id_user
         WHERE tarea_user.id_user = $1
     `, [id_user]);
     return resultado.rows;
@@ -127,14 +128,33 @@ export async function getInsigniasPorUsuario() {
     SELECT
       u.id_user,
       i.nombre AS insignia,
-      i.icono
+      ic.clase AS icono_clase,
+      ic.color AS icono_color
     FROM usuarios u, tarea_user tu, tareas t, insignias i
+    LEFT JOIN iconos ic ON i.id_icono = ic.id_icono
     WHERE tu.id_user = u.id_user
     AND tu.id_tarea = t.id_tarea
     AND t.estado = 'hecha'
     AND i.id_categoria_tarea = t.id_categoria
-    GROUP BY u.id_user, i.id_insignia, i.nombre, i.icono
+    GROUP BY u.id_user, i.id_insignia, i.nombre, ic.clase, ic.color
     HAVING COUNT(t.id_tarea) >= i.cant_tarea
+  `);
+  return result.rows;
+}
+
+export async function getPuntosDelMes() {
+  const result = await db.query(`
+    SELECT
+      u.id_user,
+      u.nombre,
+      COUNT(t.id_tarea) AS puntos
+    FROM tarea_user tu, tareas t, usuarios u
+    WHERE tu.id_tarea = t.id_tarea
+    AND tu.id_user = u.id_user
+    AND t.estado = 'hecha'
+    AND DATE_TRUNC('month', t.fecha_completada) = DATE_TRUNC('month', CURRENT_DATE)
+    GROUP BY u.id_user, u.nombre
+    ORDER BY puntos DESC
   `);
   return result.rows;
 }
