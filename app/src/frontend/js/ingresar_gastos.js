@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
       data.monto = parseFloat(data.monto);
       data.categoria = parseInt(data.categoria, 10);
       data.metodo_pago = parseInt(data["metodo-pago"]);
-      data.id_user = 1
+      data.id_user = getUsuarioActual().id_user
       try { 
         const response = await fetch(URL_API, {
           method: 'POST',

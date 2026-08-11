@@ -17,16 +17,32 @@
     <aside class="sidebar">
         <div class="sidebar-brand">
             <div class="house-name">Casa Feliz</div>
-            <div class="members">4 miembros</div>
+            <div class="members" id="cantidad-miembros">4 miembros</div>
         </div>
-        
         <nav class="sidebar-menu">
+<<<<<<< HEAD
             <a href="dashboard.html" class="sidebar-item"><i class="fa-solid fa-house"></i>Página principal</a>
             <a href="ver_gastos.html" class="sidebar-item"><i class="fa-solid fa-dollar-sign"></i>Gastos</a>
             <a href="tareas.html" class="sidebar-item"><i class="fa-solid fa-list-check"></i>Tareas</a>
             <a href="ranking.html" class="sidebar-item"><i class="fa-solid fa-trophy"></i>Ranking</a>
         </nav>
 
+=======
+            <a href="dashboard" class="sidebar-item active"><i class="fa-solid fa-house"></i> Página principal</a>
+            <a href="ver_gastos" class="sidebar-item"><i class="fa-solid fa-dollar-sign"></i> Gastos</a>
+            <a href="tareas" class="sidebar-item"><i class="fa-solid fa-list-check"></i> Tareas</a>
+            <a href="ranking" class="sidebar-item"><i class="fa-solid fa-trophy"></i>Ranking</a>
+            <a href="miembros" class="sidebar-item"><i class="fa-solid fa-users"></i> Miembros</a>
+        </nav>
+        <div class="sidebar-user" id="selector-usuario">
+            <div class="avatar" id="user-avatar">M</div>
+            <div class="user-info">
+                <div class="name" id="user-name">Malena</div>
+                <div class="role">Cambiar usuario ▾</div>
+            </div>
+        </div>
+        <div id="user-dropdown" class="user-dropdown"></div>
+>>>>>>> development
     </aside>
     <main class="main-content">
         <header class="page-header">
@@ -40,7 +56,7 @@
     <section class="summary-grid">
     <div class="summary-card">
         <p class="summary-label">Tareas pendientes</p>
-        <h2 class="summary-value blue" id="pending-tasks">5</h2>
+        <h2 class="summary-value blue" id="pending-tasks">...</h2>
     </div>
     <div class="summary-card">
         <p class="summary-label">Gastos del mes</p>
@@ -51,10 +67,17 @@
     <div class="summary-card">
         <p class="summary-label">Tus tareas</p>
         <h2 class="summary-value purple" id="my-tasks">
-            0 de 5
         </h2>
     </div>
     </section> 
+
+     <section class="panel-card" style="margin-bottom: 1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.1rem;">
+            <h3 class="panel-title" style="margin-bottom: 0;">Próximas a vencer</h3>
+        </div>
+        <div class="task-list" id="lista-proximas-a-vencer"></div>
+    </section>
+
     <section class="bottom-grid">
         
         <div class="panel-card">
@@ -63,28 +86,7 @@
                 <a href="tareas.html" style="font-size: 0.8rem; color: var(--c-utilities); text-decoration: none;">Ver todas</a>
             </div>
             
-        <div class="task-list">
-        <!-- Tarea 1 -->
-        <div class="tx-row" style="background: var(--bg); padding: 0.8rem; border-radius: 8px; border: none; margin-bottom: 0.5rem;">
-            <div class="tx-info">
-                <div class="tx-name">Limpiar la cocina</div>
-                <div class="tx-meta">Alex</div>
-            </div>
-            <div>
-                <span class="badge-estado estado-progreso">En progreso</span>
-            </div>
-    </div>
-    <!-- Tarea 2 -->
-                <div class="tx-row" style="background: var(--bg); padding: 0.8rem; border-radius: 8px; border: none; margin-bottom: 0.5rem;">
-                    <div class="tx-info">
-                        <div class="tx-name">Hacer la compra</div>
-                        <div class="tx-meta">Tu</div>
-                    </div>
-                    <div>
-                        <span class="badge-estado estado-pendiente">Pendiente</span>
-                    </div>
-                </div>
-            </div>
+        <div class="task-list" id="lista-tareas-asignadas"></div>
         </div> 
 
         <div class="panel-card">
@@ -102,6 +104,7 @@
     </section>
     </main>
 </div>
-    <script src="js/dashboard.js"></script>
+    <script src="js/comun.js"></script>
+<script src="js/dashboard.js"></script>
 </body>
 </html>

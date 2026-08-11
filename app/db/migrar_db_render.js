@@ -13,10 +13,9 @@ async function run(file) {
 }
 
 async function main() {
-  //await run("./delete.sql");     // Borra todo
-  //await run("./schemas.sql");    // Crea tablas de nuevo
-  //await run("./seeds.sql");       // Inserta datos nuevos
-  await run("./update_db_render.sql");  // Agrega esta línea
+  await run("./delete.sql");     // Borra todo
+  await run("./schemas.sql");    // Crea tablas de nuevo
+  await run("./seeds.sql");       // Inserta datos nuevos
   await pool.end();
   }
 main().catch((err) => {

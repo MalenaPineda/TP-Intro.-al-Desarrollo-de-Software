@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getTareas,getNombreCategoriaTarea,getRankingTareas, getTareasPorId,crearTarea, borrarTarea, cambiarEstadoTarea, getTareasCompletas, asignarUsuario, getMisTareas, getTareasDeOtros, getTareasDisponibles,editarTarea, getInsigniasPorUsuario } from '../../../db/tareas.js';
+import { getTareas,getNombreCategoriaTarea,getRankingTareas, getTareasPorId,crearTarea, borrarTarea, cambiarEstadoTarea, getTareasCompletas, asignarUsuario, getMisTareas, getTareasDeOtros, getTareasDisponibles,editarTarea, getInsigniasPorUsuario, getPuntosDelMes } from '../../../db/tareas.js';
 
 export const rutaTareas = Router();
 
@@ -83,7 +83,7 @@ rutaTareas.get("/ranking", async (req, res) => {
       ...usuario,
       insignias: insigniasPorUsuario
         .filter((i) => i.id_user === usuario.id_user)
-        .map((i) => ({ nombre: i.insignia, icono: i.icono })),
+        .map((i) => ({ nombre: i.insignia, icono_clase: i.icono_clase, icono_color: i.icono_color })),
     }));
 
     res.json(rankingConInsignias);
@@ -93,22 +93,30 @@ rutaTareas.get("/ranking", async (req, res) => {
   }
 });
 
-
-//Mostrar tareas por id
-rutaTareas.get('/:id', async (req,res) => {
-    try {
-        const {id} = req.params;
-        const tarea = await getTareasPorId(id);
-
-        if (!tarea) {
-            return res.status(404).json({error: "Tarea no encontrada"});
-        }
-        res.json(tarea)
-    } catch(error) {
-        console.error("Error al obtener tarea", error);
-        res.status(500).json({error: "Error interno del servidor"});
-    }
+rutaTareas.get("/puntos-del-mes", async (req, res) => {
+  try {
+    const puntos = await getPuntosDelMes();
+    const puntosConNivel = puntos.map((usuario) => {
+      let nivel;
+      if (usuario.puntos >= 31) {
+        nivel = "Maestro de la casa";
+      } else if (usuario.puntos >= 16) {
+        nivel = "Experto";
+      } else if (usuario.puntos >= 7) {
+        nivel = "Colaborador";
+      } else {
+        nivel = "Novato";
+      }
+      return { ...usuario, nivel };
+    });
+    res.json(puntosConNivel);
+  } catch (error) {
+    console.error("Error al obtener los puntos del mes:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
 });
+
+
 
 
 
@@ -221,3 +229,18 @@ rutaTareas.put('/:id', async (req,res)=> {
     }   
  })
 
+//Mostrar tareas por id
+rutaTareas.get('/:id', async (req,res) => {
+    try {
+        const {id} = req.params;
+        const tarea = await getTareasPorId(id);
+
+        if (!tarea) {
+            return res.status(404).json({error: "Tarea no encontrada"});
+        }
+        res.json(tarea)
+    } catch(error) {
+        console.error("Error al obtener tarea", error);
+        res.status(500).json({error: "Error interno del servidor"});
+    }
+});

@@ -189,11 +189,11 @@
         <div class="members" id="cantidad-miembros">4 miembros</div>
     </div>
     <nav class="sidebar-menu">
-        <a href="dashboard" class="sidebar-item"><i class="fa-solid fa-house"></i> Página principal</a>
-        <a href="ver_gastos" class="sidebar-item active"><i class="fa-solid fa-dollar-sign"></i> Gastos</a>
-        <a href="tareas" class="sidebar-item"><i class="fa-solid fa-list-check"></i> Tareas</a>
-        <a href="ranking" class="sidebar-item"><i class="fa-solid fa-trophy"></i>Ranking</a>
-        <a href="miembros" class="sidebar-item"><i class="fa-solid fa-users"></i> Miembros</a>
+        <a href="dashboard.html" class="sidebar-item"><i class="fa-solid fa-house"></i> Página principal</a>
+        <a href="ver_gastos.html" class="sidebar-item active"><i class="fa-solid fa-dollar-sign"></i> Gastos</a>
+        <a href="tareas.html" class="sidebar-item"><i class="fa-solid fa-list-check"></i> Tareas</a>
+        <a href="ranking.html" class="sidebar-item"><i class="fa-solid fa-trophy"></i>Ranking</a>
+        <a href="miembros.html" class="sidebar-item"><i class="fa-solid fa-users"></i> Miembros</a>
     </nav>
     <div class="sidebar-user" id="selector-usuario">
         <div class="avatar" id="user-avatar">M</div>
@@ -205,66 +205,49 @@
     <div id="user-dropdown" class="user-dropdown"></div>
 </aside>
   <!-- ═══ MAIN ═══ -->
-  <main class="main-content">
-    <!-- Page header -->
-    <div class="page-header">
-      <div>
-        <h1 class="page-title">Historial de pagos</h1>
-        <p class="page-subtitle">Gastos compartidos de la casa</p>
-        <a href="/resumen_anual_gastos" class="link-resumen">
-          Ver resumen anual
-        </a>
-      </div>
-      <a href="ingresar_gastos.html" class="btn-add">
-        <i class="fa-solid fa-circle-plus"></i> Agregar gasto
-      </a>
-    </div>
-<!-- Summary cards -->
-<div class="summary-grid">
-  <div class="summary-card">
-    <div class="summary-label">Gasto del mes</div>
-    <div class="summary-value teal" id="gasto-mes"></div>
-  </div>
-  <div class="summary-card">
-    <div class="summary-label">Mi gasto</div>
-    <div class="summary-value purple" id="gasto-user"></div>
-  </div>
-</div>
+<main class="main-content">
+    <header class="page-header">
+        <div>
+            <h1 class="page-title">Resumen anual de gastos</h1>
+        </div>
+        <div id="current-date"></div>
+    </header>
+    <section class="panel-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+          <div>
+              <h2 class="panel-title">
+                  Movimientos del año
+              </h2>
 
-<!-- Gráficos (izq) + Transacciones (der) -->
-<div class="bottom-grid">
-  <!-- Gráficos apilados verticalmente -->
-  <div style="display: flex; flex-direction: column; gap: 1rem;">
-    <div class="panel-card">
-      <div class="panel-title">Por categoría</div>
-      <div class="chart-wrap">
-        <canvas id="donut"></canvas>
-        <div class="legend"></div>
-      </div>
-    </div>
-
-    <div class="panel-card">
-      <div class="panel-title">Gasto mensual</div>
-      <canvas id="barras"></canvas>
-    </div>
-
-    <div class="panel-card">
-      <div class="panel-title">Gasto por usuario</div>
-      <canvas id="lineChart"></canvas>
-    </div>
-  </div>
-
-  <!-- Transacciones (derecha) -->
-  <div class="panel-card">
-    <div class="panel-title">Transacciones del mes</div>
-    <div id="lista-gastos"></div>
-  </div>
-</div>
-
-  </main>
-<!-- Chart.js para el donut -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<script src="js/comun.js"></script>
-<script src="js/ver_gastos.js"></script>
+              <h3 class="page-subtitle">
+                  Consultá todos los gastos registrados durante el año.
+              </h3>
+          </div>
+          <div class="select">
+              <select id="filtro-categoria">
+                  <option value="">Todas las categorías</option>
+              </select>
+            </div>
+        </div>
+        <div class="table-container">
+            <table class="table is-fullwidth is-striped is-hoverable">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Descripción</th>
+                        <th>Categoría</th>
+                        <th>Usuario</th>
+                        <th>Método de pago</th>
+                        <th class="has-text-right">Monto</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-gastos">
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+<script src="./js/comun.js"></script>
+<script src="./js/resumen_anual_gastos.js"></script>
 </body>
 </html>

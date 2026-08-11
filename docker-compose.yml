@@ -1,4 +1,12 @@
 services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./app/src/frontend:/app/src/frontend
   convivencia-api:
     image: "backend"
     build: . # Buildear el Dockerfile de esta carpeta (.)

@@ -1,5 +1,5 @@
-const URL_API = `${window.location.origin}/api/v1/tareas`;
-const ID_USER = 2;
+const URL_API = 'http://localhost:8000/api/v1/tareas';
+const ID_USER = getUsuarioActual().id_user;
 
 const coloresPorCategoria = {
     1: '#00bfa5', // Limpieza
@@ -59,6 +59,8 @@ function mostrarDisponibles(tareas) {
         const estadoTarea = document.createElement('span');
         estadoTarea.className = `badge-estado ${infoTarea_clase(tarea.estado)}`;
         estadoTarea.textContent = ponerPrimeraLetraMayuscula(tarea.estado);
+        // En el caso de que la tarea esté por vencer o ya esté vencida
+        const estadoVencimiento = crearAvisoVencimiento(tarea);
 
         //boton - al clickear marca la tarea como hecha
        /* const boton = document.createElement('button');
@@ -77,6 +79,7 @@ function mostrarDisponibles(tareas) {
         card.appendChild(tituloTarea);
         card.appendChild(infoTarea);
         card.appendChild(estadoTarea);
+        if(estadoVencimiento) {card.appendChild(estadoVencimiento)}; //Sólo si corresponde
         //card.appendChild(boton);
         card.appendChild(botonElegir);
         contenedor.append(card)
@@ -125,12 +128,16 @@ function mostrarMisTareas(tareas) {
         estadoTarea.className = `badge-estado ${infoTarea_clase(tarea.estado)}`;
         estadoTarea.textContent = ponerPrimeraLetraMayuscula(tarea.estado);
 
+        //Caso de tarea por vencer o vencida
+        const estadoVencimiento = crearAvisoVencimiento(tarea);
       
 
         card.appendChild(puntoCategoria);
         card.appendChild(tituloTarea);
         card.appendChild(infoTarea);
         card.appendChild(estadoTarea);
+        //Avisa si corresponde
+        if(estadoVencimiento) {card.appendChild(estadoVencimiento)};
         if (tarea.estado !== 'hecha') {
 
             const boton = document.createElement('button');
@@ -183,6 +190,9 @@ function mostrarTareasDeOtros(tareas)
         estadoTarea.className = `badge-estado ${infoTarea_clase(tarea.estado)}`;
         estadoTarea.textContent = ponerPrimeraLetraMayuscula(tarea.estado);
 
+        const estadoVencimiento = crearAvisoVencimiento(tarea);
+
+
         const nombreUsuario = document.createElement('div');
         nombreUsuario.className = 'task-meta';
         nombreUsuario.textContent = tarea.usuario;
@@ -192,6 +202,7 @@ function mostrarTareasDeOtros(tareas)
         footerCard.className = 'card-footer';
         footerCard.appendChild(nombreUsuario);
         footerCard.appendChild(estadoTarea);
+        if(estadoVencimiento) {footerCard.appendChild(estadoVencimiento)};
 
         card.appendChild(puntoCategoria);
         card.appendChild(tituloTarea);
