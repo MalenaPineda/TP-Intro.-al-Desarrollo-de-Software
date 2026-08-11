@@ -1,7 +1,7 @@
 import { db } from "./pool.js"
 
 export async function getTareas() {
-    const resultado = await db.query("SELECT * FROM tareas")
+    const resultado = await db.query("SELECT * FROM tareas ORDER BY (estado = 'hecha') ASC, fecha_vencimiento ASC, fecha_creacion ASC");
     return resultado.rows
 }
 
@@ -58,7 +58,10 @@ export async function getTareasCompletas() {
         FROM tareas 
         JOIN categoria_tareas ON tareas.id_categoria = categoria_tareas.id_categoria
         LEFT JOIN tarea_user ON tareas.id_tarea = tarea_user.id_tarea
-        LEFT JOIN usuarios ON tarea_user.id_user = usuarios.id_user`)
+        LEFT JOIN usuarios ON tarea_user.id_user = usuarios.id_user
+        ORDER BY (tareas.estado = 'hecha') ASC,
+        tareas.fecha_vencimiento ASC,
+        tareas.fecha_creacion ASC `)
 
     return resultado.rows;
 }
@@ -74,8 +77,12 @@ export async function getTareasDisponibles() {
     const resultado = await db.query(`SELECT tareas.*, categoria_tareas.nombre AS categoria
         FROM tareas
         JOIN categoria_tareas ON tareas.id_categoria = categoria_tareas.id_categoria
-        LEFT JOIN tarea_user ON tareas.id_tarea = tarea_user.id_tarea WHERE tarea_user.id_tarea IS NULL`);
-
+        LEFT JOIN tarea_user ON tareas.id_tarea = tarea_user.id_tarea WHERE tarea_user.id_tarea IS NULL
+        ORDER BY (tareas.estado = 'hecha') ASC,
+        tareas.fecha_vencimiento ASC,
+        tareas.fecha_creacion ASC 
+        `);
+        
         return resultado.rows;
 
 }
@@ -89,6 +96,9 @@ export async function getMisTareas(id_user) {
         JOIN tarea_user ON tareas.id_tarea = tarea_user.id_tarea
         JOIN usuarios ON tarea_user.id_user = usuarios.id_user
         WHERE tarea_user.id_user = $1
+        ORDER BY (tareas.estado = 'hecha') ASC,
+        tareas.fecha_vencimiento ASC,
+        tareas.fecha_creacion ASC 
     `, [id_user]);
     return resultado.rows;
 }
@@ -102,6 +112,9 @@ export async function getTareasDeOtros(id_user) {
         JOIN tarea_user ON tareas.id_tarea = tarea_user.id_tarea
         JOIN usuarios ON tarea_user.id_user = usuarios.id_user
         WHERE tarea_user.id_user != $1
+        ORDER BY (tareas.estado = 'hecha') ASC,
+        tareas.fecha_vencimiento ASC,
+        tareas.fecha_creacion ASC 
     `, [id_user]);
     return resultado.rows;
 }
@@ -130,12 +143,12 @@ export async function getInsigniasPorUsuario() {
       i.nombre AS insignia,
       ic.clase AS icono_clase,
       ic.color AS icono_color
-    FROM usuarios u, tarea_user tu, tareas t, insignias i
-    LEFT JOIN iconos ic ON i.id_icono = ic.id_icono
-    WHERE tu.id_user = u.id_user
-    AND tu.id_tarea = t.id_tarea
-    AND t.estado = 'hecha'
-    AND i.id_categoria_tarea = t.id_categoria
+    FROM usuarios u
+    JOIN tarea_user tu ON tu.id_user = u.id_user
+    JOIN tareas t ON tu.id_tarea = t.id_tarea
+    JOIN insignias i ON i.id_categoria_tarea = t.id_categoria
+    LEFT JOIN iconos ic ON ic.id_icono = i.icono
+    WHERE t.estado = 'hecha'
     GROUP BY u.id_user, i.id_insignia, i.nombre, ic.clase, ic.color
     HAVING COUNT(t.id_tarea) >= i.cant_tarea
   `);
