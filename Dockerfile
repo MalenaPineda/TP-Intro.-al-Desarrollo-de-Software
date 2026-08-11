@@ -2,9 +2,9 @@ FROM node:22
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY app/package*.json ./
 RUN npm install
 
-COPY . .
+COPY app/ .
 
 CMD ["npm","run","dev"]
