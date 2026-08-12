@@ -147,7 +147,7 @@ export async function getInsigniasPorUsuario() {
     JOIN tarea_user tu ON tu.id_user = u.id_user
     JOIN tareas t ON tu.id_tarea = t.id_tarea
     JOIN insignias i ON i.id_categoria_tarea = t.id_categoria
-    LEFT JOIN iconos ic ON ic.id_icono = i.icono
+    LEFT JOIN iconos ic ON ic.id_icono = i.id_icono
     WHERE t.estado = 'hecha'
     GROUP BY u.id_user, i.id_insignia, i.nombre, ic.clase, ic.color
     HAVING COUNT(t.id_tarea) >= i.cant_tarea
