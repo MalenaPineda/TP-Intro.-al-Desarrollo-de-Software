@@ -7,31 +7,31 @@ export async function getInsignias() {
         i.nombre,
         i.descripcion,
         i.cant_tarea,
-        i.icono,
+        i.id_icono,
         i.id_categoria_tarea,
         c.nombre AS categoria,
         ic.clase AS icono_clase,
         ic.color AS icono_color
       FROM insignias i
       JOIN categoria_tareas c ON i.id_categoria_tarea = c.id_categoria
-      LEFT JOIN iconos ic ON i.icono = ic.id_icono
+      LEFT JOIN iconos ic ON i.id_icono = ic.id_icono
       ORDER BY i.id_insignia ASC
     `);
   return resultado.rows;
 }
 
-export async function createInsignia(nombre, descripcion, cant_tarea, id_categoria_tarea, icono) {
+export async function createInsignia(nombre, descripcion, cant_tarea, id_categoria_tarea, id_icono) {
   const result = await db.query(
-    "INSERT INTO insignias (nombre, descripcion, cant_tarea, id_categoria_tarea, icono) VALUES ($1, $2, $3, $4, $5) RETURNING *",
-    [nombre, descripcion, cant_tarea, id_categoria_tarea, icono]
+    "INSERT INTO insignias (nombre, descripcion, cant_tarea, id_categoria_tarea, id_icono) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+    [nombre, descripcion, cant_tarea, id_categoria_tarea, id_icono]
   );
   return result.rows[0];
 }
 
-export async function updateInsignia(id, nombre, descripcion, cant_tarea, id_categoria_tarea, icono) {
+export async function updateInsignia(id, nombre, descripcion, cant_tarea, id_categoria_tarea, id_icono) {
   const result = await db.query(
-    "UPDATE insignias SET nombre = $1, descripcion = $2, cant_tarea = $3, id_categoria_tarea = $4, icono = $5 WHERE id_insignia = $6",
-    [nombre, descripcion, cant_tarea, id_categoria_tarea, icono, id]
+    "UPDATE insignias SET nombre = $1, descripcion = $2, cant_tarea = $3, id_categoria_tarea = $4, id_icono = $5 WHERE id_insignia = $6",
+    [nombre, descripcion, cant_tarea, id_categoria_tarea, id_icono, id]
   );
   return result.rowCount > 0;
 }
