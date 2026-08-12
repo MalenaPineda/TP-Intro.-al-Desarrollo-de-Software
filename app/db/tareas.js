@@ -1,186 +1,248 @@
-import { db } from "./pool.js"
-
-export async function getTareas() {
-    const resultado = await db.query("SELECT * FROM tareas ORDER BY (estado = 'hecha') ASC, fecha_vencimiento ASC, fecha_creacion ASC");
-    return resultado.rows
-}
-
-export async function getNombreCategoriaTarea() {
-    const resultado = await db.query('SELECT * FROM categoria_tareas ORDER BY nombre ASC');
-    return resultado.rows;
-};
 
 
-export async function getTareasPorId(id) {
-    const resultado = await db.query("SELECT * FROM tareas WHERE id_tarea = $1", [id]);
-    return resultado.rows[0];
-}
+import { Router } from 'express';
+import { getTareas,getNombreCategoriaTarea,getRankingTareas, getTareasPorId,crearTarea, borrarTarea, cambiarEstadoTarea, getTareasCompletas, asignarUsuario, getMisTareas, getTareasDeOtros, getTareasDisponibles,editarTarea, getInsigniasPorUsuario, getPuntosDelMes } from '../../../db/tareas.js';
 
-export async function crearTarea(descripcion, fecha_vencimiento, id_categoria, notas) {
-    const resultado = await db.query(
-        `INSERT INTO tareas (descripcion, fecha_vencimiento, id_categoria, notas) VALUES ($1, $2, $3, $4)
-        RETURNING *`, [descripcion,fecha_vencimiento,id_categoria, notas]);
-        return resultado.rows[0];
-}
+export const rutaTareas = Router();
 
-//PROBLEMA: No deja borrar una fila de tareas si todavía hay registros en tarea_user que la referencian — rompería la integridad referencial (quedaría una relación "huérfana" apuntando a una tarea que ya no existe).
-//FIX: Primero se borran las relaciones en tarea_user (la tabla "hija"), y una vez que ya no hay nada que dependa de esa tarea, se borra la tarea en sí de la tabla tareas (la tabla "padre") sin que la FK se quede con valores huérfanos. El orden importa: siempre hijo antes que padre.
-export async function borrarTarea(id) {
-    await db.query("DELETE FROM tarea_user WHERE id_tarea = $1", [id]);
-    const resultado = await db.query("DELETE FROM tareas WHERE id_tarea = $1 RETURNING *", [id]);
-    return resultado.rows[0];
-}
+// Tareas disponibles o sin asignar
+rutaTareas.get('/disponibles', async (req, res) => {
+    try {
+        const tareas = await getTareasDisponibles();
+        res.json(tareas);
+    } catch (error) {
+        console.error("Error al obtener tareas disponibles", error);
+        res.status(500).json({ error: "Error interno del servidor" });
+    }
 
-export async function editarTarea(id,descripcion,fecha_vencimiento,id_categoria,notas) {
-    const resultado = await db.query(`UPDATE tareas SET descripcion = $1, fecha_vencimiento = $2, id_categoria =$3, notas = $4 WHERE id_tarea = $5 RETURNING *`, [descripcion,fecha_vencimiento,id_categoria,notas,id]);
-    return resultado.rows[0];
-}
+});
+//Mostrar tareas con información completa
+rutaTareas.get('/completas', async (req,res) => {
+    try {
+        const tareas = await getTareasCompletas();
+        res.json(tareas);
 
-export async function cambiarEstadoTarea(id,estado) {
-    const resultado = await db.query(estado === 'hecha' ? "UPDATE tareas SET estado = $1, fecha_completada = CURRENT_TIMESTAMP WHERE id_tarea = $2 RETURNING *" : "UPDATE tareas SET estado = $1, fecha_completada = NULL WHERE id_tarea = $2 RETURNING *", [estado, id]);
-    return resultado.rows[0];
-}
-//Función para solicitar a la base de datos las tareas con toda la información necesaria. 
-//FIX, modifico INNER JOIN por LERFT JOIN para que también traiga las tareas sin asignar
-//Además, tomando en cuenta de que es un usuario por tarea, no usamos array_agg ni Group By como estaba anteriormente
-export async function getTareasCompletas() {
-    const resultado = await db.query(`SELECT 
-        tareas.id_categoria,
-        tareas.descripcion,
-        tareas.id_tarea,
-        tareas.fecha_vencimiento,
-        tareas.fecha_creacion,
-        tareas.diaria,
-        tareas.estado,
-        tareas.notas,
-        categoria_tareas.nombre AS categoria,
-        usuarios.nombre AS usuario
-        FROM tareas 
-        JOIN categoria_tareas ON tareas.id_categoria = categoria_tareas.id_categoria
-        LEFT JOIN tarea_user ON tareas.id_tarea = tarea_user.id_tarea
-        LEFT JOIN usuarios ON tarea_user.id_user = usuarios.id_user
-        ORDER BY (tareas.estado = 'hecha') ASC,
-        tareas.fecha_vencimiento ASC,
-        tareas.fecha_creacion ASC `)
-
-    return resultado.rows;
-}
-
-export async function asignarUsuario(id_tarea, id_user) {
-    const resultado = await db.query(`INSERT INTO tarea_user(id_tarea,id_user) VALUES ($1,$2) RETURNING *`, [id_tarea,id_user]);
-
-    return resultado.rows[0];
-}
+    } catch (error) {
+        console.log("Error al obtener tareas", error)
+        res.status(500).json({error: "Error interno del servidor"});
+    }
+})
 
 
-export async function getTareasDisponibles() {
-    const resultado = await db.query(`SELECT tareas.*, categoria_tareas.nombre AS categoria
-        FROM tareas
-        JOIN categoria_tareas ON tareas.id_categoria = categoria_tareas.id_categoria
-        LEFT JOIN tarea_user ON tareas.id_tarea = tarea_user.id_tarea WHERE tarea_user.id_tarea IS NULL
-        ORDER BY (tareas.estado = 'hecha') ASC,
-        tareas.fecha_vencimiento ASC,
-        tareas.fecha_creacion ASC 
-        `);
+// Mis tareas
+rutaTareas.get('/mias/:id_user', async (req, res) => {
+    try {
+        const { id_user } = req.params;
+        const tareas = await getMisTareas(id_user);
+        res.json(tareas);
+    } catch (error) {
+        console.error("Error al obtener mis tareas", error);
+        res.status(500).json({ error: "Error interno del servidor" });
+    }
+});
+
+// Tareas de otros
+rutaTareas.get('/otros/:id_user', async (req, res) => {
+    try {
+        const { id_user } = req.params;
+        const tareas = await getTareasDeOtros(id_user);
+        res.json(tareas);
+    } catch (error) {
+        console.error("Error al obtener tareas de otros", error);
+        res.status(500).json({ error: "Error interno del servidor" });
+    }
+});
+
+//Mostrar todas las tareas
+rutaTareas.get('/', async (req,res) => {
+    try {
+        const tareas = await getTareas();
+        res.json(tareas);
+    } catch(error) {
+        console.log("Error al obtener tareas", error)
+        res.status(500).json({error: "Error interno del servidor"});
+    }
+});
+
+//Mostrar nombre de la categoría de tarea
+rutaTareas.get('/nombre-categoria-tarea', async (req, res) => {
+    try {
+        const categorias = await getNombreCategoriaTarea();
+        res.json(categorias);
+    } catch (error) {
+        console.log("Error al obtener tareas", error);
+        res.status(500).json({error: "Error interno del servidor"});
+    }
+} )
+
+//Muevo get ranking antes de /:id
+rutaTareas.get("/ranking", async (req, res) => {
+  try {
+    const ranking = await getRankingTareas();
+    const insigniasPorUsuario = await getInsigniasPorUsuario();
+
+    const rankingConInsignias = ranking.map((usuario) => ({
+      ...usuario,
+      insignias: insigniasPorUsuario
+        .filter((i) => i.id_user === usuario.id_user)
+        .map((i) => ({ nombre: i.insignia, icono_clase: i.icono_clase, icono_color: i.icono_color })),
+    }));
+
+    res.json(rankingConInsignias);
+  } catch (error) {
+    console.error("Error al obtener el ranking:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
+rutaTareas.get("/puntos-del-mes", async (req, res) => {
+  try {
+    const puntos = await getPuntosDelMes();
+    const puntosConNivel = puntos.map((usuario) => {
+      let nivel;
+      if (usuario.puntos >= 31) {
+        nivel = "Maestro de la casa";
+      } else if (usuario.puntos >= 16) {
+        nivel = "Experto";
+      } else if (usuario.puntos >= 7) {
+        nivel = "Colaborador";
+      } else {
+        nivel = "Novato";
+      }
+      return { ...usuario, nivel };
+    });
+    res.json(puntosConNivel);
+  } catch (error) {
+    console.error("Error al obtener los puntos del mes:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
+
+
+
+
+//Crear una tarea
+rutaTareas.post('/', async (req,res) => {
+    try {
+        const {descripcion, fecha_vencimiento, id_categoria, notas} = req.body;
+        if (!descripcion || !id_categoria) {
+           return res.status(400).json({"Error":"Datos obligatorios no ingresados"})
+        }
+           const tarea = await crearTarea(descripcion,fecha_vencimiento,id_categoria, notas);
+           res.status(201).json(tarea);
+
+    } catch (error) {
+        console.error("Error al cargar tarea", error);
+        res.status(500).json({"error":"Fallo en el servidor"});
+    }
+});
+//Borrar una tarea
+rutaTareas.delete('/:id', async (req,res) => {
+    try {
+        const {id} = req.params;
+        const tarea = await borrarTarea(id);
+
+        if (!tarea) {
+            return res.status(404).json({"error":"Tarea no encontrada"});
+        }
+        res.json({mensaje: "Tarea eliminada correctamente", tarea});
+    } catch (error) {
+        console.error("Error al eliminar tarea", error)
+        res.status(500).json({error: "Error en el servidor"});
+    }
+ });
+
+//Editar detalles de una tarea
+rutaTareas.put('/:id', async (req,res)=> {
+    try {
+        const {id} = req.params;
+        const {descripcion,fecha_vencimiento,id_categoria,notas} = req.body;
+
+        const tarea = await getTareasPorId(id);
+        if(!tarea) {
+            return res.status(404).json({error: "Tarea no encontrada"}); 
+        }
+        if(!descripcion || !id_categoria) {
+            return res.status(400).json({error: "Datos obligatorios no ingresados"});
+        }
         
-        return resultado.rows;
+        const resultado = await editarTarea(id,descripcion,fecha_vencimiento,id_categoria,notas);
+        res.json(resultado);
 
-}
+    } catch(error) {
+        console.error("Error al editar tarea",error);
+        res.status(500).json({error: "Error interno del servidor"});
+    }
+});
 
+//Actualizar estado de una tarea
+ rutaTareas.patch('/:id', async (req,res) => {
+    try{
+        const {id} = req.params
+        const {estado} = req.body;
+        const estadosValidos = ['pendiente', 'en progreso','hecha']
 
-export async function getMisTareas(id_user) {
-    const resultado = await db.query(`
-        SELECT tareas.*, categoria_tareas.nombre AS categoria, usuarios.nombre AS usuario
-        FROM tareas
-        JOIN categoria_tareas ON tareas.id_categoria = categoria_tareas.id_categoria
-        JOIN tarea_user ON tareas.id_tarea = tarea_user.id_tarea
-        JOIN usuarios ON tarea_user.id_user = usuarios.id_user
-        WHERE tarea_user.id_user = $1
-        ORDER BY (tareas.estado = 'hecha') ASC,
-        tareas.fecha_vencimiento ASC,
-        tareas.fecha_creacion ASC 
-    `, [id_user]);
-    return resultado.rows;
-}
+        const tarea = await getTareasPorId(id);
+        if(!tarea) {
+            console.error("No existe la tarea");
+            return res.status(404).json({error:"Tarea no encontrada"});
+        }
+        if(!estado) {
+            console.error("Estado mal ingresado");
+            return res.status(400).json({error:"Estado mal ingresado"});
+        } 
+        if (!estadosValidos.includes(estado)) {
+            return res.status(400).json({ error: "Estado inválido. Debe ser pendiente, en progreso o hecha" });
+        }
 
+        const resultado = await cambiarEstadoTarea(id,estado);
+        res.json(resultado);
+        
+    } catch (error) {
+        console.error("Error al cambiar estado",error);
+        res.status(500).json({error: "Error interno del servidor"});
+    }
+ });
 
-export async function getTareasDeOtros(id_user) {
-    const resultado = await db.query(`
-        SELECT tareas.*, categoria_tareas.nombre AS categoria, usuarios.nombre AS usuario
-        FROM tareas
-        JOIN categoria_tareas ON tareas.id_categoria = categoria_tareas.id_categoria
-        JOIN tarea_user ON tareas.id_tarea = tarea_user.id_tarea
-        JOIN usuarios ON tarea_user.id_user = usuarios.id_user
-        WHERE tarea_user.id_user != $1
-        ORDER BY (tareas.estado = 'hecha') ASC,
-        tareas.fecha_vencimiento ASC,
-        tareas.fecha_creacion ASC 
-    `, [id_user]);
-    return resultado.rows;
-}
+ //Asignar tarea a usuario 
+ rutaTareas.post('/:id/usuarios', async (req,res)=> {
+    try {  
+        const { id }= req.params;
+        const {id_user} = req.body;
 
+        const tarea = await getTareasPorId(id);
+        if(!tarea) {
+            return res.status(404).json({error: "Tarea no encontrada"});
+        }
 
-export async function getRankingTareas() {
-  const result = await db.query(`
-    SELECT
-      u.id_user,
-      u.nombre,
-      COUNT(t.id_tarea) AS tareas_completadas
-    FROM tarea_user tu, tareas t, usuarios u
-    WHERE tu.id_tarea = t.id_tarea
-    AND tu.id_user = u.id_user
-    AND t.estado = 'hecha'
-    GROUP BY u.id_user, u.nombre
-    ORDER BY tareas_completadas DESC
-  `);
-  return result.rows;
-}
+        if (!(id_user)) {
+            console.error("Error: usuario no encontrado.");
+            return res.status(400).json({error: "El id_user es obligatorio"});
+        }
 
-export async function getInsigniasPorUsuario() {
-  const result = await db.query(`
-    SELECT
-      u.id_user,
-      i.nombre AS insignia,
-      ic.clase AS icono_clase,
-      ic.color AS icono_color
-    FROM usuarios u
-    JOIN tarea_user tu ON tu.id_user = u.id_user
-    JOIN tareas t ON tu.id_tarea = t.id_tarea
-    JOIN insignias i ON i.id_categoria_tarea = t.id_categoria
-    LEFT JOIN iconos ic ON ic.id_icono = i.id_icono
-    WHERE t.estado = 'hecha'
-    GROUP BY u.id_user, i.id_insignia, i.nombre, ic.clase, ic.color
-    HAVING COUNT(t.id_tarea) >= i.cant_tarea
-  `);
-  return result.rows;
-}
+        const resultado = await asignarUsuario(id,id_user);
+        await cambiarEstadoTarea(id, 'en progreso')
+        res.status(201).json(resultado);
 
-export async function getPuntosDelMes() {
-  const result = await db.query(`
-    SELECT
-      u.id_user,
-      u.nombre,
-      COALESCE(g.ganados, 0) - COALESCE(p.perdidas, 0) * 3 AS puntos
-    FROM usuarios u
-    LEFT JOIN (
-      SELECT tu.id_user, COUNT(t.id_tarea) AS ganados
-      FROM tarea_user tu, tareas t
-      WHERE tu.id_tarea = t.id_tarea
-      AND t.estado = 'hecha'
-      AND DATE(t.fecha_completada) <= t.fecha_vencimiento
-      AND DATE_TRUNC('month', t.fecha_completada) = DATE_TRUNC('month', CURRENT_DATE)
-      GROUP BY tu.id_user
-    ) g ON g.id_user = u.id_user
-    LEFT JOIN (
-      SELECT tu.id_user, COUNT(t.id_tarea) AS perdidas
-      FROM tarea_user tu, tareas t
-      WHERE tu.id_tarea = t.id_tarea
-      AND t.fecha_vencimiento < CURRENT_DATE
-      AND (t.estado != 'hecha' OR DATE(t.fecha_completada) > t.fecha_vencimiento)
-      GROUP BY tu.id_user
-    ) p ON p.id_user = u.id_user
-    WHERE g.ganados IS NOT NULL OR p.perdidas IS NOT NULL
-    ORDER BY puntos DESC
-  `);
-  return result.rows;
-}
+    } catch (error) {
+        console.error("Error interno al asignar tarea", error);
+        res.status(500).json({error: "Error interno del servidor"});
+    }   
+ })
+
+//Mostrar tareas por id
+rutaTareas.get('/:id', async (req,res) => {
+    try {
+        const {id} = req.params;
+        const tarea = await getTareasPorId(id);
+
+        if (!tarea) {
+            return res.status(404).json({error: "Tarea no encontrada"});
+        }
+        res.json(tarea)
+    } catch(error) {
+        console.error("Error al obtener tarea", error);
+        res.status(500).json({error: "Error interno del servidor"});
+    }
+});
