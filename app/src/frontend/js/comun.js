@@ -1,4 +1,4 @@
-const URL_API_USUARIOS = 'http://localhost:8000/api/v1/usuarios';
+const URL_API_USUARIOS = `${window.location.origin}/api/v1/usuarios`;
 
 //Esto lee el usuario guardado en el localStorage del navegador o devuelve uni por defecto
 
