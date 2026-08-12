@@ -36,7 +36,7 @@ function mostrarRanking(ranking) {
         <div class="tx-meta">${insigniasHtml}</div>
       </div>
       <div class="tx-amounts">
-        <div class="tx-total">${usuario.tareas_completadas} tareas</div>
+        <div class="tx-total">${usuario.tareas_completadas} ${Number(usuario.tareas_completadas) === 1 ? "tarea" : "tareas"}</div>
       </div>
     `;
     contenedor.appendChild(fila);
