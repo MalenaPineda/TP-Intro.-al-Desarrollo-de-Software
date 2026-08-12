@@ -167,6 +167,7 @@ export async function getPuntosDelMes() {
       FROM tarea_user tu, tareas t
       WHERE tu.id_tarea = t.id_tarea
       AND t.estado = 'hecha'
+      AND DATE(t.fecha_completada) <= t.fecha_vencimiento
       AND DATE_TRUNC('month', t.fecha_completada) = DATE_TRUNC('month', CURRENT_DATE)
       GROUP BY tu.id_user
     ) g ON g.id_user = u.id_user
@@ -174,8 +175,8 @@ export async function getPuntosDelMes() {
       SELECT tu.id_user, COUNT(t.id_tarea) AS perdidas
       FROM tarea_user tu, tareas t
       WHERE tu.id_tarea = t.id_tarea
-      AND t.estado != 'hecha'
       AND t.fecha_vencimiento < CURRENT_DATE
+      AND (t.estado != 'hecha' OR DATE(t.fecha_completada) > t.fecha_vencimiento)
       GROUP BY tu.id_user
     ) p ON p.id_user = u.id_user
     WHERE g.ganados IS NOT NULL OR p.perdidas IS NOT NULL
