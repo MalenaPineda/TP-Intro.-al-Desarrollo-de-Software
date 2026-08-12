@@ -44,13 +44,27 @@ VALUES
 ('Sacar la basura', '2026-06-24', TRUE, 'pendiente', 'Turno de Jesús', 1),
 ('Comprar papel higiénico', '2026-06-25', FALSE, 'pendiente', 'Hacer lista de compras', 3),
 ('Revisar la lámpara del living', '2026-06-27', FALSE, 'pendiente', 'Posible cambio de foco', 4);
-
+INSERT INTO iconos (nombre, clase, color) VALUES
+('Trofeo', 'fa-trophy', '#FFD700'),
+('Estrella', 'fa-star', '#FFD700'),
+('Medalla', 'fa-medal', '#FFD700'),
+('Corona', 'fa-crown', '#FFD700'),
+('Fuego', 'fa-fire', '#FF4500'),
+('Corazón', 'fa-heart', '#FF0000'),
+('Gema', 'fa-gem', '#00BFFF'),
+('Escudo', 'fa-shield', '#4169E1'),
+('Rayo', 'fa-bolt', '#FFD700'),
+('Escoba', 'fa-broom', '#00BFA5'),
+('Cubiertos', 'fa-utensils', '#F5A623'),
+('Llave inglesa', 'fa-wrench', '#7C4DFF'),
+('Hoja', 'fa-leaf', '#00BFA5'),
+('Pata', 'fa-paw', '#FF6B35');
 -- Insignias
-INSERT INTO insignias (nombre, descripcion, cant_tarea, id_categoria_tarea, icono)
+INSERT INTO insignias (nombre, descripcion, cant_tarea, id_categoria_tarea, id_icono)
 VALUES 
-('Chef del mes', 'Completa 20 tareas de cocina', 20, 2, 'chef.png'),
-('Eco-friendly', 'Saca la basura 15 veces', 15, 1, 'eco.png'),
-('Comprador estrella', 'Realiza 10 compras', 10, 3, 'shopping.png');
+('Chef del mes', 'Completa 20 tareas de cocina', 20, 2, 1),
+('Eco-friendly', 'Saca la basura 15 veces', 15, 1, 2),
+('Comprador estrella', 'Realiza 10 compras', 10, 3, 3);
 
 -- Relación usuario-insignia
 INSERT INTO user_insignia (id_user, id_insignia, disponible)
@@ -67,18 +81,3 @@ VALUES
 (3, 3),
 (4, 1);
 
-INSERT INTO iconos (nombre, clase, color) VALUES
-('Trofeo', 'fa-trophy', '#FFD700'),
-('Estrella', 'fa-star', '#FFD700'),
-('Medalla', 'fa-medal', '#FFD700'),
-('Corona', 'fa-crown', '#FFD700'),
-('Fuego', 'fa-fire', '#FF4500'),
-('Corazón', 'fa-heart', '#FF0000'),
-('Gema', 'fa-gem', '#00BFFF'),
-('Escudo', 'fa-shield', '#4169E1'),
-('Rayo', 'fa-bolt', '#FFD700'),
-('Escoba', 'fa-broom', '#00BFA5'),
-('Cubiertos', 'fa-utensils', '#F5A623'),
-('Llave inglesa', 'fa-wrench', '#7C4DFF'),
-('Hoja', 'fa-leaf', '#00BFA5'),
-('Pata', 'fa-paw', '#FF6B35');
