@@ -136,9 +136,10 @@ html, body { height: 100%; margin: 0; background: white; font-family: 'Inter', s
   font-size: 0.88rem; color: #1a1a2e;
 }
 .puntos-aviso .puntos-aviso-icon { color: var(--teal); font-size: 1.15rem; margin-top: 0.1rem; }
+.puntos-aviso strong { color: #00897b; font-weight: 700; }
 .puntos-aviso-title { font-weight: 700; margin-bottom: 0.3rem; }
-.puntos-aviso ul { margin: 0; padding-left: 1.1rem; }
-.puntos-aviso li { margin-bottom: 0.15rem; }
+.puntos-aviso ul { margin: 0; padding-left: 0; list-style: none; }
+.puntos-aviso li { margin-bottom: 0.2rem; }
 
 /* ── Donut chart ── */
 .chart-wrap { display: flex; align-items: center; gap: 2rem; }
