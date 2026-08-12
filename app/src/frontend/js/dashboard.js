@@ -253,7 +253,7 @@ function inicializarInteraccionTareas() {
 }
 async function cargarGastosRecientes() {
     try {
-        const respuesta = await fetch(URL_API);
+        const respuesta = await fetch(`${URL_API}/mes-actual`);
         if (!respuesta.ok) {
             throw new Error('No se pudieron cargar los datos de los gastos');
         }
