@@ -13,7 +13,7 @@ const nombresMeses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'S
 
 async function obtenerGastos() {
   try {
-    const respuesta = await fetch(URL_API);
+    const respuesta = await fetch(`${window.location.origin}/mes-actual`);
     if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
     const gastos = await respuesta.json();
     mostrarTransacciones(gastos);

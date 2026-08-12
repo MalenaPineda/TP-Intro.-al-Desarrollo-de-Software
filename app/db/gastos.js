@@ -14,8 +14,7 @@ export async function getGastos() {
     FROM gastos g
     JOIN usuarios u ON g.id_user = u.id_user
     JOIN metodo_pago m ON g.id_metodo = m.id
-    WHERE EXTRACT(MONTH FROM g.fecha_gasto) = EXTRACT(MONTH FROM CURRENT_DATE)
-    AND EXTRACT(YEAR FROM g.fecha_gasto) = EXTRACT(YEAR FROM CURRENT_DATE)
+    WHERE EXTRACT(YEAR FROM g.fecha_gasto) = EXTRACT(YEAR FROM CURRENT_DATE)
     ORDER BY g.fecha_gasto DESC
   `);
   return result.rows;
@@ -98,5 +97,25 @@ export async function getGastosPorMesUsuario(id) {
   GROUP BY DATE_TRUNC('month', fecha_gasto)
   ORDER BY mes`,[id]);
   return result.rows;
+}
 
+export async function getGastosMesActual() {
+  const result = await db.query(`
+    SELECT 
+      g.id_gasto,
+      g.descripcion,
+      g.monto,
+      g.fecha_gasto,
+      g.categoria,
+      u.id_user,
+      u.nombre,
+      m.nombre AS metodo_pago
+    FROM gastos g
+    JOIN usuarios u ON g.id_user = u.id_user
+    JOIN metodo_pago m ON g.id_metodo = m.id
+    WHERE EXTRACT(MONTH FROM g.fecha_gasto) = EXTRACT(MONTH FROM CURRENT_DATE)
+    AND EXTRACT(YEAR FROM g.fecha_gasto) = EXTRACT(YEAR FROM CURRENT_DATE)
+    ORDER BY g.fecha_gasto DESC
+  `);
+  return result.rows;
 }

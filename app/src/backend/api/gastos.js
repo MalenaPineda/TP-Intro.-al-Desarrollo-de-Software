@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { createGasto, deleteGasto, getCantidadMiembros, getGastos, getGastosPorCategoria, getGastosPorMes, getMetodoPago, getNombreCategoria, getTotalGastoPorMes, getTotalGastosPorUsuario, updateGasto, getGastosPorMesUsuario } from "../../../db/gastos.js";
+import { createGasto, deleteGasto, getCantidadMiembros, getGastos, getGastosPorCategoria, getGastosPorMes, getMetodoPago, getNombreCategoria, getTotalGastoPorMes, getTotalGastosPorUsuario, updateGasto, getGastosPorMesUsuario, getGastosMesActual } from "../../../db/gastos.js";
 
 export const endpointsGastos = Router();
 
@@ -156,5 +156,15 @@ endpointsGastos.get('/usuario/:id_user/gastos-por-mes', async (req, res) => {
     res.json(resultado);
   } catch (error) {
     res.status(500).json({error: error.message});
+  }
+});
+
+endpointsGastos.get("/mes-actual", async (req, res) => {
+  try {
+    const gastos = await getGastosMesActual();
+    res.json(gastos);
+  } catch (error) {
+    console.error("Error al obtener los gastos:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
   }
 });
