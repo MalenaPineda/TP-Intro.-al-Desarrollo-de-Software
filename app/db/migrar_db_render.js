@@ -13,7 +13,7 @@ async function run(file) {
 }
 
 async function main() {
-  await run("./delete.sql");     // Borra todo
+  await run("./delete_db_render.sql");     // Borra todo
   await run("./schemas.sql");    // Crea tablas de nuevo
   await run("./seed.sql");       // Inserta datos nuevos
   await pool.end();
