@@ -94,3 +94,83 @@ async function cargarCantidadMiembros() {
     }
 }
 initSidebar();
+
+//VENCIMIENTO DE TAREAS
+
+
+//Tomamos el aaaa-mm-dd de la fecha ya sea como string o como date
+function fechaSoloDia(fecha) {
+    if(!fecha) return null;
+    //Verifica si es un string o un date
+    const str = fecha instanceof Date ? fecha.toISOString() : fecha;
+    //Se queda con los primeros 10 caracteres
+    const soloDia = str.substring(0,10);
+
+    //Devuelve la fecha con regex. .test(soloDia) verifica si la fecha matchea y es válida, en caso de que sí, devuelve la fecha, caso contrario devuelve null
+    return /^\d{4}-\d{2}-\d{2}$/.test(soloDia) ? soloDia : null;
+
+}
+
+//Ver cuántos días faltan o pasaron hasta la fecha de vencimiento
+function diasParaVencer(fechaVencimiento){
+    const vence = fechaSoloDia(fechaVencimiento);
+    if(!vence) {
+        return null;
+    }
+    //Devuelve la fecha en numeros y asigna su correspondiente a las variables
+    const [anio, mes, dia] = vence.split('-').map(Number);
+    
+    const momentoVencimientoenMiliSeg = Date.UTC(anio,mes-1,dia);
+
+    const hoy = new Date();
+    const hoyEnMiliseg = Date.UTC(hoy.getFullYear(), hoy.getMonth() ,hoy.getDate());
+    //Operación para calcular el restante de días. Ya que cuando se obtiene una fecha, viene en milisegundos.
+    return Math.round((momentoVencimientoenMiliSeg-hoyEnMiliseg)/86400000);
+}
+
+//Traducimos la cantidad de días a un mensaje para el usuario
+//Devuelve null si no hay que avisar (si tiene más de 3 días para que venza)
+function infoVencimiento(fechaVencimiento) {
+    const dias = diasParaVencer(fechaVencimiento);
+    if (dias === null) {
+        return null;
+    }
+
+    if (dias<0) {
+        //Si ya pasó de la fecha de vencimiento cambiamos el signo
+        const diasPasados = -dias;
+        const texto = diasPasados === 1 ? 'Vencida hace 1 día' : `Vencida hace ${diasPasados} días`;
+        
+        return {tipo: 'vencida', texto};
+    }
+if (dias===0) {
+    return {tipo: 'proxima', texto: 'Vence hoy'};
+}
+if (dias ===1) {
+    return {tipo:'proxima', texto: 'Vence mañana'};
+}
+if (dias<=3) {
+    return {tipo: 'proxima', texto: `Vence en ${dias} días`};
+}
+return null; //Si no es urgente
+}
+
+
+//Crear el aviso de vencimiento de una tarea.
+function crearAvisoVencimiento(tarea) {
+    //Las tareas hechas no dan aviso
+    if (tarea.estado == 'hecha') {
+        return null;
+    }
+
+    const info = infoVencimiento(tarea.fecha_vencimiento);
+    if(!info) {
+        return null;
+    }
+
+    const avisoVencimiento = document.createElement('span');
+    avisoVencimiento.className = `badge-vencimiento ${info.tipo}`;
+
+    avisoVencimiento.textContent = info.texto;
+    return avisoVencimiento;
+}

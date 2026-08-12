@@ -18,7 +18,7 @@
   --c-other:     #ff6b35;
 }
 
-html, body { height: 100%; margin: 0; background: var(--bg); font-family: 'Inter', system-ui, sans-serif; }
+html, body { height: 100%; margin: 0; background: white; font-family: 'Inter', system-ui, sans-serif; }
 
 /* ── Layout ── */
 .app-layout { display: flex; min-height: 100vh; }
@@ -238,6 +238,20 @@ font-weight: 600;
 .badge-en-progreso { background: #cff4fc; color: #055160; }
 .badge-hecha       { background: #d1e7dd; color: #0a3622; }
 
+/* Badge de vencimiento de tareas */
+.badge-vencimiento {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.badge-vencimiento.vencida  { background: #f8d7da; color: #842029; }
+.badge-vencimiento.proxima  { background: #ffe8cc; color: #8a4b00; }
+
+/* Separa el badge de vencimiento cuando va al lado del de estado */
+.task-card .badge-vencimiento,
+.tx-row .badge-vencimiento { margin-left: 0.5rem; }
 .btn-elegir {
 width: 100%;
 margin-top: 0.6rem;
@@ -269,7 +283,7 @@ cursor: pointer;
 /* ── Edición inline de tareas (gestion_tareas) ── */
 .edit-form {
 display: flex;
-align-items: center;
+align-items: stretch;
 gap: 0.75rem;
 width: 100%;
 }
@@ -289,6 +303,11 @@ min-width: 140px;
 display: flex;
 flex-direction: column;
 gap: 0.3rem;
+justify-content: center;
+}
+/* Aviso de ayuda (p.ej. "Edad mínima: 15 años") pegado abajo, sin empujar el layout */
+.edit-form .edit-datos .help {
+margin-top: auto;
 }
 
 @media (max-width: 768px) {

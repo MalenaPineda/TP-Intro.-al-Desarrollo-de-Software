@@ -2,7 +2,8 @@ const URL_API = 'http://localhost:8000/api/v1/usuarios';
 
 // función auxiliar para establecer la fecha máxima en el input de fecha de nacimiento
 function establecerFechaMaxima() {
-    const fechaMaxima = new Date().toISOString().split('T')[0];
+    const fechaMaxima = hace15AniosISO(); //Agrego función que calcula15 años comó mínimo de edad
+    
 
     const inputFecha = document.querySelector('input[name="fecha_nacimiento"]');
 
@@ -156,15 +157,22 @@ async function construirFormularioEdicion(fila, miembro) {
     inputFecha.className = 'input is-small';
     inputFecha.type = 'date';
     // max de la fecha de nacimiento
-    inputFecha.max = new Date().toISOString().split('T')[0];
+    //inputFecha.max = new Date().toISOString().split('T')[0];
     // substring(0, 10) extrae "aaaa-mm-dd" del formato ISO completo. En este caso mostramos año al ser una fecha de cumpleaños
     inputFecha.value = miembro.fecha_nacimiento
         ? miembro.fecha_nacimiento.substring(0, 10)
         : '';
+    inputFecha.max = hace15AniosISO(); //Función para agregar máximo de la fecha hace 15 años
+    const aviso = document.createElement('p');
+    aviso.className = "help";
+    aviso.textContent = "Edad mínima: 15 años";
+
 
     editDatos.appendChild(inputContrasenia);
     editDatos.appendChild(inputFecha);
-    // Columna derecha: botones Guardar / Cancelar
+    editDatos.appendChild(aviso);
+    
+ // Columna derecha: botones Guardar / Cancelar
     const editAcciones = document.createElement('div');
     editAcciones.className = 'edit-acciones';
 
@@ -206,8 +214,19 @@ function cancelarEdicion(fila, miembro) {
 }
 
 //Enviar cambios editados al backend con PUT
-async function guardarEdicion(id, datosEditados) {
-    try {
+async function guardarEdicion(id,datosEditados) {
+    //Validacion de fechas imposibles primero
+    //Caso de que las fechas no cumplan, no se entra al try
+    if (esFechaFutura(datosEditados.fecha_nacimiento)) {
+        mostrarToast('La fecha de nacimiento no puede ser futura', 'error');
+    return;
+    }
+    if (esMenor(datosEditados.fecha_nacimiento)) {
+        mostrarToast('Debe tener al menos 15 años', 'error');
+    return;
+    }
+       
+    try { 
         const res = await fetch(`${URL_API}/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -256,7 +275,16 @@ function registrarHandlerFormulario() {
             contrasenia: datos.get('contrasenia'),
             fecha_nacimiento: datos.get('fecha_nacimiento') || null,
         };
-
+        //Validación de fechas imposibles antes de enviar al back
+        // Rechaza fechas imposibles antes de enviar al backend
+        if (esFechaFutura(nuevoMiembro.fecha_nacimiento)) {
+                mostrarToast('La fecha de nacimiento no puede ser futura', 'error');
+                return;
+        }
+        if (esMenor(nuevoMiembro.fecha_nacimiento)) {
+            mostrarToast('Debe tener al menos 15 años', 'error');
+            return;
+        }
         try {
             const res = await fetch(URL_API, {
                 method: 'POST',
@@ -296,7 +324,28 @@ function mostrarToast(mensaje, tipo = 'exito') {
     setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
+//HELPER Poner límite para edad mínima con una fecha máxima.
+function aISOFecha(fecha) {
+  const anio = fecha.getFullYear();
+  const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+  const dia = String(fecha.getDate()).padStart(2, '0');
+  return `${anio}-${mes}-${dia}`;
+}
+
+const hoyISO = () => aISOFecha(new Date());
+
+const hace15AniosISO = () => {
+  const fecha = new Date();
+  fecha.setFullYear(fecha.getFullYear() - 15); //Resta el año menos 15 para establecer el máximo
+  return aISOFecha(fecha);
+};
+//Devuelve true si la fecha es posterior a hoy (no se puede naacer en el futuro(?)xd)
+const esFechaFutura = (fecha) => !!fecha && fecha > hoyISO();
+
+//Devuelve true si quien nació en en la fecha no tiene el mínimo de edad
+const esMenor = (fecha) => !!fecha && fecha > hace15AniosISO();
+
 // Punto de entrada: ejecuta init cuando el DOM está listo
 init();
 // llamada a la función para establecer la fecha máxima
-establecerFechaMaxima();    
+//establecerFechaMaxima();    
