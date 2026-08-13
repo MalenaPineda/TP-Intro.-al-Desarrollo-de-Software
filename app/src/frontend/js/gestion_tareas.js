@@ -120,8 +120,9 @@ function crearFila(tarea) {
     metaTarea.textContent = `${tarea.categoria} · Vence ${formatearFecha(tarea.fecha_vencimiento)} · ${usuarioAsignado}`;
 
     //Agrego elementos 
-    infoTarea.appendChild(notasTarea);
+    
     infoTarea.appendChild(nombreTarea);
+    infoTarea.appendChild(notasTarea);
     infoTarea.appendChild(metaTarea);
 
     //Parte de estado (pendiente / en progreso / hecha), con su color acorde
