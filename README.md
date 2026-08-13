@@ -158,10 +158,10 @@ cd src/frontend && npx http-server -p 8080
 A continuación se presentan capturas de pantalla con las funcionalidades principales del sistema:
 Pantalla de Inicio
 
-Landing page de bienvenida para ingresar a la plataforma CoLiving.
+Pagina de Bienvenida para ingresar a la plataforma CoLiving.
+
 Panel Principal (Dashboard)
 <img width="1366" height="768" alt="WhatsApp Image 2026-07-30 at 18 50 19" src="https://github.com/user-attachments/assets/4e5a59d6-98f0-4f5d-bc4f-22eb747f9b66" />
-
 
 Vista general con el resumen de tareas pendientes, los gastos acumulados del mes, el cálculo de tu parte a pagar y el estado de progreso de tus tareas.
 Historial y Gráficos de Gastos
