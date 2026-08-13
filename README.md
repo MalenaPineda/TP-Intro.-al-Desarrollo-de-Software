@@ -168,7 +168,7 @@ Resumen de las tareas asignadas/elegidas por el usuario con su estado y su venci
 
 <img width="1366" height="768" alt="2" src="https://github.com/user-attachments/assets/f309c2e8-9dd2-4209-bba9-d3e48c09edd0" />
 
-Historial y Gráficos de Gastos.
+Pagina de gastos: Historial y Gráficos de Gastos.
 
 <img width="1366" height="768" alt="3" src="https://github.com/user-attachments/assets/d67b673d-1162-48bc-beac-1958f40c5db6" />
 
