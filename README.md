@@ -28,24 +28,25 @@ CoLiving es una aplicación web full-stack diseñada para facilitar la administr
 ```text
 ┌─────────────────────────────────────────────────────┐
 │                     Frontend                        │
-│              http-server :8080                       │
-│         HTML + CSS + JavaScript vanilla              │
+│                     :8080                           │
+│          HTML + CSS + JavaScript vanilla            |
+|                   http-server                       |
 └──────────────────────┬──────────────────────────────┘
-                       │ fetch() /api/v1/...
-                       │ CORS localhost:8000
+                       │  HTTP / fetch() 
+                       │ 
                        ▼
 ┌─────────────────────────────────────────────────────┐
 │                   Backend API                        │
-│               Express :8000                          │
-│         /api/v1/gastos | /api/v1/tareas              │
+│                  Express :8000                       │
+│ /api/v1/gastos | /api/v1/tareas | /api/v1/insignias  │
 └──────────────────────┬──────────────────────────────┘
                        │ pg.Pool
-                       │ localhost:5432
+                       │ 
                        ▼
 ┌─────────────────────────────────────────────────────┐
 │                 PostgreSQL 18                        │
 │                    9 tablas                          │
-│              schemas.sql + seeds.sql                  │
+│              schemas.sql + seeds.sql                 │
 └─────────────────────────────────────────────────────┘
 ```
 
@@ -53,7 +54,7 @@ CoLiving es una aplicación web full-stack diseñada para facilitar la administr
 
 ## Ejecución Local
 
-### Opción 1: Con Docker y Makefile 
+### Con Docker y Makefile 
 
 ```bash
 # 1. Clonar el repositorio
@@ -64,28 +65,19 @@ cd TP-Intro.-al-Desarrollo-de-Software
 # Copiar el archivo de ejemplo y renombrarlo a .env
 cp .env.example .env
 
-# 3. Levantar la aplicación completa
+# 3. Levantar la aplicación completa o docker compose up -d --build
 make run
+Esto iniciará automáticamente:
+Frontend en http://localhost:8080
+Backend en http://localhost:8000
+PostgreSQL en el puerto 5433.
+docker compose down: Detiene los contenedores.
 ```
 
 > **Comandos útiles del Makefile:**
 > Para levantar solo el frontend: make run-front
 Para levantar el backend (junto con la base de datos): make run-back
 Para levantar toda la aplicación: make run
-
-### Opción 2: Ejecución Manual:
-Clonar el repositorio
-Levantar todos los servicios con Docker Compose:
-docker compose up -d --build (make run)
-
-Esto iniciará automáticamente:
-Frontend en http://localhost:8080
-Backend en http://localhost:8000
-PostgreSQL en el puerto 5433
-Para acceder a la aplicación, abrir en el navegador:
-http://localhost:8080
-Para detener los servicios:
-docker compose down
 
 
 ### Accesos Principales
@@ -127,7 +119,7 @@ docker compose down
 ```text
 .
 ├── Dockerfile                        # Imagen del backend Node.js
-├── Dockerfile.frontend               # Ejecuta el Frontend dentro de un contenedor Docker (utilizando http-server)
+├── Dockerfile.frontend               # Imagen Docker del frontend
 ├── docker-compose.yml                # Orquestación de contenedores
 ├── Makefile                          # Comandos simplificados de ejecución
 ├── app/
@@ -138,7 +130,7 @@ docker compose down
 │   │   ├── schemas.sql / seeds.sql   # DDL y datos iniciales
 │   │   └── migrar_db_render.js       # Script de despliegue remoto
 │   └── src/
-│       ├── backend/api/              # Controladores / Rutas Express
+│       ├── backend/api/              # Rutas y endpoints de la API REST
 │       └── frontend/                 # Vistas HTML, estilos y JS Vanilla
 └── data/                             # Volumen persistente de PostgreSQL
 ```
