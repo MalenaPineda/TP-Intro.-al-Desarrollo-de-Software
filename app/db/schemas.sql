@@ -80,8 +80,7 @@ CREATE TABLE user_insignia (
 CREATE TABLE tarea_user (
     id_tarea INT NOT NULL,
     id_user INT NOT NULL,
+    fecha_asignacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id_tarea, id_user),
     FOREIGN KEY (id_tarea) REFERENCES tareas(id_tarea),
-    FOREIGN KEY (id_user) REFERENCES usuarios(id_user)
-);
-
+    FOREIGN KEY (id_user) REFERENCES usuarios(id_user);

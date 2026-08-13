@@ -26,13 +26,8 @@ INSERT INTO iconos (nombre, clase, color) VALUES
     */
 
 
-DELETE FROM iconos 
-WHERE id_icono = (
-  SELECT id_icono FROM iconos 
-  WHERE nombre = 'Medalla' 
-  ORDER BY id_icono DESC 
-  LIMIT 1
-);
+ALTER TABLE tarea_user
+ADD COLUMN fecha_asignacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 
 
 
