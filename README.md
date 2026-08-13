@@ -19,7 +19,7 @@ CoLiving es una aplicación web full-stack diseñada para facilitar la administr
 | **Frontend** | HTML5, CSS3 (Bulma), JavaScript Vanilla (ES6+), Chart.js |
 | **Backend** | Node.js (v22), Express.js (v5), ES Modules |
 | **Base de Datos** | PostgreSQL 18 (`pg` client) |
-| **Infraestructura** | Docker, Docker.frontend | Docker Compose, Makefile, `http-server` |
+| **Infraestructura** | Docker| Docker Compose, Makefile, `http-server` |
 
 ---
 
