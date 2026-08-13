@@ -13,21 +13,24 @@
     <aside class="sidebar">
         <div class="sidebar-brand">
           <div class="house-name">Casa Feliz</div>
-          <div class="members">4 miembros</div>
+          <div class="members" id="cantidad-miembros">4 miembros</div>
         </div>
         <nav class="sidebar-menu">
-          <a href="dashboard" class="sidebar-item"><i class="fa-solid fa-house"></i>Página principal</a>
-          <a href="ver_gastos" class="sidebar-item"><i class="fa-solid fa-dollar-sign"></i>Gastos</a>
-          <a href="#" class="sidebar-item"><i class="fa-solid fa-list-check"></i>Tareas</a>
+          <a href="dashboard" class="sidebar-item"><i class="fa-solid fa-house"></i> Página principal</a>
+          <a href="ver_gastos" class="sidebar-item active"><i class="fa-solid fa-dollar-sign"></i> Gastos</a>
+          <a href="tareas" class="sidebar-item"><i class="fa-solid fa-list-check"></i> Tareas</a>
           <a href="ranking" class="sidebar-item"><i class="fa-solid fa-trophy"></i>Ranking</a>
+          <a href="insignias.html" class="sidebar-item"><i class="fa-solid fa-square-plus"></i></i> Crear insignia</a>
+          <a href="miembros" class="sidebar-item"><i class="fa-solid fa-users"></i> Miembros</a>
         </nav>
-        <div class="sidebar-user">
-          <div class="avatar">M</div>
+        <div class="sidebar-user" id="selector-usuario">
+          <div class="avatar" id="user-avatar">M</div>
           <div class="user-info">
-            <div class="name">Malena</div>
-            <div class="role">Integrantes</div>
+            <div class="name" id="user-name">Malena</div>
+            <div class="role">Cambiar usuario ▾</div>
           </div>
         </div>
+        <div id="user-dropdown" class="user-dropdown"></div>
     </aside>
     <main class="main-content">
     <div class="container is-max-desktop p-5">
@@ -91,6 +94,7 @@
     </div>
     </main>
 </div>
+<script src="js/comun.js"></script>
 <script src="js/ingresar_gastos.js"></script>
 </body>
 </html>
