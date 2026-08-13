@@ -25,6 +25,7 @@ async function cargarMiembros() {
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
         const miembros = await res.json();
         mostrarMiembrosEnLista(miembros);
+        location.reload()
     } catch (error) {
         console.error("Error al cargar miembros", error);
     }
