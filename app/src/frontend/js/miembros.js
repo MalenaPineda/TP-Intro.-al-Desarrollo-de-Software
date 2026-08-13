@@ -25,7 +25,6 @@ async function cargarMiembros() {
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
         const miembros = await res.json();
         mostrarMiembrosEnLista(miembros);
-        location.reload()
     } catch (error) {
         console.error("Error al cargar miembros", error);
     }
@@ -254,6 +253,7 @@ async function eliminarMiembro(id) {
 
         await cargarMiembros();
         mostrarToast('Miembro eliminado exitosamente');
+        location.reload()
     } catch (error) {
         console.error("Error al eliminar miembro", error);
         mostrarToast('Error al eliminar miembro', 'error');
@@ -298,6 +298,7 @@ function registrarHandlerFormulario() {
             form.reset();
             await cargarMiembros();
             mostrarToast('Miembro creado exitosamente');
+            location.reload()
         } catch (error) {
             console.error("Error al crear miembro", error);
             mostrarToast('Error al crear miembro', 'error');
