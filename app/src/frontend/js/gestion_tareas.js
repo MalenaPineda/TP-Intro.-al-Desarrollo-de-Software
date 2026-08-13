@@ -104,11 +104,22 @@ function crearFila(tarea) {
 
 
     const metaTarea = document.createElement('div');
+    const notasTarea = document.createElement('p');
+    notasTarea.className = 'tx-notas';
+    notasTarea.textContent = tarea.notas;
+
+    metaTarea.className = 'tx-meta';
+    metaTarea.textContent = `${tarea.categoria} · Vence ${formatearFecha(tarea.fecha_vencimiento)} · ${usuarioAsignado}`;
+
+
+
+
     metaTarea.className = 'tx-meta';
     metaTarea.textContent = tarea.notas
     metaTarea.textContent = `${tarea.categoria} · Vence ${formatearFecha(tarea.fecha_vencimiento)} · ${usuarioAsignado}`;
 
     //Agrego elementos 
+    contenedor.appendChild(notasTarea);
     infoTarea.appendChild(nombreTarea);
     infoTarea.appendChild(metaTarea);
 
