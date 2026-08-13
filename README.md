@@ -6,7 +6,7 @@ CoLiving es una aplicación web full-stack diseñada para facilitar la administr
 
 ### Integrantes:
 * María Fernanda Toyo 
-* Malena Pineda
+* Malena Aylen Pineda
 * María Eugenia Brum
 * Jesús David Guerra
 
