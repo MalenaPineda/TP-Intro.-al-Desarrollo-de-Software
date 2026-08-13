@@ -67,7 +67,7 @@ export async function getTareasCompletas() {
 }
 
 export async function asignarUsuario(id_tarea, id_user) {
-    const resultado = await db.query(`INSERT INTO tarea_user(id_tarea,id_user) VALUES ($1,$2) RETURNING *`, [id_tarea,id_user]);
+    const resultado = await db.query(`INSERT INTO tarea_user(id_tarea,id_user,fecha_asignacion) VALUES ($1,$2,CURRENT_TIMESTAMP) RETURNING *`, [id_tarea,id_user]);
 
     return resultado.rows[0];
 }
@@ -176,6 +176,7 @@ export async function getPuntosDelMes() {
       FROM tarea_user tu, tareas t
       WHERE tu.id_tarea = t.id_tarea
       AND t.fecha_vencimiento < CURRENT_DATE
+      AND DATE(tu.fecha_asignacion) <= t.fecha_vencimiento
       AND (t.estado != 'hecha' OR DATE(t.fecha_completada) > t.fecha_vencimiento)
       GROUP BY tu.id_user
     ) p ON p.id_user = u.id_user
