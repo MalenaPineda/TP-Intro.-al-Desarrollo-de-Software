@@ -19,7 +19,7 @@ CoLiving es una aplicación web full-stack diseñada para facilitar la administr
 | **Frontend** | HTML5, CSS3 (Bulma), JavaScript Vanilla (ES6+), Chart.js |
 | **Backend** | Node.js (v22), Express.js (v5), ES Modules |
 | **Base de Datos** | PostgreSQL 18 (`pg` client) |
-| **Infraestructura** | Docker, Docker Compose, Makefile, `http-server` |
+| **Infraestructura** | Docker, Docker.frontend | Docker Compose, Makefile, `http-server` |
 
 ---
 
@@ -69,9 +69,9 @@ make run
 ```
 
 > **Comandos útiles del Makefile:**
-> * `make run`: Levanta API, DB y el servidor frontend.
-> * `make run-back`: Ejecuta `docker compose up -d` (API + DB).
-> * `make run-front`: Sirve el frontend en el puerto 8080.
+> Para levantar solo el frontend: make run-front
+Para levantar el backend (junto con la base de datos): make run-back
+Para levantar toda la aplicación: make run
 
 ### Opción 2: Ejecución Manual
 
@@ -127,6 +127,7 @@ cd src/frontend && npx http-server -p 8080
 ```text
 .
 ├── Dockerfile                        # Imagen del backend Node.js
+├── Dockerfile.frontend               # Ejecuta el Frontend dentro de un contenedor Docker (utilizando http-server)
 ├── docker-compose.yml                # Orquestación de contenedores
 ├── Makefile                          # Comandos simplificados de ejecución
 ├── app/
