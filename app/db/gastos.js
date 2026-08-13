@@ -14,6 +14,8 @@ export async function getGastos() {
     FROM gastos g
     JOIN usuarios u ON g.id_user = u.id_user
     JOIN metodo_pago m ON g.id_metodo = m.id
+    WHERE EXTRACT(MONTH FROM g.fecha_gasto) = EXTRACT(MONTH FROM CURRENT_DATE)
+    AND EXTRACT(YEAR FROM g.fecha_gasto) = EXTRACT(YEAR FROM CURRENT_DATE)
     ORDER BY g.fecha_gasto DESC
   `);
   return result.rows;
@@ -80,21 +82,21 @@ export async function deleteGasto(id) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 export async function getCantidadMiembros() {
   const result = await db.query(
     "SELECT COUNT(*) AS cantidad FROM usuarios;"
   );
 
   return result.rows[0];
+}
+
+export async function getGastosPorMesUsuario(id) {
+  const result = await db.query(`
+  SELECT DATE_TRUNC('month', fecha_gasto) as mes, SUM(monto) as total
+  FROM gastos
+  WHERE id_user = $1
+  GROUP BY DATE_TRUNC('month', fecha_gasto)
+  ORDER BY mes`,[id]);
+  return result.rows;
+
 }

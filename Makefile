@@ -1,8 +1,8 @@
 run-front:
-	mkdir -p ./data
-	cd app/src/frontend && npx http-server -p 8080
+	docker compose up -d frontend
 
 run-back:
-	cd app/src/backend && docker compose up -d
+	docker compose up -d convivencia-api db
 
-run: run-back run-front
+run:
+	docker compose up --build

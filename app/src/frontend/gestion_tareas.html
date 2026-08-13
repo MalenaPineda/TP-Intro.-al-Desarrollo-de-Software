@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CoLiving – Gestión de Tareas</title>
+
+  <!--
+    ═══════════════════════════════════════════════════════════════════
+    ARCHIVO: gestion_tareas.html
+    DESCRIPCIÓN: Página de administración CRUD de tareas.
+    Permite crear, editar y eliminar tareas del hogar.
+
+    ARQUITECTURA:
+    - Layout: app-layout (sidebar + main-content) definido en style.css
+    - Sidebar: misma estructura que tareas.html y ver_gastos.html
+    - Formulario: patrón de ingresar_gastos.html (Bulma + style.css)
+    - Tabla: lista todas las tareas con acciones de editar/eliminar
+    - Lógica: gestion_tareas.js (pendiente de crear)
+
+    FLUJO:
+    1. El usuario llega desde tareas.html (botón "Gestión de tareas")
+    2. Puede crear una tarea usando el formulario
+    3. La tabla muestra todas las tareas existentes
+    4. Puede editar o eliminar cada tarea desde la tabla
+    ═══════════════════════════════════════════════════════════════════
+  -->
+
+ 
+   <!-- Bulma: usado para elementor del formulario (field, control, input, select) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.2/css/bulma.min.css" />
+   <!-- Estilos base del proyecto (variables, layout, sidebar, componentes) -->
+  <link rel="stylesheet" href="./css/style.css">
+  
+  <!-- Font Awesome: íconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <!--
+    ═══ LAYOUT PRINCIPAL ═══
+    Estructura flex que divide la página en sidebar fijo + contenido principal.
+    Definido en style.css: .app-layout { display: flex; min-height: 100vh; }
+  -->
+<div class="app-layout">
+
+  <!--
+    ═══ SIDEBAR ═══
+    Mismo sidebar que en todas las páginas. El link de "Tareas" queda activo.
+    Si se quiere agregar un link separado para "Gestión de tareas", se puede
+    agregar aquí como sub-item o link independiente.
+  -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+        <div class="house-name">Casa Feliz</div>
+        <div class="members" id="cantidad-miembros">4 miembros</div>
+    </div>
+    <nav class="sidebar-menu">
+        <a href="dashboard" class="sidebar-item"><i class="fa-solid fa-house"></i> Página principal</a>
+        <a href="ver_gastos" class="sidebar-item"><i class="fa-solid fa-dollar-sign"></i> Gastos</a>
+        <a href="tareas" class="sidebar-item active"><i class="fa-solid fa-list-check"></i> Tareas</a>
+        <a href="ranking" class="sidebar-item"><i class="fa-solid fa-trophy"></i>Ranking</a>
+        <a href="miembros" class="sidebar-item"><i class="fa-solid fa-users"></i> Miembros</a>
+    </nav>
+    <div class="sidebar-user" id="selector-usuario">
+        <div class="avatar" id="user-avatar">M</div>
+        <div class="user-info">
+            <div class="name" id="user-name">Malena</div>
+            <div class="role">Cambiar usuario ▾</div>
+        </div>
+    </div>
+    <div id="user-dropdown" class="user-dropdown"></div>
+</aside>
+
+  <!--
+    ═══ CONTENIDO PRINCIPAL ═══
+    Container flex con padding. Max-width de 1060px (definido en style.css).
+    Contiene: header de página, formulario de creación, y tabla de tareas.
+  -->
+  <main class="main-content">
+
+    <!--
+      ═══ HEADER DE PÁGINA ═══
+      Título + subtítulo a la izquierda, botón de volver a la derecha.
+      Patrón igual a ver_gastos.html y tareas.html.
+    -->
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Gestión de tareas</h1>
+        <p class="page-subtitle">Crear, editar y eliminar tareas del hogar</p>
+      </div>
+      <a href="tareas" class="btn-add">
+        <i class="fa-solid fa-arrow-left"></i> Volver a tareas
+      </a>
+    </div>
+
+    <!--
+      ═══ SECCIÓN: FORMULARIO DE CREACIÓN ═══
+      Formulario para agregar una nueva tarea.
+      Patrón similar a ingresar_gastos.html:
+      - Usa clases de Bulma para campos (field, control, input, select)
+      - Usa .panel-card de style.css como contenedor visual
+      - El submit será manejado por gestion_tareas.js
+
+      CAMPOS:
+      - descripcion (text, required): descripción de la tarea
+      - id_categoria (select, required): categoría de la tarea (hardcoded en JS)
+      - fecha_vencimiento (date): fecha límite de la tarea
+      - notas (textarea): observaciones adicionales
+
+      ENDPOINT: POST /api/v1/tareas
+      BODY: { descripcion, id_categoria, fecha_vencimiento, notas }
+    -->
+    <div class="panel-card" style="margin-bottom: 1.5rem;">
+      <div class="panel-title">
+        <i class="fa-solid fa-circle-plus" style="color: var(--teal);"></i> Nueva tarea
+      </div>
+
+      <form id="form-crear-tarea">
+        <!-- Campo: Descripción de la tarea -->
+        <div class="field mb-4">
+          <label class="label has-text-grey-dark has-text-weight-normal">Descripción</label>
+          <div class="control">
+            <input
+              class="input is-medium"
+              name="descripcion"
+              type="text"
+              placeholder="ej. Limpiar el baño"
+              required
+              
+            />
+          </div>
+        </div>
+
+        <!-- Fila: Categoría + Fecha de vencimiento -->
+        <div class="columns mb-4">
+
+          <!-- Categoría (select con las 6 categorías de la DB) -->
+          <div class="column">
+            <div class="field">
+              <label class="label has-text-grey-dark has-text-weight-normal">Categoría</label>
+              <div class="control is-expanded">
+                <div class="select is-fullwidth is-medium">
+                  <select name="id_categoria" id="id_categoria" required>
+                    <!-- Opciones cargadas por gestion_tareas.js -->
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fecha de vencimiento -->
+          <div class="column">
+            <div class="field">
+              <label class="label has-text-grey-dark has-text-weight-normal">Fecha de vencimiento</label>
+              <div class="control">
+                <input
+                  class="input is-medium"
+                  name="fecha_vencimiento"
+                  type="date"
+                  
+                />
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Campo: Notas adicionales -->
+        <div class="field mb-5">
+          <label class="label has-text-grey-dark has-text-weight-normal">Notas</label>
+          <div class="control">
+            <textarea
+              class="textarea is-medium"
+              name="notas"
+              placeholder="Observaciones opcionales..."
+              rows="3"
+              
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- Botón de submit -->
+        <div class="field">
+          <div class="control">
+            <button
+              class="button is-fullwidth is-medium py-5"
+              name="btn-crear"
+              type="submit"
+            >
+              <span class="icon mr-2">
+                <i class="fa-solid fa-circle-plus"></i>
+              </span>
+              <span>Crear tarea</span>
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+    <!--
+      ═══ SECCIÓN: TABLA DE TAREAS ═══
+      Lista todas las tareas existentes con información completa.
+      Cada fila tiene acciones de editar y eliminar.
+
+      ESTRUCTURA DE LA TABLA:
+      - Descripción de la tarea
+      - Categoría (con dot de color)
+      - Estado (badge de color)
+      - Fecha de vencimiento
+      - Acciones (botones editar/eliminar)
+
+      ENDPOINT: GET /api/v1/tareas/completas
+      Retorna: [{ id_tarea, descripcion, categoria, estado, fecha_vencimiento, usuario, ... }]
+
+      ACCIONES:
+      - Editar: transforma la fila en formulario inline (patrón de ver_gastos.js)
+        ENDPOINT: PUT /api/v1/tareas/:id (pendiente de crear en backend)
+      - Eliminar: pide confirmación y borra la tarea
+        ENDPOINT: DELETE /api/v1/tareas/:id (ya existe)
+    -->
+    <div class="panel-card">
+      <div class="panel-title">
+        <i class="fa-solid fa-list" style="color: var(--accent);"></i> Todas las tareas
+      </div>
+
+      <!-- Contenedor donde se injectará la tabla desde gestion_tareas.js -->
+      <div id="lista-tareas-gestion">
+        <!-- La tabla se genera dinámicamente con JavaScript -->
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!--Toast notificación de acción exitosa-->
+<div id="toast" class="toast"></div>
+<!--
+  ═══ SCRIPTS ═══
+  - gestion_tareas.js: lógica de la página (crear, editar, eliminar, cargar tabla)
+  - Se carga al final del body para que el DOM esté listo
+-->
+ 
+<script src="js/comun.js"></script>
+<script src="js/gestion_tareas.js"></script>
+</body>
+</html>

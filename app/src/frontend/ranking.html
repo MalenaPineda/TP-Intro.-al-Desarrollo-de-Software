@@ -6,29 +6,31 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <title>Ranking de tareas - Hogar Compartido</title>
+    <title>CoLiving – Ranking de Tareas</title>
 </head>
 <body>
     <aside class="sidebar">
         <div class="sidebar-brand">
             <div class="house-name">Casa Feliz</div>
-            <div class="members">4 miembros</div>
+            <div class="members" id="cantidad-miembros">4 miembros</div>
         </div>
-
         <nav class="sidebar-menu">
-            <a href="dashboard" class="sidebar-item"><i class="fa-solid fa-house"></i>Página principal</a>
-            <a href="ver_gastos" class="sidebar-item"><i class="fa-solid fa-dollar-sign"></i>Gastos</a>
-            <a href="#" class="sidebar-item"><i class="fa-solid fa-list-check"></i>Tareas</a>
+            <a href="dashboard" class="sidebar-item"><i class="fa-solid fa-house"></i> Página principal</a>
+            <a href="ver_gastos" class="sidebar-item"><i class="fa-solid fa-dollar-sign"></i> Gastos</a>
+            <a href="tareas" class="sidebar-item"><i class="fa-solid fa-list-check"></i> Tareas</a>
             <a href="ranking" class="sidebar-item active"><i class="fa-solid fa-trophy"></i>Ranking</a>
+            <a href="insignias.html" class="sidebar-item"><i class="fa-solid fa-square-plus"></i></i> Crear insignia</a>
+            <a href="miembros" class="sidebar-item"><i class="fa-solid fa-users"></i> Miembros</a>
+            <a href="insignias" class="sidebar-item"><i class="fa-solid fa-medal"></i> Insignias</a>
         </nav>
-
-        <div class="sidebar-user">
-            <div class="avatar">M</div>
+        <div class="sidebar-user" id="selector-usuario">
+            <div class="avatar" id="user-avatar">M</div>
             <div class="user-info">
-                <div class="name">Malena</div>
-                <div class="role">Integrantes</div>
+                <div class="name" id="user-name">Malena</div>
+                <div class="role">Cambiar usuario ▾</div>
             </div>
         </div>
+        <div id="user-dropdown" class="user-dropdown"></div>
     </aside>
     <main class="main-content">
         <header class="page-header">
@@ -44,8 +46,26 @@
                 </div>
                 <div id="lista-ranking"></div>
             </div>
+            <div class="panel-card" style="grid-column: 1 / -1; margin-top: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.1rem;">
+                    <h3 class="panel-title" style="margin-bottom: 0;">Puntos del mes</h3>
+                </div>
+                <div class="puntos-aviso">
+                    <i class="fa-solid fa-circle-info puntos-aviso-icon"></i>
+                    <div>
+                        <div class="puntos-aviso-title">Cómo se suman los puntos</div>
+                        <ul>
+                            <li><strong>+1 punto</strong> por cada tarea completada en el mes.</li>
+                            <li><strong>−3 puntos</strong> por cada tarea asignada que vence sin completarse.</li>
+                            <li>Completar una tarea después de su vencimiento <strong>no suma puntos</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="lista-puntos"></div>
+            </div>
         </section>
     </main>
-    <script src="js/ranking.js"></script>
+    <script src="js/comun.js"></script>
+<script src="js/ranking.js"></script>
 </body>
 </html>
