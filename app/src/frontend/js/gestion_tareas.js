@@ -114,12 +114,13 @@ function crearFila(tarea) {
 
 
 
+
     metaTarea.className = 'tx-meta';
     metaTarea.textContent = tarea.notas
     metaTarea.textContent = `${tarea.categoria} · Vence ${formatearFecha(tarea.fecha_vencimiento)} · ${usuarioAsignado}`;
 
     //Agrego elementos 
-    contenedor.appendChild(notasTarea);
+    infoTarea.appendChild(notasTarea);
     infoTarea.appendChild(nombreTarea);
     infoTarea.appendChild(metaTarea);
 
