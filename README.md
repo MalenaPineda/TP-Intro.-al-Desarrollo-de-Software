@@ -87,13 +87,6 @@ http://localhost:8080
 Para detener los servicios:
 docker compose down
 
-# 2. Configurar variables de entorno en app/.env
-# DB_USER=usuario
-# DB_PASS=password
-# DB_HOST=localhost
-# DB_PORT=5432
-# DB_NAME=db_postgres
-```
 
 ### Accesos Principales
 
