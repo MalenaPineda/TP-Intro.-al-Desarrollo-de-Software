@@ -4,7 +4,7 @@ WHERE id_categoria = (
   WHERE nombre = 'Compras' 
   ORDER BY id_categoria DESC 
   LIMIT 1
-);*/
+);
 -- Junio 2026
 INSERT INTO gastos (descripcion, monto, fecha_gasto, id_metodo, categoria, id_user) VALUES
 ('Supermercado', 15400.00, '2026-06-03', 1, 1, 1),
@@ -15,3 +15,25 @@ INSERT INTO gastos (descripcion, monto, fecha_gasto, id_metodo, categoria, id_us
 INSERT INTO gastos (descripcion, monto, fecha_gasto, id_metodo, categoria, id_user) VALUES
 ('Supermercado', 16800.00, '2026-07-05', 1, 1, 1),
 ('Internet',      9500.00, '2026-07-10',2, 2, 3)
+
+ALTER TABLE user_insignia
+DROP CONSTRAINT user_insignia_id_insignia_fkey,
+ADD CONSTRAINT user_insignia_id_insignia_fkey
+    FOREIGN KEY (id_insignia) REFERENCES insignias(id_insignia) ON DELETE CASCADE;
+
+INSERT INTO iconos (nombre, clase, color) VALUES
+('Billete', 'fa-money-bill-wave', '#2e7d32');
+    */
+
+
+DELETE FROM iconos 
+WHERE id_icono = (
+  SELECT id_icono FROM iconos 
+  WHERE nombre = 'Medalla' 
+  ORDER BY id_icono DESC 
+  LIMIT 1
+);
+
+
+
+
