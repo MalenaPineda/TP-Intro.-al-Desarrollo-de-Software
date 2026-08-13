@@ -73,12 +73,19 @@ make run
 Para levantar el backend (junto con la base de datos): make run-back
 Para levantar toda la aplicación: make run
 
-### Opción 2: Ejecución Manual
+### Opción 2: Ejecución Manual:
+Clonar el repositorio
+Levantar todos los servicios con Docker Compose:
+docker compose up -d --build (make run)
 
-```bash
-# 1. Levantar/Configurar PostgreSQL local e instalar dependencias
-cd app
-npm install
+Esto iniciará automáticamente:
+Frontend en http://localhost:8080
+Backend en http://localhost:8000
+PostgreSQL en el puerto 5433
+Para acceder a la aplicación, abrir en el navegador:
+http://localhost:8080
+Para detener los servicios:
+docker compose down
 
 # 2. Configurar variables de entorno en app/.env
 # DB_USER=usuario
@@ -86,12 +93,6 @@ npm install
 # DB_HOST=localhost
 # DB_PORT=5432
 # DB_NAME=db_postgres
-
-# 3. Iniciar Backend
-npm run dev
-
-# 4. En otra terminal, servir Frontend
-cd src/frontend && npx http-server -p 8080
 ```
 
 ### Accesos Principales
@@ -158,6 +159,7 @@ cd src/frontend && npx http-server -p 8080
 * **CORS:** Restringido explícitamente a peticiones desde el origen del frontend (`localhost:8080`).
 * **Persistencia:** Configuración de volumen Docker mapeado a `./data` para mantener la base de datos entre reinicios.
 * **Despliegue Remoto:** Incluye script en `app/db/migrar_db_render.js` para inicialización de esquemas en servicios Cloud (Render).
+* **Modulos:** Arquitectura de contrasenia basada en (`"type": "password"`).
 
  ## Vistas de la Aplicación
 
