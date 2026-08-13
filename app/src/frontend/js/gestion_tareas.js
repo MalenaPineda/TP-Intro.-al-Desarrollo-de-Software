@@ -105,7 +105,7 @@ function crearFila(tarea) {
 
     const metaTarea = document.createElement('div');
     metaTarea.className = 'tx-meta';
-    metaTarea.textContent = `${tarea.notas}`
+    metaTarea.textContent = tarea.notas
     metaTarea.textContent = `${tarea.categoria} · Vence ${formatearFecha(tarea.fecha_vencimiento)} · ${usuarioAsignado}`;
 
     //Agrego elementos 
