@@ -120,6 +120,12 @@ cd src/frontend && npx http-server -p 8080
 * `POST /`: Registrar nuevo gasto.
 * `PUT /:id` | `DELETE /:id`: Actualizar o eliminar gasto.
 
+### Insignias (/api/v1/insignias)
+* `GET /`: Listar todas las insignias.
+* `GET /iconos`: Obtener los iconos disponibles para las insignias.
+* `POST /`: Crear una nueva insignia.
+* `PUT /:id`: Actualizar una insignia existente.
+* `DELETE /:id`: Eliminar una insignia.
 ---
 
 ## Estructura del Proyecto
