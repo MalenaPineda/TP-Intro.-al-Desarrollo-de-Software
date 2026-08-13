@@ -156,9 +156,8 @@ cd src/frontend && npx http-server -p 8080
  ## Vistas de la Aplicación
 
 A continuación se presentan capturas de pantalla con las funcionalidades principales del sistema:
-Pantalla de Inicio
 
-Pagina de Bienvenida para ingresar a la plataforma CoLiving.
+Pantalla de Inicio. Pagina de Bienvenida para ingresar a la plataforma CoLiving.
 <img width="1366" height="768" alt="WhatsApp Image 2026-07-30 at 18 50 19" src="https://github.com/user-attachments/assets/4e5a59d6-98f0-4f5d-bc4f-22eb747f9b66" />
 
 Vista general (Pantalla principal) muestra el resumen de tareas pendientes junto con el estado de cada tarea seleccionada por el usuario, los gastos acumulados del mes con la parte de cada usuario y el estado de progreso de las tareas. 
