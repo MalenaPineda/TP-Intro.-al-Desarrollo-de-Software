@@ -42,6 +42,6 @@ export async function deleteInsignia(id) {
 }
 
 export async function getIconos() {
-  const result = await db.query("SELECT * FROM iconos ORDER BY id_icono ASC");
+  const result = await db.query("SELECT * FROM iconos ORDER BY nombre DESC");
   return result.rows;
 }
