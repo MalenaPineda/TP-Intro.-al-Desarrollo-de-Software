@@ -159,33 +159,49 @@ A continuación se presentan capturas de pantalla con las funcionalidades princi
 Pantalla de Inicio
 
 Pagina de Bienvenida para ingresar a la plataforma CoLiving.
-
-Panel Principal (Dashboard)
 <img width="1366" height="768" alt="WhatsApp Image 2026-07-30 at 18 50 19" src="https://github.com/user-attachments/assets/4e5a59d6-98f0-4f5d-bc4f-22eb747f9b66" />
 
-Vista general con el resumen de tareas pendientes, los gastos acumulados del mes, el cálculo de tu parte a pagar y el estado de progreso de tus tareas.
-Historial y Gráficos de Gastos
+Vista general (Pantalla principal) muestra el resumen de tareas pendientes junto con el estado de cada tarea seleccionada por el usuario, los gastos acumulados del mes con la parte de cada usuario y el estado de progreso de las tareas. 
 
-<img width="1366" height="768" alt="2 jpg" src="https://github.com/user-attachments/assets/5827ea89-2fbb-4465-a43f-0e5618ae2263" />
+<img width="1366" height="768" alt="1" src="https://github.com/user-attachments/assets/94e7f3a8-e47a-4233-8647-8172f165a6c1" />
 
+Resumen de las tareas asignadas/elegidas por el usuario con su estado y su vencimiento (si corresponde) y los gastos recientes.
 
-Visualización de los gastos compartidos de la casa, incluyendo gráficos de barras para los gastos mensuales y división por categorías.
-<img width="1366" height="768" alt="4 jpg" src="https://github.com/user-attachments/assets/a223fc16-b912-4373-997e-aabaaea3df5f" />
+<img width="1366" height="768" alt="2" src="https://github.com/user-attachments/assets/f309c2e8-9dd2-4209-bba9-d3e48c09edd0" />
 
-Registro de Gastos
+Historial y Gráficos de Gastos.
 
-Formulario integrado para añadir un nuevo gasto indicando nombre, categoría, monto y método de pago utilizado.
-Tablero de Tareas
-<img width="1366" height="768" alt="3 jpg" src="https://github.com/user-attachments/assets/0ae49cd1-9661-4e74-9be2-ed153e691f66" />
+<img width="1366" height="768" alt="3" src="https://github.com/user-attachments/assets/d67b673d-1162-48bc-beac-1958f40c5db6" />
 
-Organización visual de las tareas del hogar divididas en: tareas disponibles para elegir, tareas seleccionadas (propias) y tareas asignadas a los demás miembros.
-Gestión y Creación de Tareas
-<img width="1366" height="768" alt="imagen" src="https://github.com/user-attachments/assets/6c95f99f-ae4d-45a1-82e5-29c99135667c" />
+Graficos visuales de gastos por mes y evolucion.
 
-Sección dedicada a la creación de nuevas tareas definiendo su nombre, categoría correspondiente, fecha de vencimiento y observaciones.
-Ranking de Usuarios
-<img width="1366" height="768" alt="imagen" src="https://github.com/user-attachments/assets/4ace703f-700c-47ec-a4a3-154fa382c70c" />
+<img width="1366" height="768" alt="4" src="https://github.com/user-attachments/assets/4431801f-2e1d-4625-899a-b40255b06b5e" />
 
+Tabla del resumen anual de gastos, con busqueda por categoria.
 
-Tabla de clasificación que muestra al miembro que más tareas ha realizado, fomentando la participación mediante el sistema de insignias.
-<img width="1366" height="768" alt="imagen" src="https://github.com/user-attachments/assets/f18c2bf7-2c4e-41d6-98fa-5ef01e908571" />
+<img width="1366" height="768" alt="5" src="https://github.com/user-attachments/assets/d04dbc3f-6548-45e2-bc11-bed141cb0959" />
+
+Registro de Gastos. Formulario integrado para añadir un nuevo gasto indicando nombre, categoría, monto y método de pago utilizado.
+
+<img width="1366" height="768" alt="6" src="https://github.com/user-attachments/assets/4c77550d-e697-4711-a454-3f193e6eef57" />
+
+Tablero de Tareas.Organización visual de las tareas del hogar divididas en: tareas disponibles para elegir, tareas seleccionadas (propias) y tareas asignadas a los demás miembros.
+
+<img width="1366" height="768" alt="7" src="https://github.com/user-attachments/assets/8c4fc747-23dd-4ef1-906f-5b53cdb46111" />
+
+Registro de Tareas. Sección integrada a la creación de nuevas tareas definiendo su nombre, categoría correspondiente, fecha de vencimiento.
+
+<img width="1366" height="768" alt="8" src="https://github.com/user-attachments/assets/bbfc6f81-42e3-46a9-94a9-8fafb58e35d7" />
+
+Ranking de Tareas. Muestra la tabla de clasificación que permite visualizar al miembro que más tareas ha realizado y las insignias ganadas, fomentando la participación mediante el sistema de insignias.
+
+<img width="1366" height="768" alt="9" src="https://github.com/user-attachments/assets/dee098c3-e7f0-4438-9cd9-850b1d820708" />
+
+Regristro para agregar una nueva insignia.
+
+<img width="1366" height="768" alt="9" src="https://github.com/user-attachments/assets/bd4a2748-6b45-4b39-8b98-6575f58ad976" />
+
+Formulario integrado para registrar un nuevo miembro a la casa.
+
+<img width="1366" height="768" alt="11" src="https://github.com/user-attachments/assets/e0a6d1ed-fbf9-49ac-9b9c-92c80f57470e" />
+
