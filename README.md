@@ -198,7 +198,7 @@ Ranking de Tareas. Muestra la tabla de clasificación que permite visualizar al 
 
 Regristro para agregar una nueva insignia.
 
-<img width="1366" height="768" alt="9" src="https://github.com/user-attachments/assets/bd4a2748-6b45-4b39-8b98-6575f58ad976" />
+<img width="1366" height="768" alt="10" src="https://github.com/user-attachments/assets/98528701-ed80-49ad-b7cc-bc85768ce51c" />
 
 Formulario integrado para registrar un nuevo miembro a la casa.
 
